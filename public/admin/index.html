@@ -98,6 +98,12 @@
       margin-bottom: 1rem;
       font-size: 0.875rem;
     }
+    #cms-root {
+      display: none;
+    }
+    #cms-root.active {
+      display: block;
+    }
   </style>
 </head>
 <body>
@@ -134,6 +140,9 @@
     </div>
   </div>
 
+  <!-- Contenedor para el CMS -->
+  <div id="cms-root"></div>
+
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
   
   <script>
@@ -142,11 +151,12 @@
     const tokenInput = document.getElementById('token');
     const errorDiv = document.getElementById('error-message');
     const loginScreen = document.getElementById('login-screen');
+    const cmsRoot = document.getElementById('cms-root');
 
     // Verificar si ya hay un token guardado
-    const savedToken = localStorage.getItem('github_token');
+    const savedToken = sessionStorage.getItem('github_token');
     if (savedToken) {
-      initCMS(savedToken);
+      verifyAndInitCMS(savedToken);
     }
 
     loginForm.addEventListener('submit', async (e) => {
@@ -158,10 +168,19 @@
         return;
       }
 
+      if (!token.startsWith('ghp_') && !token.startsWith('github_pat_')) {
+        showError('El token debe empezar con ghp_ o github_pat_');
+        return;
+      }
+
       loginBtn.disabled = true;
       loginBtn.textContent = 'Verificando...';
       errorDiv.innerHTML = '';
 
+      await verifyAndInitCMS(token);
+    });
+
+    async function verifyAndInitCMS(token) {
       try {
         // Verificar el token
         const response = await fetch('https://api.github.com/user', {
@@ -175,45 +194,85 @@
           throw new Error('Token inválido o sin permisos');
         }
 
+        const userData = await response.json();
+        console.log('Usuario autenticado:', userData.login);
+
+        // Verificar acceso al repositorio
+        const repoResponse = await fetch('https://api.github.com/repos/milton0999/web-doctora-astro', {
+          headers: {
+            'Authorization': `token ${token}`,
+            'Accept': 'application/vnd.github.v3+json'
+          }
+        });
+
+        if (!repoResponse.ok) {
+          throw new Error('No tienes acceso al repositorio');
+        }
+
         // Guardar token y cargar CMS
-        localStorage.setItem('github_token', token);
+        sessionStorage.setItem('github_token', token);
         initCMS(token);
 
       } catch (error) {
+        console.error('Error de autenticación:', error);
         showError(error.message);
-        loginBtn.disabled = false;
-        loginBtn.textContent = 'Acceder al Editor';
+        if (loginBtn) {
+          loginBtn.disabled = false;
+          loginBtn.textContent = 'Acceder al Editor';
+        }
+        sessionStorage.removeItem('github_token');
       }
-    });
+    }
 
     function showError(message) {
       errorDiv.innerHTML = `<div class="error">${message}</div>`;
     }
 
     function initCMS(token) {
+      console.log('Inicializando CMS...');
+      
+      // Ocultar pantalla de login
       loginScreen.style.display = 'none';
+      cmsRoot.classList.add('active');
       
-      // Configurar el CMS con el token
-      window.CMS_MANUAL_INIT = true;
-      
-      CMS.init({
-        config: {
-          backend: {
-            name: 'github',
-            repo: 'milton0999/web-doctora-astro',
-            branch: 'main',
-            auth_type: 'implicit',
-            app_id: token, // Usar el token como autenticación
-          },
-          load_config_file: true
-        }
-      });
+      // Crear configuración del backend con el token
+      const script = document.createElement('script');
+      script.innerHTML = `
+        window.CMS_MANUAL_INIT = true;
+        
+        // Interceptar las peticiones de GitHub para agregar el token
+        const originalFetch = window.fetch;
+        window.fetch = function(...args) {
+          const [url, options = {}] = args;
+          
+          if (typeof url === 'string' && url.includes('api.github.com')) {
+            options.headers = options.headers || {};
+            options.headers['Authorization'] = 'token ${token}';
+          }
+          
+          return originalFetch(url, options);
+        };
+        
+        CMS.init({
+          config: {
+            backend: {
+              name: 'github',
+              repo: 'milton0999/web-doctora-astro',
+              branch: 'main'
+            },
+            load_config_file: true,
+            media_folder: 'public/assets/images',
+            public_folder: '/assets/images'
+          }
+        });
+      `;
+      document.body.appendChild(script);
     }
 
     // Botón para cerrar sesión (Ctrl+Shift+L)
     document.addEventListener('keydown', (e) => {
       if (e.ctrlKey && e.shiftKey && e.key === 'L') {
-        localStorage.removeItem('github_token');
+        sessionStorage.removeItem('github_token');
         location.reload();
       }
     });
