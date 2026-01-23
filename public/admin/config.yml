@@ -1,25 +1,32 @@
+# Backend de prueba - guarda cambios en memoria (localStorage)
+# Perfecto para probar el CMS sin necesidad de GitHub
 backend:
-  name: github
-  repo: milton0999/web-doctora-astro
-  branch: main
-  # Sin OAuth - usa el token directamente en desarrollo
-  
-# Para desarrollo local
-local_backend: true
+  name: test-repo
+
+# O si prefieres usar GitHub directamente con OAuth:
+# backend:
+#   name: github
+#   repo: milton0999/web-doctora-astro
+#   branch: main
+#   base_url: https://decap-cms-oauth.milton-olivares0999.workers.dev
+#   auth_endpoint: /auth
 
 media_folder: "public/assets/images"
 public_folder: "/assets/images"
+
+# Para desarrollo local
+local_backend: true
 
 collections:
   - name: "paginas"
     label: "Páginas"
     files:
       - name: "inicio"
-        label: "Página de Inicio"
+        label: "Inicio"
         file: "src/content/paginas/inicio.md"
         fields:
           - { label: "Título", name: "title", widget: "string" }
-          - { label: "Descripción", name: "description", widget: "text" }
+          - { label: "Descripción", name: "description", widget: "text", required: false }
           - { label: "Contenido", name: "body", widget: "markdown" }
       
       - name: "servicios"
@@ -40,7 +47,7 @@ collections:
           - { label: "Contenido", name: "body", widget: "markdown" }
 
   - name: "blog"
-    label: "Blog/Artículos"
+    label: "Blog"
     folder: "src/content/blog"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
