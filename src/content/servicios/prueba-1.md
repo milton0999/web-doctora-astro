@@ -1,6 +1,5 @@
 ---
-title: Prueba
-image: /img/servicios/logo-cmg-horizontal.png
-description: Prieba de descripcion
+title: "Servicio de Prueba"
+image: "/img/servicios/test.jpg"
+description: "Esta es una descripción de prueba"
 ---
-no se que mas poner ayuda
