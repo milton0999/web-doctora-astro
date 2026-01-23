@@ -1,50 +1,21 @@
 backend:
   name: github
-  repo: milton0999/web-doctora-astro
-  branch: main
-  base_url: https://decap-cms-oauth.milton-olivares0999.workers.dev
-  auth_endpoint: /auth
-
-media_folder: "public/assets/images"
-public_folder: "/assets/images"
-
+  repo: username/repo
+  branch: main # Branch to update (optional; defaults to master)
+  base_url: https://centromedicogonzalitos.milcoms.org
+  auth_endpoint: /api/auth
+media_folder: static/img
+public_folder: /img
 collections:
-  - name: "paginas"
-    label: "Páginas"
-    files:
-      - name: "inicio"
-        label: "Inicio"
-        file: "src/content/paginas/inicio.md"
-        fields:
-          - { label: "Título", name: "title", widget: "string" }
-          - { label: "Descripción", name: "description", widget: "text", required: false }
-          - { label: "Contenido", name: "body", widget: "markdown" }
-      
-      - name: "servicios"
-        label: "Servicios"
-        file: "src/content/paginas/servicios.md"
-        fields:
-          - { label: "Título", name: "title", widget: "string" }
-          - { label: "Contenido", name: "body", widget: "markdown" }
-      
-      - name: "contacto"
-        label: "Contacto"
-        file: "src/content/paginas/contacto.md"
-        fields:
-          - { label: "Título", name: "title", widget: "string" }
-          - { label: "Teléfono", name: "phone", widget: "string" }
-          - { label: "Email", name: "email", widget: "string" }
-          - { label: "Dirección", name: "address", widget: "text" }
-          - { label: "Contenido", name: "body", widget: "markdown" }
-
-  - name: "blog"
-    label: "Blog"
-    folder: "src/content/blog"
+  - name: 'blog'
+    label: 'Blog'
+    folder: 'content/blog'
     create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    slug: '{{slug}}'
+    editor:
+      preview: false
     fields:
-      - { label: "Título", name: "title", widget: "string" }
-      - { label: "Fecha", name: "date", widget: "datetime" }
-      - { label: "Imagen", name: "image", widget: "image", required: false }
-      - { label: "Descripción", name: "description", widget: "text" }
-      - { label: "Contenido", name: "body", widget: "markdown" }
+      - { label: 'Title', name: 'title', widget: 'string' }
+      - { label: 'Publish Date', name: 'date', widget: 'datetime' }
+      - { label: 'Description', name: 'description', widget: 'string' }
+      - { label: 'Body', name: 'body', widget: 'markdown' }
