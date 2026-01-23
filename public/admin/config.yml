@@ -1,0 +1,20 @@
+backend:
+  name: github
+  repo: milton0999/web-doctora-astro
+  branch: main
+  base_url: https://decap-cms-oauth.milton-olivares0999.workers.dev
+  auth_endpoint: /auth
+
+media_folder: "public/assets/images"
+public_folder: "/assets/images"
+
+collections:
+  - name: "paginas"
+    label: "Páginas"
+    files:
+      - name: "inicio"
+        label: "Página de Inicio"
+        file: "src/content/paginas/inicio.md"
+        fields:
+          - { label: "Título", name: "title", widget: "string" }
+          - { label: "Contenido", name: "body", widget: "markdown" }
