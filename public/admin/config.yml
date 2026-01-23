@@ -8,14 +8,16 @@ backend:
 media_folder: public/img/servicios # Donde se guardarán las fotos
 public_folder: /img/servicios
 
+# public/admin/config.yml
 collections:
   - name: 'servicios'
     label: 'Servicios y Estudios'
-    folder: 'src/content/servicios' # Carpeta que ya tienes creada
+    folder: 'src/content/servicios'
     create: true
     slug: '{{slug}}'
     fields:
       - { label: 'Nombre del Estudio', name: 'title', widget: 'string' }
-      - { label: 'Imagen del Estudio', name: 'image', widget: 'image' } # AQUÍ SUBE LA FOTO
+      - { label: 'Categoría', name: 'categoria', widget: 'select', options: ['Adulto', 'Embarazada', 'Pediatrico'] } # NUEVO
+      - { label: 'Imagen del Estudio', name: 'image', widget: 'image' }
       - { label: 'Descripción breve', name: 'description', widget: 'string' }
-      - { label: 'Contenido Detallado', name: 'body', widget: 'markdown' } # AQUÍ VA EL TEXTO DEL WAYBACK
+      - { label: 'Contenido Detallado', name: 'body', widget: 'markdown' }

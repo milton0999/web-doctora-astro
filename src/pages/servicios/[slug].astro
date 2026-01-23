@@ -1,5 +1,4 @@
 ---
-// src/pages/servicios/[slug].astro
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 
@@ -24,6 +23,7 @@ const { Content } = await entrada.render();
     )}
 
     <div class="prose">
-      <Content /> </div>
+      <Content />
+    </div>
   </div>
 </Layout>

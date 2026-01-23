@@ -1,6 +1,14 @@
 ---
 // src/layouts/Layout.astro
+import { getCollection } from 'astro:content';
 const { title } = Astro.props;
+
+const servicios = await getCollection('servicios');
+
+// Filtros automáticos (ya no deben marcar error 'any')
+const adultos = servicios.filter(s => s.data.categoria === 'Adulto');
+const embarazadas = servicios.filter(s => s.data.categoria === 'Embarazada');
+const pediatrico = servicios.filter(s => s.data.categoria === 'Pediatrico');
 ---
 <!DOCTYPE html>
 <html lang="es">
@@ -10,23 +18,77 @@ const { title } = Astro.props;
     <title>{title} | Centro Médico Gonzalitos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        :root {
-            --azul-oscuro: #1D3B6B;
-            --verde-medico: #37BF4B;
-        }
-        nav { background-color: var(--azul-oscuro); }
-        .btn-cita { background-color: var(--verde-medico); color: white; border-radius: 20px; }
+        .bg-medical { background-color: #003da2; }
+        .nav-link { color: white !important; font-size: 0.9rem; }
+        .dropdown-menu { border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .logo-img { max-width: 250px; height: auto; }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-dark p-3">
+    <div class="container py-3">
+        <div class="d-flex justify-content-between align-items-center">
+            <a href="/">
+                <img src="/logo-cmg.png" alt="Logo Centro Médico Gonzalitos" class="logo-img">
+            </a>
+            <div class="d-none d-md-block text-end">
+                <small class="text-muted">Agenda una Cita WhatsApp:</small><br>
+                <a href="https://wa.me/528115883775" target="_blank" class="text-decoration-none">
+                    <strong style="color: #003da2;">81 1588 3775</strong>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-medical sticky-top shadow-sm">
         <div class="container">
-            <a class="navbar-brand font-weight-bold" href="/">Centro Médico Gonzalitos</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav w-100 justify-content-between">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Ultrasonido Adulto</a>
+                        <ul class="dropdown-menu">
+                            {adultos.length > 0 ? adultos.map(s => (
+                                <li><a class="dropdown-item" href={`/servicios/${s.slug}`}>{s.data.title}</a></li>
+                            )) : <li><span class="dropdown-item disabled">Próximamente</span></li>}
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Embarazo</a>
+                        <ul class="dropdown-menu">
+                            {embarazadas.length > 0 ? embarazadas.map(s => (
+                                <li><a class="dropdown-item" href={`/servicios/${s.slug}`}>{s.data.title}</a></li>
+                            )) : <li><span class="dropdown-item disabled">Próximamente</span></li>}
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Pediátrico</a>
+                        <ul class="dropdown-menu">
+                            {pediatrico.length > 0 ? pediatrico.map(s => (
+                                <li><a class="dropdown-item" href={`/servicios/${s.slug}`}>{s.data.title}</a></li>
+                            )) : <li><span class="dropdown-item disabled">Próximamente</span></li>}
+                        </ul>
+                    </li>
+
+                    <li class="nav-item"><a class="nav-link" href="/nosotros">Nosotros</a></li>
+                </ul>
+            </div>
         </div>
     </nav>
 
-    <slot /> <footer class="text-center py-4 mt-5 bg-light">
-        <p>© 2024 Centro Médico Gonzalitos - Monterrey</p>
+    <main>
+        <slot />
+    </main>
+
+    <footer class="bg-light py-4 mt-5 border-top">
+        <div class="container text-center">
+            <p class="text-muted small mb-0">© 2024 Centro Médico Gonzalitos - Monterrey, N.L.</p>
+        </div>
     </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

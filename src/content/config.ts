@@ -1,16 +1,12 @@
 import { defineCollection, z } from 'astro:content';
 
 const servicios = defineCollection({
-  // 'type: content' es para archivos Markdown
-  type: 'content', 
   schema: z.object({
-    title: z.string(),
-    image: z.string().optional(),
-    description: z.string().optional(),
+    title: z.string(), // Antes decía 'nombre'
+    image: z.string().optional(), // Antes decía 'imagen'
+    description: z.string(), // Antes decía 'descripcion'
+    categoria: z.enum(['Adulto', 'Embarazada', 'Pediatrico']),
   }),
 });
 
-// Esto exporta la colección para que Astro la reconozca
-export const collections = {
-  'servicios': servicios,
-};
+export const collections = { servicios };

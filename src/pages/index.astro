@@ -1,11 +1,41 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const servicios = await getCollection('servicios');
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="Inicio">
+    <header class="py-5 bg-light border-bottom">
+        <div class="container text-center py-5">
+            <h1 class="display-4 fw-bold" style="color: #1D3B6B;">Centro Médico Gonzalitos</h1>
+            <p class="lead">Cuidando tu salud con la mejor tecnología y atención humana.</p>
+        </div>
+    </header>
+
+    <section class="container py-5">
+        <h2 class="text-center mb-5">Nuestros Estudios</h2>
+        <div class="row g-4">
+            {servicios.map(s => (
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        {s.data.image && (
+                           <img src={s.data.image} class="card-img-top" alt={s.data.title} style="height: 200px; object-fit: cover;">
+                        )}
+                        
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title fw-bold" style="color: #1D3B6B;">{s.data.title}</h5>
+                            <p class="card-text text-muted small">{s.data.description}</p>
+                            
+                            <div class="mt-auto">
+                                <a href={`/servicios/${s.slug}`} class="btn btn-outline-primary btn-sm w-100">
+                                    Ver detalles
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ))}
+        </div>
+    </section>
 </Layout>
