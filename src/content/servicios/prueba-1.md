@@ -1,5 +1,8 @@
 ---
-title: "Servicio de Prueba"
-image: "/img/servicios/test.jpg"
-description: "Esta es una descripción de prueba"
+title: "Prueba"
+categoria: "Adulto"
+image: "/img/servicios/centro-medico.png"
+description: "Prueba de descripcion"
 ---
+
+no se que mas poner ayuda
