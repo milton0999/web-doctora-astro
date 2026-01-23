@@ -1,15 +1,10 @@
-# Backend de prueba - guarda cambios en memoria (localStorage)
-# Perfecto para probar el CMS sin necesidad de GitHub
 backend:
-  name: test-repo
-
-# O si prefieres usar GitHub directamente con OAuth:
-# backend:
-#   name: github
-#   repo: milton0999/web-doctora-astro
-#   branch: main
-#   base_url: https://decap-cms-oauth.milton-olivares0999.workers.dev
-#   auth_endpoint: /auth
+  name: github
+  repo: milton0999/web-doctora-astro
+  branch: main
+  # Usa el proxy de Decap CMS para OAuth
+  base_url: https://api.decapcms.org
+  auth_endpoint: auth
 
 media_folder: "public/assets/images"
 public_folder: "/assets/images"
