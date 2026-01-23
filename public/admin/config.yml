@@ -2,8 +2,10 @@ backend:
   name: github
   repo: milton0999/web-doctora-astro
   branch: main
-  base_url: https://decap-cms-oauth.milton-olivares0999.workers.dev
-  auth_endpoint: /auth
+  # Sin OAuth - usa el token directamente en desarrollo
+  
+# Para desarrollo local
+local_backend: true
 
 media_folder: "public/assets/images"
 public_folder: "/assets/images"
@@ -17,4 +19,34 @@ collections:
         file: "src/content/paginas/inicio.md"
         fields:
           - { label: "Título", name: "title", widget: "string" }
+          - { label: "Descripción", name: "description", widget: "text" }
           - { label: "Contenido", name: "body", widget: "markdown" }
+      
+      - name: "servicios"
+        label: "Servicios"
+        file: "src/content/paginas/servicios.md"
+        fields:
+          - { label: "Título", name: "title", widget: "string" }
+          - { label: "Contenido", name: "body", widget: "markdown" }
+      
+      - name: "contacto"
+        label: "Contacto"
+        file: "src/content/paginas/contacto.md"
+        fields:
+          - { label: "Título", name: "title", widget: "string" }
+          - { label: "Teléfono", name: "phone", widget: "string" }
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "Dirección", name: "address", widget: "text" }
+          - { label: "Contenido", name: "body", widget: "markdown" }
+
+  - name: "blog"
+    label: "Blog/Artículos"
+    folder: "src/content/blog"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Fecha", name: "date", widget: "datetime" }
+      - { label: "Imagen", name: "image", widget: "image", required: false }
+      - { label: "Descripción", name: "description", widget: "text" }
+      - { label: "Contenido", name: "body", widget: "markdown" }
