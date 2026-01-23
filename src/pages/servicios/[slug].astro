@@ -1,0 +1,29 @@
+---
+// src/pages/servicios/[slug].astro
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const servicios = await getCollection('servicios');
+  return servicios.map(entrada => ({
+    params: { slug: entrada.slug },
+    props: { entrada },
+  }));
+}
+
+const { entrada } = Astro.props;
+const { Content } = await entrada.render();
+---
+
+<Layout title={entrada.data.title}>
+  <div class="container mt-5">
+    <h1 style="color: #1D3B6B;">{entrada.data.title}</h1>
+    
+    {entrada.data.image && (
+      <img src={entrada.data.image} alt={entrada.data.title} class="img-fluid rounded my-4" />
+    )}
+
+    <div class="prose">
+      <Content /> </div>
+  </div>
+</Layout>

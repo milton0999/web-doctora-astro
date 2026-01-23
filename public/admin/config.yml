@@ -5,18 +5,17 @@ backend:
   base_url: https://centromedicogonzalitos.milcoms.org # Tu dominio personalizado
   auth_endpoint: api/auth # Apunta a tu carpeta functions/api
 
-media_folder: public/img # Carpeta donde se guardarán fotos
-public_folder: /img
+media_folder: public/img/servicios # Donde se guardarán las fotos
+public_folder: /img/servicios
+
 collections:
-  - name: 'blog'
-    label: 'Blog'
-    folder: 'content/blog'
+  - name: 'servicios'
+    label: 'Servicios y Estudios'
+    folder: 'src/content/servicios' # Carpeta que ya tienes creada
     create: true
     slug: '{{slug}}'
-    editor:
-      preview: false
     fields:
-      - { label: 'Title', name: 'title', widget: 'string' }
-      - { label: 'Publish Date', name: 'date', widget: 'datetime' }
-      - { label: 'Description', name: 'description', widget: 'string' }
-      - { label: 'Body', name: 'body', widget: 'markdown' }
+      - { label: 'Nombre del Estudio', name: 'title', widget: 'string' }
+      - { label: 'Imagen del Estudio', name: 'image', widget: 'image' } # AQUÍ SUBE LA FOTO
+      - { label: 'Descripción breve', name: 'description', widget: 'string' }
+      - { label: 'Contenido Detallado', name: 'body', widget: 'markdown' } # AQUÍ VA EL TEXTO DEL WAYBACK
