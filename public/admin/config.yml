@@ -2,15 +2,11 @@ backend:
   name: github
   repo: milton0999/web-doctora-astro
   branch: main
-  # Usa el proxy de Decap CMS para OAuth
-  base_url: https://api.decapcms.org
-  auth_endpoint: auth
+  base_url: https://decap-cms-oauth.milton-olivares0999.workers.dev
+  auth_endpoint: /auth
 
 media_folder: "public/assets/images"
 public_folder: "/assets/images"
-
-# Para desarrollo local
-local_backend: true
 
 collections:
   - name: "paginas"
