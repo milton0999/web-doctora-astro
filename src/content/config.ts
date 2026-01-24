@@ -19,8 +19,8 @@ const servicios = defineCollection({
       'General'           // Otros estudios
     ]),
     subcategoria: z.string().optional(), // Ej: "Abdominal", "Vascular", etc.
-    precio: z.string().optional(),
-    duracion: z.string().optional(),
+    price: z.string().optional(),    // Corregido a price para consistencia con archivos
+    duration: z.string().optional(),  // Corregido a duration para consistencia con archivos
     preparacion: z.string().optional(),
     contraindicaciones: z.array(z.string()).optional(),
     gallery: z.array(z.string()).optional(),
@@ -153,6 +153,27 @@ const aboutUs = defineCollection({
   }),
 });
 
+// Páginas de Categoría
+const categorias = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    hero_image: z.string().optional(),
+    seo_title: z.string().default(""),
+    seo_description: z.string().default(""),
+  }),
+});
+
+// Páginas Legales
+const legal = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    last_updated: z.date().optional(),
+  }),
+});
+
 export const collections = {
   servicios,
   settings,
@@ -160,5 +181,7 @@ export const collections = {
   testimonials,
   promotions,
   team,
-  aboutUs
+  aboutUs,
+  categorias,
+  legal
 };

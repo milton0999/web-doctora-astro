@@ -42,7 +42,7 @@ collections:
     slug: '{{slug}}'
     fields:
       - { label: 'Nombre del Estudio', name: 'title', widget: 'string' }
-      - { label: 'Categoría', name: 'categoria', widget: 'select', options: ['Adulto', 'Embarazada', 'Pediatrico'] }
+      - { label: 'Categoría', name: 'categoria', widget: 'select', options: ['Adulto', 'Embarazada', 'Pediatrico', 'Ginecologia', 'Cardiologia', 'Musculoesqueletico', 'Doppler', 'Tiroides', 'Mama', 'General'] }
       - { label: 'Imagen Principal', name: 'image', widget: 'image' }
       - { label: 'Descripción Breve', name: 'description', widget: 'text' }
       - { label: 'Precio', name: 'price', widget: 'string', required: false }
@@ -79,7 +79,7 @@ collections:
       - { label: 'Foto del Paciente', name: 'photo', widget: 'image', required: false }
       - { label: 'Testimonio', name: 'content', widget: 'text' }
       - { label: 'Calificación', name: 'rating', widget: 'number', min: 1, max: 5, default: 5 }
-      - { label: 'Categoría de Servicio', name: 'service_category', widget: 'select', options: ['Adulto', 'Embarazada', 'Pediatrico'] }
+      - { label: 'Categoría de Servicio', name: 'service_category', widget: 'select', options: ['Adulto', 'Embarazada', 'Pediatrico', 'Ginecologia', 'Cardiologia', 'Musculoesqueletico', 'Doppler', 'Tiroides', 'Mama', 'General'] }
       - { label: 'Fecha', name: 'date', widget: 'date' }
       - { label: 'Destacado', name: 'featured', widget: 'boolean', default: false }
 
@@ -113,3 +113,105 @@ collections:
       - { label: 'Especialidades', name: 'specialties', widget: 'list', field: { name: 'specialty', widget: 'string' } }
       - { label: 'Años de Experiencia', name: 'experience_years', widget: 'number', required: false }
       - { label: 'Educación', name: 'education', widget: 'list', field: { name: 'education_item', widget: 'string' }, required: false }
+
+  # Página Nosotros (Activada)
+  - name: 'aboutUs'
+    label: 'Página Nosotros'
+    files:
+      - name: 'general'
+        label: 'Contenido de Nosotros'
+        file: 'src/content/aboutUs/general.yml'
+        fields:
+          - { label: 'Título Principal', name: 'hero_title', widget: 'string' }
+          - { label: 'Subtítulo', name: 'hero_subtitle', widget: 'string' }
+          - { label: 'Imagen Hero', name: 'hero_image', widget: 'image', required: false }
+          
+          - { label: 'Título Misión', name: 'mission_title', widget: 'string' }
+          - { label: 'Contenido Misión', name: 'mission_content', widget: 'text' }
+          - { label: 'Estadísticas', name: 'mission_stats', widget: 'list', field: { name: 'stat', widget: 'object', fields: [
+              { label: 'Número', name: 'number', widget: 'string' },
+              { label: 'Etiqueta', name: 'label', widget: 'string' }
+            ]} }
+          
+          - { label: 'Valores', name: 'values', widget: 'list', field: { name: 'value', widget: 'object', fields: [
+              { label: 'Ícono', name: 'icon', widget: 'string' },
+              { label: 'Título', name: 'title', widget: 'string' },
+              { label: 'Descripción', name: 'description', widget: 'text' }
+            ]} }
+          
+          - { label: 'Título del Equipo', name: 'team_title', widget: 'string' }
+          - { label: 'Mostrar Equipo', name: 'show_team', widget: 'boolean', default: true }
+          
+          - { label: 'Título CTA', name: 'cta_title', widget: 'string' }
+          - { label: 'Descripción CTA', name: 'cta_description', widget: 'text' }
+          - { label: 'Texto del Botón', name: 'cta_button_text', widget: 'string' }
+          - { label: 'Enlace del Botón', name: 'cta_button_link', widget: 'string' }
+          
+          - { label: 'Título Ubicación', name: 'location_title', widget: 'string' }
+          - { label: 'Dirección', name: 'address', widget: 'text' }
+          - { label: 'Teléfono', name: 'phone', widget: 'string' }
+          - { label: 'Horario', name: 'hours', widget: 'text' }
+          - { label: 'Mapa Embed', name: 'map_embed', widget: 'text', required: false }
+          
+          - { label: 'Meta Título', name: 'seo_title', widget: 'string' }
+          - { label: 'Meta Descripción', name: 'seo_description', widget: 'text' }
+
+  # Páginas de Categoría
+  - name: 'categorias'
+    label: 'Páginas de Categoría'
+    files:
+      - name: 'adulto'
+        label: 'Página Ecografías Adulto'
+        file: 'src/content/categorias/adulto.md'
+        fields:
+          - { label: 'Título de la Página', name: 'title', widget: 'string' }
+          - { label: 'Descripción', name: 'description', widget: 'text' }
+          - { label: 'Imagen Hero', name: 'hero_image', widget: 'image', required: false }
+          - { label: 'Contenido Principal', name: 'body', widget: 'markdown' }
+          - { label: 'Meta Título', name: 'seo_title', widget: 'string' }
+          - { label: 'Meta Descripción', name: 'seo_description', widget: 'text' }
+      
+      - name: 'embarazada'
+        label: 'Página Ecografías Embarazada'
+        file: 'src/content/categorias/embarazada.md'
+        fields:
+          - { label: 'Título de la Página', name: 'title', widget: 'string' }
+          - { label: 'Descripción', name: 'description', widget: 'text' }
+          - { label: 'Imagen Hero', name: 'hero_image', widget: 'image', required: false }
+          - { label: 'Contenido Principal', name: 'body', widget: 'markdown' }
+          - { label: 'Meta Título', name: 'seo_title', widget: 'string' }
+          - { label: 'Meta Descripción', name: 'seo_description', widget: 'text' }
+      
+      - name: 'pediatrico'
+        label: 'Página Ecografías Pediátricas'
+        file: 'src/content/categorias/pediatrico.md'
+        fields:
+          - { label: 'Título de la Página', name: 'title', widget: 'string' }
+          - { label: 'Descripción', name: 'description', widget: 'text' }
+          - { label: 'Imagen Hero', name: 'hero_image', widget: 'image', required: false }
+          - { label: 'Contenido Principal', name: 'body', widget: 'markdown' }
+          - { label: 'Meta Título', name: 'seo_title', widget: 'string' }
+          - { label: 'Meta Descripción', name: 'seo_description', widget: 'text' }
+      
+      - name: 'ginecologia'
+        label: 'Página Ginecología'
+        file: 'src/content/categorias/ginecologia.md'
+        fields:
+          - { label: 'Título de la Página', name: 'title', widget: 'string' }
+          - { label: 'Descripción', name: 'description', widget: 'text' }
+          - { label: 'Imagen Hero', name: 'hero_image', widget: 'image', required: false }
+          - { label: 'Contenido Principal', name: 'body', widget: 'markdown' }
+          - { label: 'Meta Título', name: 'seo_title', widget: 'string' }
+          - { label: 'Meta Descripción', name: 'seo_description', widget: 'text' }
+
+  # Páginas Legales
+  - name: 'legal'
+    label: 'Páginas Legales'
+    files:
+      - name: 'privacy'
+        label: 'Aviso de Privacidad'
+        file: 'src/content/legal/privacy.md'
+        fields:
+          - { label: 'Título', name: 'title', widget: 'string' }
+          - { label: 'Última actualización', name: 'last_updated', widget: 'date' }
+          - { label: 'Contenido', name: 'body', widget: 'markdown' }

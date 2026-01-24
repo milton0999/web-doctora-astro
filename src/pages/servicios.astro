@@ -1,0 +1,139 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ServicioCard from '../components/ServicioCard.astro';
+import { getCollection } from 'astro:content';
+
+// Obtener todos los servicios
+const servicios = await getCollection('servicios');
+
+// Agrupar servicios por categoría
+const serviciosPorCategoria = servicios.reduce((acc, servicio) => {
+  const categoria = servicio.data.categoria;
+  if (!acc[categoria]) {
+    acc[categoria] = [];
+  }
+  acc[categoria].push(servicio);
+  return acc;
+}, {});
+
+// Mapeo de nombres de categorías para mostrar
+const nombresCategorias = {
+  'Adulto': 'Ecografías para Adulto',
+  'Embarazada': 'Ecografías Materno-Fetales',
+  'Pediatrico': 'Ecografías Pediátricas',
+  'Ginecologia': 'Estudios Ginecológicos',
+  'Cardiologia': 'Ecografías Cardíacas',
+  'Musculoesqueletico': 'Ecografías Musculoesqueléticas',
+  'Doppler': 'Estudios Doppler',
+  'Tiroides': 'Ecografías de Tiroides',
+  'Mama': 'Ecografías de Mama',
+  'General': 'Estudios Generales'
+};
+
+// Orden de categorías
+const ordenCategorias = ['Adulto', 'Embarazada', 'Pediatrico', 'Ginecologia'];
+---
+
+<Layout title="Servicios - Centro Médico Gonzalitos" description="Conoce todos nuestros servicios de ultrasonido y estudios diagnósticos">
+  <!-- Hero Section -->
+  <section class="py-5 bg-primary">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-8">
+          <h1 class="display-4 fw-bold text-white mb-3">Nuestros Servicios</h1>
+          <p class="lead text-white-50">Ofrecemos una amplia gama de estudios de ultrasonido con tecnología de punta para brindarte el mejor diagnóstico.</p>
+        </div>
+        <div class="col-lg-4">
+          <div class="bg-white bg-opacity-10 rounded-3 p-4">
+            <div class="text-center">
+              <h3 class="text-white mb-0">{servicios.length}</h3>
+              <p class="text-white-50">Servicios Disponibles</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Servicios por Categoría -->
+  <section class="py-5">
+    <div class="container">
+      {ordenCategorias.map(categoria => (
+        serviciosPorCategoria[categoria] && (
+          <>
+            <!-- Sección de Categoría -->
+            <div class="mb-5">
+              <div class="text-center mb-4">
+                <h2 class="h2 fw-bold">{nombresCategorias[categoria]}</h2>
+                <p class="text-muted">
+                  {serviciosPorCategoria[categoria].length} estudio{serviciosPorCategoria[categoria].length > 1 ? 's' : ''} disponible{serviciosPorCategoria[categoria].length > 1 ? 's' : ''}
+                </p>
+              </div>
+              
+              <div class="row g-4">
+                {serviciosPorCategoria[categoria].map(servicio => (
+                  <div class="col-md-6 col-lg-4">
+                    <ServicioCard servicio={servicio} />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {categoria !== ordenCategorias[ordenCategorias.length - 1] && (
+              <hr class="my-5">
+            )}
+          </>
+        )
+      ))}
+
+      <!-- Categorías sin servicios -->
+      {Object.keys(nombresCategorias).map(categoria => (
+        !ordenCategorias.includes(categoria) && serviciosPorCategoria[categoria] && (
+          <div class="mb-5">
+            <div class="text-center mb-4">
+              <h2 class="h2 fw-bold">{nombresCategorias[categoria]}</h2>
+              <p class="text-muted">
+                {serviciosPorCategoria[categoria].length} estudio{serviciosPorCategoria[categoria].length > 1 ? 's' : ''} disponible{serviciosPorCategoria[categoria].length > 1 ? 's' : ''}
+              </p>
+            </div>
+            
+            <div class="row g-4">
+              {serviciosPorCategoria[categoria].map(servicio => (
+                <div class="col-md-6 col-lg-4">
+                  <ServicioCard servicio={servicio} />
+                </div>
+              ))}
+            </div>
+
+            <hr class="my-5">
+          </div>
+        )
+      ))}
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-5 bg-light">
+    <div class="container">
+      <div class="text-center">
+        <h2 class="h2 fw-bold mb-3">¿Necesitas más información?</h2>
+        <p class="text-muted mb-4">Nuestro equipo de expertos está listo para ayudarte a elegir el estudio adecuado para ti.</p>
+        <div class="d-flex gap-3 justify-content-center flex-wrap">
+          <a href="/contacto" class="btn btn-primary btn-lg">
+            <i class="bi bi-envelope me-2"></i>Contáctanos
+          </a>
+          <a href="tel:+528111234567" class="btn btn-outline-primary btn-lg">
+            <i class="bi bi-telephone me-2"></i>Llamar Ahora
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .btn-lg {
+    padding: 12px 24px;
+    font-size: 1.1rem;
+  }
+</style>

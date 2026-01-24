@@ -1,0 +1,182 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getEntry } from 'astro:content';
+
+// Intentar obtener contenido del CMS
+let privacyContent = null;
+try {
+  privacyContent = await getEntry('legal', 'privacy');
+} catch (e) {
+  // Si no hay contenido, usar valores por defecto
+}
+---
+
+<Layout 
+  title="Aviso de Privacidad - Centro Médico Gonzalitos" 
+  description="Aviso de privacidad y protección de datos personales conforme a la normativa vigente"
+>
+  <!-- Hero Section -->
+  <section class="py-5 bg-primary">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <h1 class="display-4 fw-bold text-white mb-3">Aviso de Privacidad</h1>
+          <p class="lead text-white-50">Protección y manejo responsable de tus datos personales.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contenido Principal -->
+  <section class="py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+          {privacyContent ? (
+            <div class="prose prose-lg">
+              {privacyContent.content}
+            </div>
+          ) : (
+            <div class="content-wrapper">
+              <div class="alert alert-info mb-4">
+                <i class="bi bi-info-circle me-2"></i>
+                <strong>Última actualización:</strong> {new Date().toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' })}
+              </div>
+
+              <!-- Contenido por defecto del aviso de privacidad -->
+              <article class="privacy-content">
+                <h2>AVISO DE PRIVACIDAD SIMPLIFICADO</h2>
+                
+                <h3>1. Identidad y Domicilio del Responsable</h3>
+                <p><strong>Centro Médico Gonzalitos</strong>, con domicilio en Monterrey, Nuevo León, México, es responsable del tratamiento de sus datos personales.</p>
+                
+                <h3>2. Datos Personales que Recabamos</h3>
+                <p>Para la prestación de nuestros servicios médicos, podemos recabar los siguientes datos:</p>
+                <ul>
+                  <li>Datos de identificación: nombre, fecha de nacimiento, edad, sexo</li>
+                  <li>Datos de contacto: teléfono, correo electrónico, domicilio</li>
+                  <li>Datos médicos: historial clínico, estudios realizados, resultados</li>
+                  <li>Datos de pago: información facturación, método de pago</li>
+                </ul>
+                
+                <h3>3. Finalidades del Tratamiento</h3>
+                <p>Sus datos personales serán utilizados para:</p>
+                <ul>
+                  <li>Prestación de servicios médicos y estudios de ultrasonido</li>
+                  <li>Agendamiento de citas y seguimiento médico</li>
+                  <li>Emisión de facturas y comprobantes fiscales</li>
+                  <li>Comunicación sobre resultados y seguimiento</li>
+                  <li>Mejora continua de nuestros servicios</li>
+                </ul>
+                
+                <h3>4. Transferencias de Datos</h3>
+                <p>Podemos compartir sus datos personales con:</p>
+                <ul>
+                  <li>Profesionales de la salud que participen en su atención</li>
+                  <li>Autoridades sanitarias cuando sea requerido por ley</li>
+                  <li>Prestadores de servicios tecnológicos bajo confidencialidad</li>
+                </ul>
+                
+                <h3>5. Derechos ARCO</h3>
+                <p>Usted tiene derecho a:</p>
+                <ul>
+                  <li><strong>Acceso:</strong> Conocer qué datos personales tenemos de usted</li>
+                  <li><strong>Rectificación:</strong> Corregir datos inexactos o incompletos</li>
+                  <li><strong>Cancelación:</strong> Solicitar la eliminación de sus datos</li>
+                  <li><strong>Oposición:</strong> Oponerse al tratamiento de sus datos</li>
+                </ul>
+                
+                <p>Para ejercer estos derechos, comuníquese con nosotros:</p>
+                <ul>
+                  <li>Correo electrónico: privacidad@gonzalitos.com</li>
+                  <li>Teléfono: +52 81 1234 5678</li>
+                  <li>Domicilio: Monterrey, Nuevo León, México</li>
+                </ul>
+                
+                <h3>6. Medidas de Seguridad</h3>
+                <p>Implementamos medidas de seguridad administrativas, físicas y técnicas para proteger sus datos personales contra acceso no autorizado, uso indebido o divulgación.</p>
+                
+                <h3>7. Tiempo de Conservación</h3>
+                <p>Conservaremos sus datos personales durante el tiempo necesario para cumplir con las finalidades descritas, o hasta que usted solicite su cancelación, siempre que no exista una obligación legal de conservarlos.</p>
+                
+                <h3>8. Cambios al Aviso de Privacidad</h3>
+                <p>Nos reservamos el derecho de modificar este aviso de privacidad en cualquier momento. Cualquier modificación será notificada a través de nuestros medios de contacto habituales o en nuestras instalaciones.</p>
+                
+                <h3>9. Consentimiento</h3>
+                <p>Al proporcionar sus datos personales, usted manifiesta su consentimiento expreso para el tratamiento de los mismos conforme a los términos establecidos en este aviso de privacidad.</p>
+                
+                <div class="mt-5 p-4 bg-light rounded">
+                  <p class="mb-0"><strong>Para mayor información o dudas sobre este aviso de privacidad,</strong> no dude en contactarnos a través de los medios proporcionados.</p>
+                </div>
+              </article>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="py-5 bg-light">
+    <div class="container">
+      <div class="text-center">
+        <h2 class="h2 fw-bold mb-3">¿Dudas sobre tu privacidad?</h2>
+        <p class="text-muted mb-4">Estamos a tu disposición para resolver cualquier pregunta sobre el manejo de tus datos.</p>
+        <div class="d-flex gap-3 justify-content-center flex-wrap">
+          <a href="/contacto" class="btn btn-primary">
+            <i class="bi bi-envelope me-2"></i>Contáctanos
+          </a>
+          <a href="tel:+528111234567" class="btn btn-outline-primary">
+            <i class="bi bi-telephone me-2"></i>Llamar
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .privacy-content {
+    line-height: 1.6;
+  }
+  
+  .privacy-content h2 {
+    color: var(--primary-color);
+    border-bottom: 3px solid var(--primary-color);
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+  }
+  
+  .privacy-content h3 {
+    color: var(--text-dark);
+    margin-top: 30px;
+    margin-bottom: 15px;
+  }
+  
+  .privacy-content ul {
+    margin-bottom: 20px;
+  }
+  
+  .privacy-content li {
+    margin-bottom: 8px;
+  }
+  
+  .content-wrapper {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  }
+  
+  .prose {
+    max-width: none;
+  }
+  
+  .prose h1, .prose h2, .prose h3 {
+    color: var(--text-dark);
+  }
+  
+  .prose p {
+    color: var(--text-muted);
+  }
+</style>
