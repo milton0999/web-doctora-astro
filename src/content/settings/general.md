@@ -1,5 +1,5 @@
 ---
-site_name: Centro Médico Gonzalitos 2
+site_name: Centro Médico Gonzalitos
 slogan: Cuidando tu salud con la mejor tecnología y atención humana
 description: Ecografías y ultrasonidos de alta calidad en Monterrey.
   Especialistas en estudios médicos para adultos, embarazadas y pediatría.
