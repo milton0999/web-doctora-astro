@@ -1,50 +1,21 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import ServicioCard from '../../components/ServicioCard.astro';
-import { getCollection, getEntry } from 'astro:content';
-
-// Mapeo de URLs a categorías
-const categoryMapping = {
-  'ecografias-adulto': 'Adulto',
-  'ecografias-pediatrico': 'Pediatrico',
-  'ecografias-materno': 'Embarazada',
-  'ginecologia': 'Ginecologia'
-};
-
-// Nombres para mostrar
-const nombresCategorias = {
-  'Adulto': 'Ecografías para Adulto',
-  'Embarazada': 'Ecografías Materno-Fetales',
-  'Pediatrico': 'Ecografías Pediátricas',
-  'Ginecologia': 'Estudios Ginecológicos'
-};
-
-// Metadatos por categoría
-const metadatosCategoria = {
-  'Adulto': {
-    description: 'Estudios de ultrasonido especializados para adultos con tecnología de última generación',
-    icon: 'bi-person-heart'
-  },
-  'Embarazada': {
-    description: 'Ecografías materno-fetales para el seguimiento del embarazo y bienestar del bebé',
-    icon: 'bi-heart-pulse'
-  },
-  'Pediatrico': {
-    description: 'Estudios de ultrasonido diseñados específicamente para pacientes pediátricos',
-    icon: 'bi-child'
-  },
-  'Ginecologia': {
-    description: 'Estudios ginecológicos especializados para diagnóstico y prevención',
-    icon: 'bi-heart'
-  }
-};
+import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
+  const categoryMapping = {
+    'ecografias-adulto': 'Adulto',
+    'ecografias-pediatrico': 'Pediatrico',
+    'ecografias-materno': 'Embarazada',
+    'ginecologia': 'Ginecologia'
+  };
+  
   const servicios = await getCollection('servicios');
   const categoryKeys = Object.keys(categoryMapping);
   
   return categoryKeys.map(urlKey => {
-    const categoria = categoryMapping[urlKey];
+    const categoria = categoryMapping[urlKey as keyof typeof categoryMapping];
     const serviciosFiltrados = servicios.filter(s => s.data.categoria === categoria);
     
     return {
@@ -52,27 +23,43 @@ export async function getStaticPaths() {
       props: { 
         categoria,
         serviciosFiltrados,
-        urlKey,
-        metadatos: metadatosCategoria[categoria]
+        urlKey
       }
     };
   });
 }
 
-const { categoria, serviciosFiltrados, urlKey, metadatos } = Astro.props;
+const { categoria, serviciosFiltrados, urlKey } = Astro.props;
 
-// Intentar obtener contenido personalizado de la categoría
-let categoriaContent = null;
-try {
-  categoriaContent = await getEntry('categorias', categoria.toLowerCase());
-} catch (e) {
-  // Si no hay contenido personalizado, usar valores por defecto
-}
+const categoryData = {
+  'Adulto': {
+    title: 'Ecografías para Adulto',
+    description: 'Estudios de ultrasonido especializados para adultos con tecnología de última generación',
+    icon: 'bi-person-heart'
+  },
+  'Embarazada': {
+    title: 'Ecografías Materno-Fetales',
+    description: 'Ecografías materno-fetales para el seguimiento del embarazo y bienestar del bebé',
+    icon: 'bi-heart-pulse'
+  },
+  'Pediatrico': {
+    title: 'Ecografías Pediátricas',
+    description: 'Estudios de ultrasonido diseñados específicamente para pacientes pediátricos',
+    icon: 'bi-child'
+  },
+  'Ginecologia': {
+    title: 'Estudios Ginecológicos',
+    description: 'Estudios ginecológicos especializados para diagnóstico y prevención',
+    icon: 'bi-heart'
+  }
+};
+
+const metadatos = categoryData[categoria as keyof typeof categoryData];
 ---
 
 <Layout 
-  title={`${nombresCategorias[categoria]} - Centro Médico Gonzalitos`} 
-  description={metadatos.description}
+  title={`${metadatos?.title || 'Categoría'} - Centro Médico Gonzalitos`} 
+  description={metadatos?.description || 'Estudios especializados'}
 >
   <!-- Hero Section -->
   <section class="py-5 bg-primary position-relative overflow-hidden">
@@ -80,14 +67,14 @@ try {
       <div class="row align-items-center">
         <div class="col-lg-8">
           <div class="d-flex align-items-center mb-3">
-            <i class="bi {metadatos.icon} text-white fs-1 me-3"></i>
+            <i class="bi {metadatos?.icon || 'bi-heart'} text-white fs-1 me-3"></i>
             <div>
-              <h1 class="display-4 fw-bold text-white mb-0">{nombresCategorias[categoria]}</h1>
+              <h1 class="display-4 fw-bold text-white mb-0">{metadatos?.title || 'Categoría'}</h1>
               <p class="text-white-50 mb-0">Estudios especializados</p>
             </div>
           </div>
           <p class="lead text-white-50">
-            {categoriaContent?.data.description || metadatos.description}
+            {metadatos?.description || 'Estudios especializados para tu diagnóstico'}
           </p>
         </div>
         <div class="col-lg-4">
@@ -101,21 +88,6 @@ try {
       </div>
     </div>
   </section>
-
-  <!-- Contenido Personalizado si existe -->
-  {categoriaContent && (
-    <section class="py-4 bg-light">
-      <div class="container">
-        <div class="row">
-          <div class="col-12">
-            <div class="prose prose-lg">
-              {categoriaContent.content}
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  )}
 
   <!-- Lista de Servicios -->
   <section class="py-5">
@@ -203,30 +175,21 @@ try {
         <div class="col-12">
           <p class="text-muted mb-2">Explorar otras categorías:</p>
           <div class="d-flex flex-wrap gap-2">
-            {Object.entries(categoryMapping).map(([urlKey, cat]) => (
-              cat !== categoria && (
-                <a href={`/categoria-de-servicio/${urlKey}/`} class="btn btn-sm btn-outline-secondary">
-                  {nombresCategorias[cat]}
-                </a>
-              )
-            ))}
+            <a href="/categoria-de-servicio/ecografias-adulto/" class="btn btn-sm btn-outline-secondary">
+              Ecografías para Adulto
+            </a>
+            <a href="/categoria-de-servicio/ecografias-pediatrico/" class="btn btn-sm btn-outline-secondary">
+              Ecografías Pediátricas
+            </a>
+            <a href="/categoria-de-servicio/ecografias-materno/" class="btn btn-sm btn-outline-secondary">
+              Ecografías Materno-Fetales
+            </a>
+            <a href="/categoria-de-servicio/ginecologia/" class="btn btn-sm btn-outline-secondary">
+              Estudios Ginecológicos
+            </a>
           </div>
         </div>
       </div>
     </div>
   </section>
 </Layout>
-
-<style>
-  .prose {
-    max-width: none;
-  }
-  
-  .prose h1, .prose h2, .prose h3 {
-    color: var(--text-dark);
-  }
-  
-  .prose p {
-    color: var(--text-muted);
-  }
-</style>

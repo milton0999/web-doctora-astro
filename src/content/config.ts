@@ -31,7 +31,7 @@ const servicios = defineCollection({
 
 // Configuración Global del Sitio
 const settings = defineCollection({
-  type: 'data',
+  type: 'content', // Cambiar de 'data' a 'content' para que lea .md
   schema: z.object({
     site_name: z.string(),
     slogan: z.string(),
