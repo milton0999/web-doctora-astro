@@ -15,15 +15,94 @@ const { Content } = await entrada.render();
 ---
 
 <Layout title={entrada.data.title}>
-  <div class="container mt-5">
-    <h1 style="color: #1D3B6B;">{entrada.data.title}</h1>
-    
-    {entrada.data.image && (
-      <img src={entrada.data.image} alt={entrada.data.title} class="img-fluid rounded my-4" />
-    )}
-
-    <div class="prose">
-      <Content />
+  <!-- Title Bar (estilo archivado) -->
+  <div class="title-bar-wrapper border-bottom">
+    <div class="container">
+      <div class="row align-items-center py-4">
+        <div class="col-12 col-lg-6">
+          <h1 class="entry-title mb-0" style="color: var(--text-dark);">{entrada.data.title}</h1>
+        </div>
+        <div class="col-12 col-lg-6 text-lg-end">
+          <nav class="nav-breadcrumb" aria-label="breadcrumb">
+            <ol class="breadcrumb justify-content-lg-end mb-0">
+              <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+              <li class="breadcrumb-item"><a href="/servicios">Servicios</a></li>
+              <li class="breadcrumb-item active" aria-current="page">{entrada.data.title}</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
     </div>
   </div>
+
+  <!-- Main Content -->
+  <main class="py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <section class="mb-4">
+            {entrada.data.image && (
+              <img src={entrada.data.image} alt={entrada.data.title} class="img-fluid rounded mb-4" style="object-fit: cover;" />
+            )}
+
+            <div class="prose">
+              <Content />
+            </div>
+          </section>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="layer px-3 py-4 mb-4" style="background-color: var(--layer-bg); border-radius: 8px;">
+            <h5 class="mb-3">Contáctanos hoy mismo por Whatsapp:</h5>
+            <p class="mb-3">Agenda una Cita por Whatsapp: <strong style="color: var(--primary-color);">{entrada.data.title === 'Ecocardiograma' ? '81 1588 3775' : '81 1588 3775'}</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
 </Layout>
+
+<style>
+.title-bar-wrapper {
+  background: var(--bg-white);
+}
+
+.breadcrumb {
+  background: transparent;
+  padding: 0;
+  margin: 0;
+}
+
+.breadcrumb-item a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.breadcrumb-item.active {
+  color: var(--text-muted);
+}
+
+.layer {
+  box-shadow: var(--shadow-sm);
+}
+
+.prose h2, .prose h3, .prose h4 {
+  color: var(--text-dark);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.prose p {
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.prose ul, .prose ol {
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+}
+
+.prose strong {
+  font-weight: 600;
+}
+</style>

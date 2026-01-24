@@ -62,12 +62,16 @@ const activePromotions = promotions.filter(p =>
     
     <style>
         :root {
-            /* Colores principales */
-            --primary-color: #2563EB;
-            --primary-hover: #1D4ED8;
+            /* Colores principales (recuperados del sitio archivado) */
+            --primary-color: #003da2;
+            --primary-hover: #002a7a;
             --primary-light: #DBEAFE;
             --secondary-color: #1E40AF;
             --secondary-hover: #1E3A8A;
+
+            /* Colores adicionales del sitio archivado */
+            --phone-color: #666666;
+            --layer-bg: #e1e1e1;
 
             /* Colores complementarios */
             --accent-color: #10B981;
@@ -151,21 +155,21 @@ const activePromotions = promotions.filter(p =>
         }
         
         .navbar {
-            background: var(--bg-white) !important;
+            background: var(--primary-color) !important;
             box-shadow: var(--shadow-md);
             border-bottom: 1px solid var(--border-color);
         }
 
         .nav-link {
-            color: var(--text-dark) !important;
+            color: var(--bg-white) !important;
             font-weight: 500;
             transition: all 0.3s ease;
             padding: var(--spacing-sm) var(--spacing-md) !important;
         }
 
         .nav-link:hover {
-            color: var(--primary-color) !important;
-            background-color: var(--primary-light);
+            color: var(--bg-white) !important;
+            background-color: rgba(255, 255, 255, 0.1);
             border-radius: 6px;
         }
         
@@ -187,18 +191,20 @@ const activePromotions = promotions.filter(p =>
             transform: scale(1.05);
         }
         
-        .dropdown-menu { 
-            border: none; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+        .dropdown-menu {
+            border: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             border-radius: 8px;
+            background-color: var(--bg-white);
         }
-        
+
         .dropdown-item {
             transition: background-color 0.3s ease;
+            color: var(--text-dark);
         }
-        
+
         .dropdown-item:hover {
-            background-color: var(--bg-light);
+            background-color: var(--primary-light);
             color: var(--primary-color) !important;
         }
         
@@ -358,142 +364,124 @@ const activePromotions = promotions.filter(p =>
         </div>
     )}
     
-    <!-- Header Principal -->
-    <header class="container py-3">
-        <div class="d-flex justify-content-between align-items-center">
-            <a href="/" class="logo-link">
-                {siteSettings.logo ? (
-                    <img src={siteSettings.logo} alt={siteSettings.site_name} class="logo-img">
-                ) : (
-                    <h1 class="h3 mb-0 fw-bold" style="color: var(--primary-color);">{siteSettings.site_name}</h1>
-                )}
-            </a>
-            <div class="d-none d-md-block text-end">
-                <small class="text-muted">Agenda tu cita:</small><br>
-                <a href={`https://wa.me/${siteSettings.whatsapp_number}`} target="_blank" class="text-decoration-none">
-                    <strong style="color: var(--primary-color);">💬 {siteSettings.whatsapp_number}</strong>
-                </a>
-                <br>
-                <a href={`tel:${siteSettings.phone_number}`} class="text-decoration-none">
-                    <strong style="color: var(--text-dark);">📞 {siteSettings.phone_number}</strong>
-                </a>
-            </div>
-        </div>
-    </header>
+     <!-- Header Top Bar (estilo archivado) -->
+     <header class="header-wrapper bg-white border-bottom">
+         <div class="container py-3">
+             <div class="d-flex justify-content-between align-items-center">
+                 <a href="/" class="logo-link">
+                     <img src="/img/servicios/logo-cmg-horizontal.png" alt={siteSettings.site_name} class="logo-img">
+                 </a>
+                 <div class="d-none d-xl-block">
+                     <p class="mb-0" style="color: var(--phone-color); font-size: 0.9rem;">
+                         Agenda una Cita Whatsapp: <mark style="background-color: rgba(0, 0, 0, 0);" class="fw-bold" style="color: var(--primary-color);">{siteSettings.phone_number}</mark>
+                     </p>
+                 </div>
+             </div>
+         </div>
+     </header>
 
-    <!-- Navegación -->
-    <nav class="navbar navbar-expand-lg navbar-light sticky-top shadow-sm">
-        <div class="container">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="mainNav">
-                <ul class="navbar-nav w-100 justify-content-between">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Ultrasonido Adulto</a>
-                        <ul class="dropdown-menu">
-                            {adultos.length > 0 ? adultos.map(s => (
-                                <li><a class="dropdown-item" href={`/servicios/${s.slug}`}>{s.data.title}</a></li>
-                            )) : <li><span class="dropdown-item disabled">Próximamente</span></li>}
-                        </ul>
-                    </li>
+     <!-- Navegación Principal (estilo archivado) -->
+     <nav class="navbar navbar-expand-lg sticky-top shadow-sm">
+         <div class="container">
+             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" style="border-color: rgba(255,255,255,0.5);">
+                 <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
+             </button>
+             <div class="collapse navbar-collapse" id="mainNav">
+                 <ul class="navbar-nav w-100 justify-content-center">
+                     <li class="nav-item dropdown me-lg-2">
+                         <a class="nav-link dropdown-toggle fw-bold" href="#" role="button" data-bs-toggle="dropdown">Ultrasonido Adulto</a>
+                         <ul class="dropdown-menu">
+                             {adultos.length > 0 ? adultos.map(s => (
+                                 <li><a class="dropdown-item" href={`/servicios/${s.slug}`}>{s.data.title}</a></li>
+                             )) : <li><span class="dropdown-item disabled">Próximamente</span></li>}
+                         </ul>
+                     </li>
 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Embarazo</a>
-                        <ul class="dropdown-menu">
-                            {embarazadas.length > 0 ? embarazadas.map(s => (
-                                <li><a class="dropdown-item" href={`/servicios/${s.slug}`}>{s.data.title}</a></li>
-                            )) : <li><span class="dropdown-item disabled">Próximamente</span></li>}
-                        </ul>
-                    </li>
+                     <li class="nav-item dropdown me-lg-2">
+                         <a class="nav-link dropdown-toggle fw-bold" href="#" role="button" data-bs-toggle="dropdown">Ultrasonido de paciente embarazada</a>
+                         <ul class="dropdown-menu">
+                             {embarazadas.length > 0 ? embarazadas.map(s => (
+                                 <li><a class="dropdown-item" href={`/servicios/${s.slug}`}>{s.data.title}</a></li>
+                             )) : <li><span class="dropdown-item disabled">Próximamente</span></li>}
+                         </ul>
+                     </li>
 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Pediátrico</a>
-                        <ul class="dropdown-menu">
-                            {pediatrico.length > 0 ? pediatrico.map(s => (
-                                <li><a class="dropdown-item" href={`/servicios/${s.slug}`}>{s.data.title}</a></li>
-                            )) : <li><span class="dropdown-item disabled">Próximamente</span></li>}
-                        </ul>
-                    </li>
+                     <li class="nav-item dropdown me-lg-2">
+                         <a class="nav-link dropdown-toggle fw-bold" href="#" role="button" data-bs-toggle="dropdown">Ultrasonido Pediatrico</a>
+                         <ul class="dropdown-menu">
+                             {pediatrico.length > 0 ? pediatrico.map(s => (
+                                 <li><a class="dropdown-item" href={`/servicios/${s.slug}`}>{s.data.title}</a></li>
+                             )) : <li><span class="dropdown-item disabled">Próximamente</span></li>}
+                         </ul>
+                     </li>
 
-                    <li class="nav-item"><a class="nav-link" href="/promociones">Promociones</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/blog">Blog</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/nosotros">Nosotros</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/contacto">Contacto</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+                     <li class="nav-item dropdown me-lg-2">
+                         <a class="nav-link dropdown-toggle fw-bold" href="#" role="button" data-bs-toggle="dropdown">Ginecología</a>
+                         <ul class="dropdown-menu">
+                             <li><a class="dropdown-item" href="/servicios">Ver todos los servicios ginecológicos</a></li>
+                         </ul>
+                     </li>
+
+                     <li class="nav-item me-lg-2">
+                         <a class="nav-link fw-bold" href="/promociones">Ultrasonido de embarazo 5D</a>
+                     </li>
+                 </ul>
+             </div>
+         </div>
+     </nav>
 
     <main>
         <slot />
     </main>
 
-    <!-- Footer Modernizado -->
-    <footer class="bg-dark text-light py-5 mt-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <h5>{siteSettings.site_name}</h5>
-                    <p class="text-light">{siteSettings.slogan}</p>
-                    <div class="social-links">
-                        {siteSettings.facebook_url && (
-                            <a href={siteSettings.facebook_url} class="me-3" target="_blank" rel="noopener noreferrer">
-                                <i class="fab fa-facebook"></i>
-                            </a>
-                        )}
-                        {siteSettings.instagram_url && (
-                            <a href={siteSettings.instagram_url} class="me-3" target="_blank" rel="noopener noreferrer">
-                                <i class="fab fa-instagram"></i>
-                            </a>
-                        )}
-                    </div>
-                </div>
-                
-                <div class="col-md-4 mb-4">
-                    <h5>Información de Contacto</h5>
-                    <p class="mb-2">
-                        <i class="fas fa-phone me-2"></i> {siteSettings.phone_number}
-                    </p>
-                    <p class="mb-2">
-                        <i class="fab fa-whatsapp me-2"></i> {siteSettings.whatsapp_number}
-                    </p>
-                    <p class="mb-2">
-                        <i class="fas fa-envelope me-2"></i> {siteSettings.email_contact}
-                    </p>
-                    <p class="mb-2">
-                        <i class="fas fa-map-marker-alt me-2"></i> {siteSettings.address}
-                    </p>
-                    <p class="mb-0">
-                        <i class="fas fa-clock me-2"></i> {siteSettings.hours}
-                    </p>
-                </div>
-                
-                <div class="col-md-4 mb-4">
-                    <h5>Enlaces Rápidos</h5>
-                    <div class="footer-links">
-                        <div class="mb-2"><a href="/" class="d-block">Inicio</a></div>
-                        <div class="mb-2"><a href="/servicios" class="d-block">Todos los Servicios</a></div>
-                        <div class="mb-2"><a href="/promociones" class="d-block">Promociones</a></div>
-                        <div class="mb-2"><a href="/blog" class="d-block">Blog y Novedades</a></div>
-                        <div class="mb-2"><a href="/nosotros" class="d-block">Nosotros</a></div>
-                        <div class="mb-0"><a href="/contacto" class="d-block">Contacto</a></div>
-                    </div>
-                </div>
-            </div>
-            
-            <hr class="border-secondary">
-            
-            <div class="row">
-                <div class="col-12 text-center">
-                    <p class="mb-0">© {new Date().getFullYear()} {siteSettings.site_name} - Todos los derechos reservados</p>
-                    <p class="mb-0 small text-secondary">
-                        Desarrollado con ❤️ por <a href="https://milcoms.org" class="text-secondary" target="_blank" rel="noopener noreferrer">Milcoms</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </footer>
+     <!-- Footer (estilo archivado) -->
+     <footer class="footer-wrapper bg-white py-5 border-top">
+         <div class="container">
+             <div class="row">
+                 <div class="col-lg-4 py-2">
+                     <img src="/img/servicios/logo-cmg-horizontal.png" alt={siteSettings.site_name} class="mb-3" style="max-width: 205px; height: auto;">
+                 </div>
+
+                 <div class="col-lg py-2">
+                     <h4 class="h5 mb-3">Servicios</h4>
+                     <nav class="footer-links">
+                         <div class="mb-2"><a href="/categoria-de-servicio/ecografias-adulto/" class="d-block text-decoration-none">Ultrasonido Adulto</a></div>
+                         <div class="mb-2"><a href="/categoria-de-servicio/ecografias-pediatrico/" class="d-block text-decoration-none">Ultrasonido Pediatrico</a></div>
+                         <div class="mb-2"><a href="/categoria-de-servicio/ecografias-materno/" class="d-block text-decoration-none">Ultrasonido Materno</a></div>
+                         <div class="mb-2"><a href="/categoria-de-servicio/ginecologia/" class="d-block text-decoration-none">Ultrasonido Ginegología</a></div>
+                         <div class="mb-2"><a href="/servicios/ecografia-de-prostata/" class="d-block text-decoration-none">Ecografía de Próstata</a></div>
+                         <div class="mb-0"><a href="/premum" class="d-block text-decoration-none">ECO 5D – Premom</a></div>
+                     </nav>
+                 </div>
+
+                 <div class="col-lg py-2">
+                     <h4 class="h5 mb-3"></h4>
+                     <nav class="footer-links">
+                         <div class="mb-2"><a href="/nosotros" class="d-block text-decoration-none">Nosotros</a></div>
+                         <div class="mb-2"><a href="/blog" class="d-block text-decoration-none">Blog</a></div>
+                         <div class="mb-0"><a href="/contacto" class="d-block text-decoration-none">Contacto</a></div>
+                     </nav>
+                 </div>
+
+                 <div class="col-lg py-2">
+                     <p class="mb-2" style="color: var(--phone-color);"><strong>Agenda una Cita por Whatsapp:</strong><br>{siteSettings.phone_number}</p>
+                     <p class="mb-2" style="color: var(--phone-color);"><strong>Citas Telefónicas:</strong><br>{siteSettings.phone_number}<br>81 1360 5630<br>81 3259 9030</p>
+                     <p class="mb-0">Av. Dr. José Eleuterio González 135,<br>Leones, 64600 Monterrey, N.L.</p>
+                 </div>
+             </div>
+         </div>
+     </footer>
+
+     <div class="bg-dark text-light py-3">
+         <div class="container">
+             <div class="row align-items-center">
+                 <div class="col-12 text-center">
+                     <p class="mb-0">© {new Date().getFullYear()} <span style="color: var(--primary-color);">CENTRO MÉDICO GONZALITOS</span> Centro de Ultrasonido Monterrey</p>
+                     <p class="mb-0"><a href="/aviso-privacidad/" class="text-light text-decoration-none me-2">Aviso de Privacidad</a> | <a href="https://bioxnet.com/" class="text-light text-decoration-none" target="_blank" rel="noopener noreferrer">Designed by Bioxnet</a></p>
+                 </div>
+             </div>
+         </div>
+     </div>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
