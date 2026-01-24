@@ -2,7 +2,7 @@
 site_name: "Centro Médico Gonzalitos"
 slogan: "Cuidando tu salud con la mejor tecnología y atención humana"
 description: "Ecografías y ultrasonidos de alta calidad en Monterrey. Especialistas en estudios médicos para adultos, embarazadas y pediatría."
-logo: "/img/logo-cmg-horizontal.png"
+logo: "/img/servicios/logo-cmg-horizontal.png"
 favicon: "/favicon.svg"
 hero_image: "/img/hero-medical-center.jpg"
 whatsapp_number: "528115883775"

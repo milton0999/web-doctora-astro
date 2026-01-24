@@ -47,8 +47,8 @@ collections:
       - { label: 'Descripción Breve', name: 'description', widget: 'text' }
       - { label: 'Precio', name: 'price', widget: 'string', required: false }
       - { label: 'Duración', name: 'duration', widget: 'string', required: false }
-      - { label: 'Galería de Imágenes', name: 'gallery', widget: 'list', field: { widget: 'image' }, required: false }
-      - { label: 'Etiquetas', name: 'tags', widget: 'list', field: { widget: 'string' }, required: false }
+      - { label: 'Galería de Imágenes', name: 'gallery', widget: 'list', field: { name: 'image', widget: 'image' }, required: false }
+      - { label: 'Etiquetas', name: 'tags', widget: 'list', field: { name: 'tag', widget: 'string' }, required: false }
       - { label: 'Destacado', name: 'featured', widget: 'boolean', default: false }
       - { label: 'Contenido Detallado', name: 'body', widget: 'markdown' }
 
@@ -95,7 +95,7 @@ collections:
       - { label: 'Precio Original', name: 'original_price', widget: 'string' }
       - { label: 'Precio Oferta', name: 'sale_price', widget: 'string' }
       - { label: 'Porcentaje de Descuento', name: 'discount_percentage', widget: 'string' }
-      - { label: 'Servicios Incluidos', name: 'services_included', widget: 'list', field: { widget: 'string' } }
+      - { label: 'Servicios Incluidos', name: 'services_included', widget: 'list', field: { name: 'service', widget: 'string' } }
       - { label: 'Válida hasta', name: 'valid_until', widget: 'date' }
       - { label: 'Activa', name: 'active', widget: 'boolean', default: true }
       - { label: 'Destacada', name: 'featured', widget: 'boolean', default: false }
@@ -110,6 +110,6 @@ collections:
       - { label: 'Posición/Cargo', name: 'position', widget: 'string' }
       - { label: 'Foto Profesional', name: 'photo', widget: 'image' }
       - { label: 'Biografía', name: 'bio', widget: 'markdown' }
-      - { label: 'Especialidades', name: 'specialties', widget: 'list', field: { widget: 'string' } }
+      - { label: 'Especialidades', name: 'specialties', widget: 'list', field: { name: 'specialty', widget: 'string' } }
       - { label: 'Años de Experiencia', name: 'experience_years', widget: 'number', required: false }
-      - { label: 'Educación', name: 'education', widget: 'list', field: { widget: 'string' }, required: false }
+      - { label: 'Educación', name: 'education', widget: 'list', field: { name: 'education_item', widget: 'string' }, required: false }
