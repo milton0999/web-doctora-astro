@@ -2,8 +2,4 @@ name = "web-doctora-astro"
 compatibility_date = "2024-01-01"
 compatibility_flags = ["nodejs_compat"]
 
-[env.production]
 pages_build_output_dir = "./dist"
-
-# Pages Functions configuration
-functions = { compatible_date = "2024-01-01" }
