@@ -1,0 +1,260 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const settings = await getCollection('settings');
+const siteSettings = settings[0]?.data || {
+  site_name: 'Centro Médico Gonzalitos',
+  whatsapp_number: '528115883775',
+  phone_number: '81 1588 3775',
+  email_contact: 'info@centromedicogonzalitos.com',
+  address: 'Monterrey, Nuevo León, México',
+  hours: 'Lun-Vie: 8am-8pm, Sáb: 8am-2pm',
+  facebook_url: null,
+  instagram_url: null
+};
+---
+
+<Layout title="Contacto" description="Contacta al Centro Médico Gonzalitos para agendar tu cita">
+    <div class="container py-5">
+        <div class="text-center mb-5 fade-in-up">
+            <h1 class="display-4 fw-bold" style="color: var(--primary-color);">Contacto</h1>
+            <p class="lead">Estamos aquí para atenderte y resolver tus dudas</p>
+        </div>
+
+        <div class="row g-4">
+            <!-- Información de Contacto -->
+            <div class="col-lg-6 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h3 class="card-title mb-4">Información de Contacto</h3>
+                        
+                        <div class="contact-item mb-4">
+                            <div class="d-flex align-items-center mb-3">
+                                <span class="text-primary me-3 h4">📱</span>
+                                <div>
+                                    <h6 class="mb-1">WhatsApp</h6>
+                                    <a href={`https://wa.me/${siteSettings.whatsapp_number}`} 
+                                       class="text-decoration-none fw-bold" target="_blank">
+                                        {siteSettings.whatsapp_number}
+                                    </a>
+                                    <p class="text-muted small mb-0">Respuesta inmediata</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="contact-item mb-4">
+                            <div class="d-flex align-items-center mb-3">
+                                <span class="text-primary me-3 h4">📞</span>
+                                <div>
+                                    <h6 class="mb-1">Teléfono</h6>
+                                    <a href={`tel:${siteSettings.phone_number}`} 
+                                       class="text-decoration-none fw-bold">
+                                        {siteSettings.phone_number}
+                                    </a>
+                                    <p class="text-muted small mb-0">Llamadas durante horario laboral</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="contact-item mb-4">
+                            <div class="d-flex align-items-center mb-3">
+                                <span class="text-primary me-3 h4">✉️</span>
+                                <div>
+                                    <h6 class="mb-1">Email</h6>
+                                    <a href={`mailto:${siteSettings.email_contact}`} 
+                                       class="text-decoration-none fw-bold">
+                                        {siteSettings.email_contact}
+                                    </a>
+                                    <p class="text-muted small mb-0">Respuesta en 24 horas</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="contact-item mb-4">
+                            <div class="d-flex align-items-start mb-3">
+                                <span class="text-primary me-3 h4">📍</span>
+                                <div>
+                                    <h6 class="mb-1">Dirección</h6>
+                                    <p class="fw-bold mb-1">{siteSettings.address}</p>
+                                    <p class="text-muted small mb-0">Monterrey, Nuevo León</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="contact-item mb-4">
+                            <div class="d-flex align-items-center mb-3">
+                                <span class="text-primary me-3 h4">🕐</span>
+                                <div>
+                                    <h6 class="mb-1">Horario de Atención</h6>
+                                    <p class="fw-bold mb-0">{siteSettings.hours}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Redes Sociales -->
+                        <div class="social-links mt-4 pt-4 border-top">
+                            <h6 class="mb-3">Síguenos en redes sociales</h6>
+                            <div class="d-flex gap-3">
+                                {siteSettings.facebook_url && (
+                                    <a href={siteSettings.facebook_url} class="btn btn-outline-primary btn-sm" target="_blank" rel="noopener noreferrer">
+                                        <i class="fab fa-facebook me-1"></i> Facebook
+                                    </a>
+                                )}
+                                {siteSettings.instagram_url && (
+                                    <a href={siteSettings.instagram_url} class="btn btn-outline-danger btn-sm" target="_blank" rel="noopener noreferrer">
+                                        <i class="fab fa-instagram me-1"></i> Instagram
+                                    </a>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formulario de Contacto Rápido -->
+            <div class="col-lg-6 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h3 class="card-title mb-4">Agenda tu Cita</h3>
+                        <p class="text-muted mb-4">
+                            Elige la opción que prefieras para contactarnos. Te responderemos a la brevedad posible.
+                        </p>
+
+                        <!-- Botones de Contacto Rápido -->
+                        <div class="contact-buttons">
+                            <a href={`https://wa.me/${siteSettings.whatsapp_number}?text=Hola, deseo agendar una cita`} 
+                               class="btn btn-success btn-lg w-100 mb-3" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-whatsapp me-2"></i>
+                                Agendar por WhatsApp
+                                <small class="d-block mt-1">Recomendado - Respuesta inmediata</small>
+                            </a>
+
+                            <a href={`tel:${siteSettings.phone_number}`} 
+                               class="btn btn-primary btn-lg w-100 mb-3">
+                                <i class="fas fa-phone me-2"></i>
+                                Llamar Ahora
+                                <small class="d-block mt-1">Durante horario laboral</small>
+                            </a>
+
+                            <div class="text-center mt-4">
+                                <h6 class="mb-3">O envía un mensaje directo</h6>
+                                <a href={`mailto:${siteSettings.email_contact}?subject=Quiero agendar una cita`} 
+                                   class="btn btn-outline-primary w-100">
+                                    <i class="fas fa-envelope me-2"></i>
+                                    Enviar Email
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Información Adicional -->
+                        <div class="mt-4 p-3 bg-light rounded">
+                            <h6 class="mb-2">💡 Consejo:</h6>
+                            <p class="small text-muted mb-0">
+                                Para agendar tu cita, ten a mano: tu nombre, número de teléfono, 
+                                tipo de estudio que necesitas y tu fecha preferida.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mapa (placeholder) -->
+        <section class="mt-5">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <h3 class="card-title mb-4">🗺️ Ubicación</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="bg-light rounded p-4 text-center" style="min-height: 300px;">
+                                <span class="text-muted h5">Mapa de ubicación</span>
+                                <p class="text-muted mt-2">
+                                    <i class="fas fa-map-marked-alt"></i><br>
+                                    {siteSettings.address}
+                                </p>
+                                <a href="https://maps.google.com/?q=Monterrey,+Nuevo+León" 
+                                   class="btn btn-outline-primary btn-sm" target="_blank" rel="noopener noreferrer">
+                                    <i class="fas fa-external-link-alt me-1"></i>
+                                    Abrir en Google Maps
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="mb-3">¿Cómo llegar?</h6>
+                            <ul class="list-unstyled">
+                                <li class="mb-2">
+                                    <i class="fas fa-car text-primary me-2"></i>
+                                    <strong>Auto:</strong> Estacionamiento disponible
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-bus text-primary me-2"></i>
+                                    <strong>Transporte público:</strong> Rutas cercanas
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-wheelchair text-primary me-2"></i>
+                                    <strong>Accesibilidad:</strong> Rampas y acceso para sillas de ruedas
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</Layout>
+
+<style>
+.contact-item {
+    transition: transform 0.3s ease;
+}
+
+.contact-item:hover {
+    transform: translateX(5px);
+}
+
+.contact-buttons .btn {
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.contact-buttons .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.social-links .btn {
+    transition: all 0.3s ease;
+}
+
+.social-links .btn:hover {
+    transform: translateY(-2px);
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .contact-buttons .btn {
+        font-size: 1rem;
+        padding: 15px;
+    }
+    
+    .btn-lg {
+        font-size: 1.1rem;
+    }
+}
+</style>

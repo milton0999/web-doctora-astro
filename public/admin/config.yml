@@ -1,15 +1,40 @@
 backend:
   name: github
-  repo: milton0999/web-doctora-astro # Cambiado de username/repo a tu repo real
+  repo: milton0999/web-doctora-astro
   branch: main
-  base_url: https://centromedicogonzalitos.milcoms.org # Tu dominio personalizado
-  auth_endpoint: api/auth # Apunta a tu carpeta functions/api
+  base_url: https://centromedicogonzalitos.milcoms.org
+  auth_endpoint: api/auth
 
-media_folder: public/img/servicios # Donde se guardarán las fotos
-public_folder: /img/servicios
+media_folder: public/img
+public_folder: /img
 
-# public/admin/config.yml
+publish_mode: editorial_workflow
+show_preview_links: true
+
 collections:
+  # Configuración Global
+  - name: 'settings'
+    label: 'Configuración del Sitio'
+    files:
+      - name: 'general'
+        label: 'Información General'
+        file: 'src/content/settings/general.md'
+        fields:
+          - { label: 'Nombre del Centro', name: 'site_name', widget: 'string' }
+          - { label: 'Slogan', name: 'slogan', widget: 'string' }
+          - { label: 'Descripción SEO', name: 'description', widget: 'text' }
+          - { label: 'Logo Principal', name: 'logo', widget: 'image' }
+          - { label: 'Favicon', name: 'favicon', widget: 'image' }
+          - { label: 'Imagen Hero', name: 'hero_image', widget: 'image' }
+          - { label: 'WhatsApp', name: 'whatsapp_number', widget: 'string' }
+          - { label: 'Teléfono', name: 'phone_number', widget: 'string' }
+          - { label: 'Email', name: 'email_contact', widget: 'string' }
+          - { label: 'Dirección', name: 'address', widget: 'text' }
+          - { label: 'Horario', name: 'hours', widget: 'text' }
+          - { label: 'Facebook URL', name: 'facebook_url', widget: 'string', required: false }
+          - { label: 'Instagram URL', name: 'instagram_url', widget: 'string', required: false }
+
+  # Servicios Médicos (expandido)
   - name: 'servicios'
     label: 'Servicios y Estudios'
     folder: 'src/content/servicios'
@@ -17,7 +42,74 @@ collections:
     slug: '{{slug}}'
     fields:
       - { label: 'Nombre del Estudio', name: 'title', widget: 'string' }
-      - { label: 'Categoría', name: 'categoria', widget: 'select', options: ['Adulto', 'Embarazada', 'Pediatrico'] } # NUEVO
-      - { label: 'Imagen del Estudio', name: 'image', widget: 'image' }
-      - { label: 'Descripción breve', name: 'description', widget: 'string' }
+      - { label: 'Categoría', name: 'categoria', widget: 'select', options: ['Adulto', 'Embarazada', 'Pediatrico'] }
+      - { label: 'Imagen Principal', name: 'image', widget: 'image' }
+      - { label: 'Descripción Breve', name: 'description', widget: 'text' }
+      - { label: 'Precio', name: 'price', widget: 'string', required: false }
+      - { label: 'Duración', name: 'duration', widget: 'string', required: false }
+      - { label: 'Galería de Imágenes', name: 'gallery', widget: 'list', field: { widget: 'image' }, required: false }
+      - { label: 'Etiquetas', name: 'tags', widget: 'list', field: { widget: 'string' }, required: false }
+      - { label: 'Destacado', name: 'featured', widget: 'boolean', default: false }
       - { label: 'Contenido Detallado', name: 'body', widget: 'markdown' }
+
+  # Blog y Novedades
+  - name: 'blog'
+    label: 'Blog y Novedades'
+    folder: 'src/content/blog'
+    create: true
+    slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
+    fields:
+      - { label: 'Título', name: 'title', widget: 'string' }
+      - { label: 'URL Amigable', name: 'slug', widget: 'string' }
+      - { label: 'Imagen Destacada', name: 'image', widget: 'image', required: false }
+      - { label: 'Extracto', name: 'excerpt', widget: 'text' }
+      - { label: 'Categoría', name: 'category', widget: 'select', options: ['Noticias', 'Promociones', 'Tips Médicos'] }
+      - { label: 'Autor', name: 'author', widget: 'string' }
+      - { label: 'Fecha', name: 'date', widget: 'datetime' }
+      - { label: 'Destacado', name: 'featured', widget: 'boolean', default: false }
+      - { label: 'Contenido', name: 'body', widget: 'markdown' }
+
+  # Testimonios
+  - name: 'testimonials'
+    label: 'Testimonios de Pacientes'
+    folder: 'src/content/testimonials'
+    create: true
+    fields:
+      - { label: 'Nombre del Paciente', name: 'name', widget: 'string' }
+      - { label: 'Foto del Paciente', name: 'photo', widget: 'image', required: false }
+      - { label: 'Testimonio', name: 'content', widget: 'text' }
+      - { label: 'Calificación', name: 'rating', widget: 'number', min: 1, max: 5, default: 5 }
+      - { label: 'Categoría de Servicio', name: 'service_category', widget: 'select', options: ['Adulto', 'Embarazada', 'Pediatrico'] }
+      - { label: 'Fecha', name: 'date', widget: 'date' }
+      - { label: 'Destacado', name: 'featured', widget: 'boolean', default: false }
+
+  # Promociones y Ofertas
+  - name: 'promotions'
+    label: 'Promociones y Ofertas'
+    folder: 'src/content/promotions'
+    create: true
+    fields:
+      - { label: 'Título de la Oferta', name: 'title', widget: 'string' }
+      - { label: 'Imagen', name: 'image', widget: 'image' }
+      - { label: 'Descripción', name: 'description', widget: 'text' }
+      - { label: 'Precio Original', name: 'original_price', widget: 'string' }
+      - { label: 'Precio Oferta', name: 'sale_price', widget: 'string' }
+      - { label: 'Porcentaje de Descuento', name: 'discount_percentage', widget: 'string' }
+      - { label: 'Servicios Incluidos', name: 'services_included', widget: 'list', field: { widget: 'string' } }
+      - { label: 'Válida hasta', name: 'valid_until', widget: 'date' }
+      - { label: 'Activa', name: 'active', widget: 'boolean', default: true }
+      - { label: 'Destacada', name: 'featured', widget: 'boolean', default: false }
+
+  # Equipo Médico
+  - name: 'team'
+    label: 'Equipo Médico'
+    folder: 'src/content/team'
+    create: true
+    fields:
+      - { label: 'Nombre Completo', name: 'name', widget: 'string' }
+      - { label: 'Posición/Cargo', name: 'position', widget: 'string' }
+      - { label: 'Foto Profesional', name: 'photo', widget: 'image' }
+      - { label: 'Biografía', name: 'bio', widget: 'markdown' }
+      - { label: 'Especialidades', name: 'specialties', widget: 'list', field: { widget: 'string' } }
+      - { label: 'Años de Experiencia', name: 'experience_years', widget: 'number', required: false }
+      - { label: 'Educación', name: 'education', widget: 'list', field: { widget: 'string' }, required: false }

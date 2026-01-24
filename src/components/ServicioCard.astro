@@ -1,0 +1,98 @@
+---
+interface Props {
+  servicio: any;  // Temporal, usaremos any hasta que arreglemos los tipos
+  showPrice?: boolean;
+}
+
+const { servicio, showPrice = true } = Astro.props;
+---
+
+<div class="servicio-card {servicio.data.featured ? 'featured' : ''} col-md-4 mb-4">
+  <div class="card h-100 shadow-sm border-0">
+    <div class="card-image-container position-relative">
+      {servicio.data.image ? (
+        <img 
+          src={servicio.data.image} 
+          alt={servicio.data.title}
+          class="card-img-top"
+          style="height: 200px; object-fit: cover;"
+        />
+      ) : (
+        <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height: 200px;">
+          <span class="text-muted">Sin imagen</span>
+        </div>
+      )}
+      {servicio.data.featured && (
+        <span class="featured-badge position-absolute top-0 end-0 m-2 badge bg-success">⭐ Popular</span>
+      )}
+    </div>
+    
+    <div class="card-body d-flex flex-column">
+      <div class="card-header bg-white border-0 p-0 mb-2">
+        <span class="categoria-badge badge bg-primary mb-2">{servicio.data.categoria}</span>
+        <h5 class="card-title fw-bold">{servicio.data.title}</h5>
+      </div>
+      
+      <p class="card-text text-muted small">{servicio.data.description}</p>
+      
+      {showPrice && servicio.data.price && (
+        <div class="price-section mt-auto mb-3">
+          <div class="p-3 bg-light rounded text-center">
+            <span class="price h4 text-primary mb-0 d-block">${servicio.data.price}</span>
+            {servicio.data.duration && (
+              <span class="duration text-muted small">⏱️ {servicio.data.duration}</span>
+            )}
+          </div>
+        </div>
+      )}
+      
+      <div class="card-actions mt-auto d-grid gap-2">
+        <a href={`/servicios/${servicio.slug}`} class="btn btn-primary">
+          Ver Detalles
+        </a>
+        <a href={`https://wa.me/528115883775?text=Hola, estoy interesado en: ${servicio.data.title}`} 
+           class="btn btn-success" target="_blank">
+          💬 WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.servicio-card:hover .card {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+}
+
+.servicio-card .card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.categoria-badge {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.featured-badge {
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.price-section .price {
+  font-weight: bold;
+}
+
+.btn-primary {
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.btn-success {
+  border-radius: 8px;
+  font-weight: 600;
+}
+</style>

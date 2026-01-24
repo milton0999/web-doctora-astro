@@ -1,0 +1,160 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const blogPosts = await getCollection('blog');
+const featuredPosts = blogPosts.filter(post => post.data.featured);
+const regularPosts = blogPosts.filter(post => !post.data.featured);
+
+// Ordenar por fecha descendente
+blogPosts.sort((a, b) => new Date(b.data.date) - new Date(a.data.date));
+featuredPosts.sort((a, b) => new Date(b.data.date) - new Date(a.data.date));
+regularPosts.sort((a, b) => new Date(b.data.date) - new Date(a.data.date));
+---
+
+<Layout title="Blog y Novedades" description="Mantente informado sobre las últimas noticias y consejos médicos">
+    <div class="container py-5">
+        <div class="text-center mb-5 fade-in-up">
+            <h1 class="display-4 fw-bold" style="color: var(--primary-color);">Blog y Novedades</h1>
+            <p class="lead">Mantente informado sobre las últimas noticias y consejos médicos</p>
+        </div>
+
+        {featuredPosts.length > 0 && (
+            <section class="mb-5">
+                <h2 class="mb-4">⭐ Artículos Destacados</h2>
+                <div class="row g-4">
+                    {featuredPosts.map(post => (
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card h-100 shadow-sm blog-card border-0">
+                                {post.data.image ? (
+                                    <img src={post.data.image} class="card-img-top" alt={post.data.title} style="height: 200px; object-fit: cover;" />
+                                ) : (
+                                    <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height: 200px;">
+                                        <span class="text-muted">📝 Sin imagen</span>
+                                    </div>
+                                )}
+                                <div class="card-body d-flex flex-column">
+                                    <div class="mb-2">
+                                        <span class="badge bg-primary mb-2" style="width: fit-content;">{post.data.category}</span>
+                                        {post.data.featured && (
+                                            <span class="badge bg-warning text-dark ms-1" style="width: fit-content;">⭐ Destacado</span>
+                                        )}
+                                    </div>
+                                    <h5 class="card-title">{post.data.title}</h5>
+                                    <p class="card-text text-muted small">{post.data.excerpt}</p>
+                                    <div class="mt-auto">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <small class="text-muted">
+                                                📅 {post.data.date.toLocaleDateString('es-MX')} • 👤 {post.data.author}
+                                            </small>
+                                            <a href={`/blog/${post.slug}`} class="btn btn-outline-primary btn-sm">
+                                                Leer más
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </section>
+        )}
+
+        {regularPosts.length > 0 && (
+            <section>
+                <h2 class="mb-4">📝 Todos los Artículos</h2>
+                <div class="row g-4">
+                    {regularPosts.map(post => (
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card h-100 shadow-sm blog-card border-0">
+                                {post.data.image ? (
+                                    <img src={post.data.image} class="card-img-top" alt={post.data.title} style="height: 200px; object-fit: cover;" />
+                                ) : (
+                                    <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height: 200px;">
+                                        <span class="text-muted">📝 Sin imagen</span>
+                                    </div>
+                                )}
+                                <div class="card-body d-flex flex-column">
+                                    <span class="badge bg-secondary mb-2" style="width: fit-content;">{post.data.category}</span>
+                                    <h5 class="card-title">{post.data.title}</h5>
+                                    <p class="card-text text-muted small">{post.data.excerpt}</p>
+                                    <div class="mt-auto">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <small class="text-muted">
+                                                📅 {post.data.date.toLocaleDateString('es-MX')} • 👤 {post.data.author}
+                                            </small>
+                                            <a href={`/blog/${post.slug}`} class="btn btn-outline-secondary btn-sm">
+                                                Leer más
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </section>
+        )}
+
+        {blogPosts.length === 0 && (
+            <div class="text-center py-5">
+                <h3 class="text-muted">No hay artículos publicados aún</h3>
+                <p class="text-muted">Pronto tendremos novedades para compartir contigo</p>
+                <a href="https://wa.me/528115883775?text=Hola, deseo recibir información sobre novedades" 
+                   class="btn btn-primary" target="_blank">
+                    💬 Contactar para más información
+                </a>
+            </div>
+        )}
+    </div>
+</Layout>
+
+<style>
+.blog-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.blog-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+}
+
+.card-title {
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--text-dark);
+}
+
+.badge {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .card-title {
+        font-size: 1rem;
+    }
+    
+    .badge {
+        font-size: 0.6rem;
+    }
+}
+</style>

@@ -1,41 +1,170 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ServicioCard from '../components/ServicioCard.astro';
 import { getCollection } from 'astro:content';
 
+// Obtener datos del sitio
+const settings = await getCollection('settings');
+const siteSettings = settings[0]?.data || {
+  site_name: 'Centro Médico Gonzalitos',
+  slogan: 'Cuidando tu salud con la mejor tecnología y atención humana',
+  hero_image: null,
+  whatsapp_number: '528115883775'
+};
+
+// Obtener servicios y promociones
 const servicios = await getCollection('servicios');
+const promotions = await getCollection('promotions');
+const activePromotions = promotions.filter(p => 
+  p.data.active && new Date(p.data.valid_until) > new Date()
+);
+
+// Servicios destacados
+const featuredServices = servicios.filter(s => s.data.featured);
+const regularServices = servicios.filter(s => !s.data.featured);
 ---
 
-<Layout title="Inicio">
-    <header class="py-5 bg-light border-bottom">
+<Layout title="Inicio" description={siteSettings.description}>
+    <!-- Alerta de Promociones -->
+    {activePromotions.length > 0 && (
+        <div class="promotion-alert alert alert-warning mb-0" role="alert">
+            <div class="container text-center">
+                🎉 {activePromotions.length} {activePromotions.length === 1 ? 'oferta especial' : 'ofertas especiales'} disponible{activePromotions.length === 1 ? '' : 's'} - 
+                <a href="/promociones" class="alert-link fw-bold">Ver todas las promociones</a>
+            </div>
+        </div>
+    )}
+    
+    <!-- Hero Section -->
+    <header class="hero-section py-5">
         <div class="container text-center py-5">
-            <h1 class="display-4 fw-bold" style="color: #1D3B6B;">Centro Médico Gonzalitos</h1>
-            <p class="lead">Cuidando tu salud con la mejor tecnología y atención humana.</p>
+            {siteSettings.hero_image ? (
+                <img src={siteSettings.hero_image} alt={siteSettings.site_name} class="hero-image mb-4" style="max-height: 400px; border-radius: 20px;" />
+            ) : (
+                <h1 class="display-3 fw-bold text-white mb-4">{siteSettings.site_name}</h1>
+            )}
+            <p class="lead text-white mb-4">{siteSettings.slogan}</p>
+            <div class="d-flex justify-content-center gap-3">
+                <a href={`https://wa.me/${siteSettings.whatsapp_number}?text=Hola, deseo agendar una cita`} 
+                   class="btn btn-light btn-lg fw-bold" target="_blank">
+                    💬 Agendar Cita por WhatsApp
+                </a>
+                <a href="#servicios" class="btn btn-outline-light btn-lg fw-bold">
+                    🏥 Ver Nuestros Servicios
+                </a>
+            </div>
         </div>
     </header>
 
-    <section class="container py-5">
-        <h2 class="text-center mb-5">Nuestros Estudios</h2>
-        <div class="row g-4">
-            {servicios.map(s => (
-                <div class="col-md-4">
-                    <div class="card h-100 shadow-sm border-0">
-                        {s.data.image && (
-                           <img src={s.data.image} class="card-img-top" alt={s.data.title} style="height: 200px; object-fit: cover;">
-                        )}
-                        
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title fw-bold" style="color: #1D3B6B;">{s.data.title}</h5>
-                            <p class="card-text text-muted small">{s.data.description}</p>
-                            
-                            <div class="mt-auto">
-                                <a href={`/servicios/${s.slug}`} class="btn btn-outline-primary btn-sm w-100">
-                                    Ver detalles
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+    <!-- Servicios Destacados -->
+    {featuredServices.length > 0 && (
+        <section class="py-5 bg-light">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h2 class="display-5 fw-bold" style="color: #2563EB;">⭐ Servicios Destacados</h2>
+                    <p class="lead text-muted">Los estudios más solicitados en nuestro centro médico</p>
                 </div>
-            ))}
+                <div class="row g-4">
+                    {featuredServices.map(servicio => (
+                        <ServicioCard servicio={servicio} />
+                    ))}
+                </div>
+            </div>
+        </section>
+    )}
+
+    <!-- Todos los Servicios -->
+    <section id="servicios" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold" style="color: #2563EB;">🏥 Todos Nuestros Estudios</h2>
+                <p class="lead text-muted">Ofrecemos una amplia gama de servicios médicos de alta calidad</p>
+            </div>
+            <div class="row g-4">
+                {regularServices.map(servicio => (
+                    <ServicioCard servicio={servicio} />
+                ))}
+            </div>
+            
+            {servicios.length === 0 && (
+                <div class="text-center py-5">
+                    <h3 class="text-muted">Pronto tendremos nuestros servicios disponibles</h3>
+                    <p class="text-muted">Mientras tanto, puedes contactarnos directamente</p>
+                    <a href={`https://wa.me/${siteSettings.whatsapp_number}`} class="btn btn-primary" target="_blank">
+                        💬 Contactar por WhatsApp
+                    </a>
+                </div>
+            )}
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-5" style="background: linear-gradient(135deg, #2563EB 0%, #1E40AF 100%);">
+        <div class="container text-center py-5">
+            <h2 class="display-5 fw-bold text-white mb-4">¿Listo para tu estudio médico?</h2>
+            <p class="lead text-white mb-4">Agenda tu cita hoy mismo y recibe la mejor atención médica</p>
+            <div class="d-flex justify-content-center gap-3">
+                <a href={`https://wa.me/${siteSettings.whatsapp_number}?text=Hola, deseo agendar una cita`} 
+                   class="btn btn-light btn-lg fw-bold" target="_blank">
+                    💬 Agendar Ahora
+                </a>
+                <a href="/contacto" class="btn btn-outline-light btn-lg fw-bold">
+                    📞 Más Información
+                </a>
+            </div>
         </div>
     </section>
 </Layout>
+
+<style>
+.hero-section {
+    background: linear-gradient(135deg, #2563EB 0%, #1E40AF 100%);
+}
+
+.hero-image {
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+.promotion-alert {
+    border-radius: 0;
+    margin-bottom: 0;
+}
+
+.btn-light:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.btn-outline-light:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255,255,255,0.2);
+}
+
+.featured-services {
+    background-color: #f8f9fa;
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 40px 0;
+    }
+    
+    .display-3 {
+        font-size: 2rem;
+    }
+    
+    .display-5 {
+        font-size: 1.5rem;
+    }
+    
+    .d-flex.gap-3 {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .btn-lg {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+</style>
