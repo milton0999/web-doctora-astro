@@ -343,13 +343,15 @@ const activePromotions = promotions.filter(p =>
         }
         
         .footer-links a {
-            color: #adb5bd;
+            color: #495057;
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: color 0.3s ease, transform 0.3s ease;
         }
         
         .footer-links a:hover {
-            color: white;
+            color: #e9ecef;
+            transform: translateY(-2px);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         
         .social-links a {
@@ -443,7 +445,7 @@ const activePromotions = promotions.filter(p =>
             <div class="d-flex justify-content-between align-items-center">
                 <!-- Logo -->
                 <a href="/" class="logo-link">
-                    <img src="/img/servicios/logo-cmg-horizontal.png" alt={siteSettings.site_name} class="logo-img">
+                    <img src="/img/servicios/logo-cmg-horizontal.png" alt="CENTRO MÉDICO GONZALITOS" class="logo-img">
                 </a>
 
                 <!-- Navegación Desktop -->
