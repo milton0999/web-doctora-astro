@@ -260,30 +260,77 @@ const activePromotions = promotions.filter(p =>
             box-shadow: var(--shadow-lg);
         }
 
-        /* Top CTA Bar Styles */
-        .top-cta-bar {
-            background: linear-gradient(135deg, var(--primary-color) 0%, #002a7a 100%);
-            border-bottom: 2px solid rgba(255,255,255,0.1);
+        /* Header Reorganizado - Estilos Modernos */
+        .header-wrapper {
             position: relative;
-            z-index: 1020;
+            z-index: 1030;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        .top-cta-bar .btn-light {
-            background: rgba(255,255,255,0.95);
-            border: 1px solid rgba(255,255,255,0.3);
-            color: var(--primary-color);
-            font-weight: 600;
+        .desktop-nav {
+            font-size: 0.95rem;
+        }
+
+        .nav-link-about {
             transition: all 0.3s ease;
-            text-decoration: none;
+            position: relative;
+            padding: 8px 12px;
+            border-radius: 6px;
         }
 
-        .top-cta-bar .btn-light:hover {
-            background: white;
+        .nav-link-about:hover {
+            color: var(--primary-hover) !important;
+            background: rgba(0, 58, 162, 0.1);
+        }
+
+        .nav-link-about::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link-about:hover::after {
+            width: 80%;
+        }
+
+        .nav-separator {
+            color: #ddd;
+            font-weight: bold;
+            user-select: none;
+        }
+
+        .cta-whatsapp {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .cta-whatsapp:hover {
+            background: rgba(40, 167, 69, 0.15) !important;
             transform: translateY(-1px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-            border-color: rgba(255,255,255,0.5);
-            color: var(--primary-color);
-            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.25);
+        }
+
+        .btn-whatsapp-link {
+            transition: color 0.3s ease;
+        }
+
+        .btn-whatsapp-link:hover {
+            color: var(--primary-hover) !important;
+        }
+
+        .mobile-cta {
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .mobile-cta a:hover {
+            background: rgba(40, 167, 69, 0.15) !important;
         }
         
         .promotion-alert {
@@ -390,21 +437,63 @@ const activePromotions = promotions.filter(p =>
         </div>
     )}
     
-     <!-- Header Top Bar (estilo archivado) -->
-     <header class="header-wrapper bg-white border-bottom">
-         <div class="container py-3">
-             <div class="d-flex justify-content-between align-items-center">
-                 <a href="/" class="logo-link">
-                     <img src="/img/servicios/logo-cmg-horizontal.png" alt={siteSettings.site_name} class="logo-img">
-                 </a>
-                 <div class="d-none d-xl-block">
-                     <p class="mb-0" style="color: var(--phone-color); font-size: 0.9rem;">
-                         Agenda una Cita Whatsapp: <mark style="background-color: rgba(0, 0, 0, 0);" class="fw-bold" style="color: var(--primary-color);">{siteSettings.phone_number}</mark>
-                     </p>
-                 </div>
-             </div>
-         </div>
-     </header>
+    <!-- Header Principal Reorganizado -->
+    <header class="header-wrapper bg-white border-bottom">
+        <div class="container py-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <!-- Logo -->
+                <a href="/" class="logo-link">
+                    <img src="/img/servicios/logo-cmg-horizontal.png" alt={siteSettings.site_name} class="logo-img">
+                </a>
+
+                <!-- Navegación Desktop -->
+                <nav class="desktop-nav d-none d-lg-flex align-items-center gap-4">
+                    <!-- Sobre Nosotros integrado -->
+                    <a href="/nosotros" class="nav-link-about text-decoration-none fw-bold" style="color: var(--primary-color);">
+                        <i class="fas fa-users me-1"></i>Sobre Nosotros
+                    </a>
+
+                    <!-- Separador -->
+                    <div class="nav-separator">|</div>
+
+                    <!-- Agenda tu cita con WhatsApp -->
+                    <div class="cta-whatsapp d-flex align-items-center gap-2 px-3 py-2 rounded-pill" style="background: rgba(40, 167, 69, 0.1); border: 1px solid rgba(40, 167, 69, 0.2);">
+                        <i class="fab fa-whatsapp text-success fs-5"></i>
+                        <span class="fw-bold" style="color: var(--phone-color); font-size: 0.9rem;">Agenda tu Cita:</span>
+                        <a href={`https://wa.me/${siteSettings.whatsapp_number}`} target="_blank"
+                           class="btn-whatsapp-link fw-bold text-decoration-none"
+                           style="color: var(--primary-color);">
+                            {siteSettings.phone_number}
+                        </a>
+                    </div>
+                </nav>
+
+                <!-- Botón móvil -->
+                <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#mobileNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+
+            <!-- Navegación móvil expandida -->
+            <div class="collapse d-lg-none" id="mobileNav">
+                <div class="mobile-cta p-3 bg-light border-top mt-2 rounded">
+                    <a href="/nosotros" class="d-block mb-3 text-decoration-none fw-bold" style="color: var(--primary-color);">
+                        <i class="fas fa-users me-2"></i>Sobre Nosotros
+                    </a>
+
+                    <a href={`https://wa.me/${siteSettings.whatsapp_number}`} target="_blank"
+                       class="d-flex align-items-center gap-3 text-decoration-none p-3 rounded border"
+                       style="background: rgba(40, 167, 69, 0.1); border-color: rgba(40, 167, 69, 0.2) !important;">
+                        <i class="fab fa-whatsapp text-success fs-3"></i>
+                        <div>
+                            <div class="fw-bold mb-1" style="color: var(--phone-color);">Agenda tu Cita</div>
+                            <div style="color: var(--primary-color); font-weight: 600; font-size: 1.1rem;">{siteSettings.phone_number}</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
 
      <!-- Navegación Principal (estilo archivado) -->
      <nav class="navbar navbar-expand-lg sticky-top shadow-sm">
@@ -456,25 +545,7 @@ const activePromotions = promotions.filter(p =>
          </div>
      </nav>
 
-    <!-- Top CTA Button (Botón directo a "Sobre Nosotros") -->
-    <div class="top-cta-bar bg-primary text-white py-2 d-none d-lg-block">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-8">
-                    <p class="mb-0 small">
-                        <i class="fas fa-info-circle me-2"></i>
-                        Conoce más sobre nuestro equipo médico especializado y nuestra trayectoria
-                    </p>
-                </div>
-                <div class="col-md-4 text-md-end">
-                    <a href="/nosotros" class="btn btn-light btn-sm fw-bold px-3">
-                        <i class="fas fa-users me-1"></i>
-                        Sobre Nosotros
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
     <main>
         <slot />
