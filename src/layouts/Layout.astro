@@ -259,6 +259,32 @@ const activePromotions = promotions.filter(p =>
             transform: translateY(-2px);
             box-shadow: var(--shadow-lg);
         }
+
+        /* Top CTA Bar Styles */
+        .top-cta-bar {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #002a7a 100%);
+            border-bottom: 2px solid rgba(255,255,255,0.1);
+            position: relative;
+            z-index: 1020;
+        }
+
+        .top-cta-bar .btn-light {
+            background: rgba(255,255,255,0.95);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: var(--primary-color);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .top-cta-bar .btn-light:hover {
+            background: white;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            border-color: rgba(255,255,255,0.5);
+            color: var(--primary-color);
+            text-decoration: none;
+        }
         
         .promotion-alert {
             background: linear-gradient(135deg, #ff6b6b, #ee5a24);
@@ -429,6 +455,26 @@ const activePromotions = promotions.filter(p =>
              </div>
          </div>
      </nav>
+
+    <!-- Top CTA Button (Botón directo a "Sobre Nosotros") -->
+    <div class="top-cta-bar bg-primary text-white py-2 d-none d-lg-block">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <p class="mb-0 small">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Conoce más sobre nuestro equipo médico especializado y nuestra trayectoria
+                    </p>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <a href="/nosotros" class="btn btn-light btn-sm fw-bold px-3">
+                        <i class="fas fa-users me-1"></i>
+                        Sobre Nosotros
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <main>
         <slot />

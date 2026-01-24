@@ -1,0 +1,43 @@
+hero_title: "Sobre Centro Médico Gonzalitos"
+hero_subtitle: "Cuidando tu salud con la mejor tecnología y atención humana"
+
+mission_title: "Nuestra Misión"
+mission_content: "En el Centro Médico Gonzalitos nos comprometemos a brindar atención médica de la más alta calidad, combinando tecnología de vanguardia con un trato humano y personalizado. Somos líderes en ultrasonografía en Monterrey, ofreciendo estudios precisos con equipos de última generación."
+
+mission_stats:
+  - number: "10+"
+    label: "Años de Experiencia"
+  - number: "5000+"
+    label: "Pacientes Atendidos"
+  - number: "100%"
+    label: "Satisfacción Garantizada"
+
+values:
+  - icon: "🏥"
+    title: "Tecnología Avanzada"
+    description: "Equipos de última generación para diagnósticos precisos"
+  - icon: "👨‍⚕️"
+    title: "Profesionales Certificados"
+    description: "Médicos especializados con amplia experiencia"
+  - icon: "❤️"
+    title: "Atención Personalizada"
+    description: "Trato cercano y humano para cada paciente"
+  - icon: "⚡"
+    title: "Resultados Rápidos"
+    description: "Entrega oportuna de estudios y diagnósticos"
+
+team_title: "Nuestro Equipo Médico"
+show_team: true
+
+cta_title: "¿Listo para tu estudio médico?"
+cta_description: "Agenda tu cita hoy mismo y recibe la mejor atención médica con tecnología de vanguardia"
+cta_button_text: "Agendar Cita"
+cta_button_link: "/contacto"
+
+location_title: "Ubicación y Contacto"
+address: "Av. Dr. José Eleuterio González 135, Leones, 64600 Monterrey, N.L."
+phone: "81 1588 3775"
+hours: "Lunes a Viernes: 8:00 AM - 8:00 PM | Sábados: 8:00 AM - 2:00 PM"
+
+seo_title: "Sobre Nosotros - Centro Médico Gonzalitos"
+seo_description: "Conoce nuestro equipo médico y nuestra misión de cuidar tu salud con la mejor tecnología en Monterrey"
