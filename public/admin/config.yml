@@ -33,6 +33,53 @@ collections:
           - { label: 'Horario', name: 'hours', widget: 'text' }
           - { label: 'Facebook URL', name: 'facebook_url', widget: 'string', required: false }
           - { label: 'Instagram URL', name: 'instagram_url', widget: 'string', required: false }
+          
+          # Hero Section Configuración Avanzada
+          - label: 'Configuración Hero Section'
+            name: 'hero'
+            widget: 'object'
+            fields:
+              - { label: 'Título Personalizado (opcional)', name: 'title_override', widget: 'string', required: false, hint: 'Deja vacío para usar el nombre del centro' }
+              - { label: 'Subtítulo Personalizado (opcional)', name: 'subtitle_override', widget: 'string', required: false, hint: 'Deja vacío para usar el slogan' }
+              
+              - label: 'Botones Hero'
+                name: 'buttons'
+                widget: 'object'
+                fields:
+                  - label: 'Botón WhatsApp'
+                    name: 'whatsapp'
+                    widget: 'object'
+                    fields:
+                      - { label: 'Texto del Botón', name: 'text', widget: 'string', default: '💬 Agendar Cita por WhatsApp' }
+                      - { label: 'Emoji', name: 'emoji', widget: 'string', default: '💬' }
+                      - { label: 'Color', name: 'color', widget: 'select', options: ['light', 'outline-light', 'primary', 'success'], default: 'light' }
+                      - { label: 'Activo', name: 'enabled', widget: 'boolean', default: true }
+                      - { label: 'Orden', name: 'order', widget: 'number', default: 1, value_type: 'int' }
+                  
+                  - label: 'Botón Servicios'
+                    name: 'services'
+                    widget: 'object'
+                    fields:
+                      - { label: 'Texto del Botón', name: 'text', widget: 'string', default: '🏥 Ver Nuestros Servicios' }
+                      - { label: 'Emoji', name: 'emoji', widget: 'string', default: '🏥' }
+                      - { label: 'Color', name: 'color', widget: 'select', options: ['light', 'outline-light', 'primary', 'success'], default: 'outline-light' }
+                      - { label: 'Enlace', name: 'link', widget: 'string', default: '#servicios' }
+                      - { label: 'Activo', name: 'enabled', widget: 'boolean', default: true }
+                      - { label: 'Orden', name: 'order', widget: 'number', default: 2, value_type: 'int' }
+                  
+                  - label: 'Botón Emergencia'
+                    name: 'emergency'
+                    widget: 'object'
+                    fields:
+                      - { label: 'Texto del Botón', name: 'text', widget: 'string', default: '🚨 Emergencia' }
+                      - { label: 'Emoji', name: 'emoji', widget: 'string', default: '🚨' }
+                      - { label: 'Color', name: 'color', widget: 'select', options: ['light', 'outline-light', 'primary', 'success'], default: 'success' }
+                      - { label: 'Enlace', name: 'link', widget: 'string', default: 'tel:8115883775' }
+                      - { label: 'Activo', name: 'enabled', widget: 'boolean', default: false }
+                      - { label: 'Orden', name: 'order', widget: 'number', default: 3, value_type: 'int' }
+              
+              - { label: 'Estilo de Fondo', name: 'background_style', widget: 'select', options: ['gradient_blue', 'gradient_green', 'gradient_purple', 'solid_color'], default: 'gradient_blue' }
+              - { label: 'Color de Fondo (solo para color sólido)', name: 'background_color', widget: 'color', default: '#003da2', required: false }
 
   # Servicios Médicos (expandido)
   - name: 'servicios'
@@ -69,149 +116,52 @@ collections:
       - { label: 'Destacado', name: 'featured', widget: 'boolean', default: false }
       - { label: 'Contenido', name: 'body', widget: 'markdown' }
 
-  # Testimonios
-  - name: 'testimonials'
-    label: 'Testimonios de Pacientes'
-    folder: 'src/content/testimonials'
-    create: true
-    fields:
-      - { label: 'Nombre del Paciente', name: 'name', widget: 'string' }
-      - { label: 'Foto del Paciente', name: 'photo', widget: 'image', required: false }
-      - { label: 'Testimonio', name: 'content', widget: 'text' }
-      - { label: 'Calificación', name: 'rating', widget: 'number', min: 1, max: 5, default: 5 }
-      - { label: 'Categoría de Servicio', name: 'service_category', widget: 'select', options: ['Adulto', 'Embarazada', 'Pediatrico', 'Ginecologia', 'Cardiologia', 'Musculoesqueletico', 'Doppler', 'Tiroides', 'Mama', 'General'] }
-      - { label: 'Fecha', name: 'date', widget: 'date' }
-      - { label: 'Destacado', name: 'featured', widget: 'boolean', default: false }
-
   # Promociones y Ofertas
   - name: 'promotions'
     label: 'Promociones y Ofertas'
     folder: 'src/content/promotions'
     create: true
+    slug: '{{slug}}'
     fields:
-      - { label: 'Título de la Oferta', name: 'title', widget: 'string' }
+      - { label: 'Título de la Promoción', name: 'title', widget: 'string' }
       - { label: 'Imagen', name: 'image', widget: 'image' }
       - { label: 'Descripción', name: 'description', widget: 'text' }
-      - { label: 'Precio Original', name: 'original_price', widget: 'string' }
-      - { label: 'Precio Oferta', name: 'sale_price', widget: 'string' }
-      - { label: 'Porcentaje de Descuento', name: 'discount_percentage', widget: 'string' }
-      - { label: 'Servicios Incluidos', name: 'services_included', widget: 'list', field: { name: 'service', widget: 'string' } }
-      - { label: 'Válida hasta', name: 'valid_until', widget: 'date' }
+      - { label: 'Precio Normal', name: 'original_price', widget: 'string', required: false }
+      - { label: 'Precio Promocional', name: 'price', widget: 'string', required: false }
+      - { label: 'Fecha de Inicio', name: 'valid_from', widget: 'datetime', required: false }
+      - { label: 'Fecha de Fin', name: 'valid_until', widget: 'datetime', required: false }
+      - { label: 'Servicios Incluidos', name: 'services', widget: 'list', field: { name: 'service', widget: 'string' }, required: false }
       - { label: 'Activa', name: 'active', widget: 'boolean', default: true }
       - { label: 'Destacada', name: 'featured', widget: 'boolean', default: false }
+      - { label: 'Condiciones', name: 'conditions', widget: 'markdown', required: false }
+
+  # Testimonios
+  - name: 'testimonials'
+    label: 'Testimonios de Pacientes'
+    folder: 'src/content/testimonials'
+    create: true
+    slug: '{{slug}}'
+    fields:
+      - { label: 'Nombre del Paciente', name: 'name', widget: 'string' }
+      - { label: 'Foto del Paciente', name: 'photo', widget: 'image', required: false }
+      - { label: 'Testimonio', name: 'testimonial', widget: 'text' }
+      - { label: 'Servicio Recibido', name: 'service', widget: 'string', required: false }
+      - { label: 'Calificación (estrellas)', name: 'rating', widget: 'number', value_type: 'int', min: 1, max: 5, default: 5 }
+      - { label: 'Fecha', name: 'date', widget: 'date', required: false }
+      - { label: 'Destacado', name: 'featured', widget: 'boolean', default: false }
 
   # Equipo Médico
   - name: 'team'
     label: 'Equipo Médico'
     folder: 'src/content/team'
     create: true
+    slug: '{{slug}}'
     fields:
-      - { label: 'Nombre Completo', name: 'name', widget: 'string' }
-      - { label: 'Posición/Cargo', name: 'position', widget: 'string' }
-      - { label: 'Foto Profesional', name: 'photo', widget: 'image' }
+      - { label: 'Nombre del Doctor', name: 'name', widget: 'string' }
+      - { label: 'Especialidad', name: 'specialty', widget: 'string' }
+      - { label: 'Foto', name: 'photo', widget: 'image' }
       - { label: 'Biografía', name: 'bio', widget: 'markdown' }
-      - { label: 'Especialidades', name: 'specialties', widget: 'list', field: { name: 'specialty', widget: 'string' } }
-      - { label: 'Años de Experiencia', name: 'experience_years', widget: 'number', required: false }
-      - { label: 'Educación', name: 'education', widget: 'list', field: { name: 'education_item', widget: 'string' }, required: false }
-
-  # Página Nosotros (Activada)
-  - name: 'aboutUs'
-    label: 'Página Nosotros'
-    files:
-      - name: 'general'
-        label: 'Contenido de Nosotros'
-        file: 'src/content/aboutUs/general.yml'
-        fields:
-          - { label: 'Título Principal', name: 'hero_title', widget: 'string' }
-          - { label: 'Subtítulo', name: 'hero_subtitle', widget: 'string' }
-          - { label: 'Imagen Hero', name: 'hero_image', widget: 'image', required: false }
-          
-          - { label: 'Título Misión', name: 'mission_title', widget: 'string' }
-          - { label: 'Contenido Misión', name: 'mission_content', widget: 'text' }
-          - { label: 'Estadísticas', name: 'mission_stats', widget: 'list', field: { name: 'stat', widget: 'object', fields: [
-              { label: 'Número', name: 'number', widget: 'string' },
-              { label: 'Etiqueta', name: 'label', widget: 'string' }
-            ]} }
-          
-          - { label: 'Valores', name: 'values', widget: 'list', field: { name: 'value', widget: 'object', fields: [
-              { label: 'Ícono', name: 'icon', widget: 'string' },
-              { label: 'Título', name: 'title', widget: 'string' },
-              { label: 'Descripción', name: 'description', widget: 'text' }
-            ]} }
-          
-          - { label: 'Título del Equipo', name: 'team_title', widget: 'string' }
-          - { label: 'Mostrar Equipo', name: 'show_team', widget: 'boolean', default: true }
-          
-          - { label: 'Título CTA', name: 'cta_title', widget: 'string' }
-          - { label: 'Descripción CTA', name: 'cta_description', widget: 'text' }
-          - { label: 'Texto del Botón', name: 'cta_button_text', widget: 'string' }
-          - { label: 'Enlace del Botón', name: 'cta_button_link', widget: 'string' }
-          
-          - { label: 'Título Ubicación', name: 'location_title', widget: 'string' }
-          - { label: 'Dirección', name: 'address', widget: 'text' }
-          - { label: 'Teléfono', name: 'phone', widget: 'string' }
-          - { label: 'Horario', name: 'hours', widget: 'text' }
-          - { label: 'Mapa Embed', name: 'map_embed', widget: 'text', required: false }
-          
-          - { label: 'Meta Título', name: 'seo_title', widget: 'string' }
-          - { label: 'Meta Descripción', name: 'seo_description', widget: 'text' }
-
-  # Páginas de Categoría
-  - name: 'categorias'
-    label: 'Páginas de Categoría'
-    files:
-      - name: 'adulto'
-        label: 'Página Ecografías Adulto'
-        file: 'src/content/categorias/adulto.md'
-        fields:
-          - { label: 'Título de la Página', name: 'title', widget: 'string' }
-          - { label: 'Descripción', name: 'description', widget: 'text' }
-          - { label: 'Imagen Hero', name: 'hero_image', widget: 'image', required: false }
-          - { label: 'Contenido Principal', name: 'body', widget: 'markdown' }
-          - { label: 'Meta Título', name: 'seo_title', widget: 'string' }
-          - { label: 'Meta Descripción', name: 'seo_description', widget: 'text' }
-      
-      - name: 'embarazada'
-        label: 'Página Ecografías Embarazada'
-        file: 'src/content/categorias/embarazada.md'
-        fields:
-          - { label: 'Título de la Página', name: 'title', widget: 'string' }
-          - { label: 'Descripción', name: 'description', widget: 'text' }
-          - { label: 'Imagen Hero', name: 'hero_image', widget: 'image', required: false }
-          - { label: 'Contenido Principal', name: 'body', widget: 'markdown' }
-          - { label: 'Meta Título', name: 'seo_title', widget: 'string' }
-          - { label: 'Meta Descripción', name: 'seo_description', widget: 'text' }
-      
-      - name: 'pediatrico'
-        label: 'Página Ecografías Pediátricas'
-        file: 'src/content/categorias/pediatrico.md'
-        fields:
-          - { label: 'Título de la Página', name: 'title', widget: 'string' }
-          - { label: 'Descripción', name: 'description', widget: 'text' }
-          - { label: 'Imagen Hero', name: 'hero_image', widget: 'image', required: false }
-          - { label: 'Contenido Principal', name: 'body', widget: 'markdown' }
-          - { label: 'Meta Título', name: 'seo_title', widget: 'string' }
-          - { label: 'Meta Descripción', name: 'seo_description', widget: 'text' }
-      
-      - name: 'ginecologia'
-        label: 'Página Ginecología'
-        file: 'src/content/categorias/ginecologia.md'
-        fields:
-          - { label: 'Título de la Página', name: 'title', widget: 'string' }
-          - { label: 'Descripción', name: 'description', widget: 'text' }
-          - { label: 'Imagen Hero', name: 'hero_image', widget: 'image', required: false }
-          - { label: 'Contenido Principal', name: 'body', widget: 'markdown' }
-          - { label: 'Meta Título', name: 'seo_title', widget: 'string' }
-          - { label: 'Meta Descripción', name: 'seo_description', widget: 'text' }
-
-  # Páginas Legales
-  - name: 'legal'
-    label: 'Páginas Legales'
-    files:
-      - name: 'privacy'
-        label: 'Aviso de Privacidad'
-        file: 'src/content/legal/privacy.md'
-        fields:
-          - { label: 'Título', name: 'title', widget: 'string' }
-          - { label: 'Última actualización', name: 'last_updated', widget: 'date' }
-          - { label: 'Contenido', name: 'body', widget: 'markdown' }
+      - { label: 'Experiencia (años)', name: 'experience', widget: 'number', value_type: 'int', required: false }
+      - { label: 'Educación', name: 'education', widget: 'list', field: { name: 'degree', widget: 'string' }, required: false }
+      - { label: 'Certificaciones', name: 'certifications', widget: 'list', field: { name: 'certification', widget: 'string' }, required: false }
+      - { label: 'Idiomas', name: 'languages', widget: 'list', field: { name: 'language', widget: 'string' }, required: false }

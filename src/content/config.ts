@@ -46,6 +46,39 @@ const settings = defineCollection({
     hours: z.string(),
     facebook_url: z.string().optional(),
     instagram_url: z.string().optional(),
+    
+    // Hero Section Configuration
+    hero: z.object({
+      title_override: z.string().nullable().optional(),
+      subtitle_override: z.string().nullable().optional(),
+      background_style: z.enum(['gradient_blue', 'gradient_green', 'gradient_purple', 'solid_color']).default('gradient_blue'),
+      background_color: z.string().optional(),
+      buttons: z.object({
+        whatsapp: z.object({
+          text: z.string(),
+          emoji: z.string(),
+          color: z.enum(['light', 'outline-light', 'primary', 'success']),
+          enabled: z.boolean(),
+          order: z.number(),
+        }),
+        services: z.object({
+          text: z.string(),
+          emoji: z.string(),
+          color: z.enum(['light', 'outline-light', 'primary', 'success']),
+          link: z.string(),
+          enabled: z.boolean(),
+          order: z.number(),
+        }),
+        emergency: z.object({
+          text: z.string(),
+          emoji: z.string(),
+          color: z.enum(['light', 'outline-light', 'primary', 'success']),
+          link: z.string(),
+          enabled: z.boolean(),
+          order: z.number(),
+        }),
+      }),
+    }).optional(),
   }),
 });
 

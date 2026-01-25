@@ -35,26 +35,85 @@ const regularServices = servicios.filter(s => !s.data.featured);
         </div>
     )}
     
-    <!-- Hero Section -->
-    <header class="hero-section py-5">
-        <div class="container text-center py-5 position-relative">
-            {siteSettings.hero_image ? (
-                <img src={siteSettings.hero_image} alt={siteSettings.site_name} class="hero-image mb-4" style="max-height: 400px; border-radius: 20px;" />
-            ) : (
-                <h1 class="display-3 fw-bold text-white mb-4">{siteSettings.site_name}</h1>
-            )}
-            <p class="lead text-white mb-4">{siteSettings.slogan}</p>
-            <div class="d-flex justify-content-center gap-3">
-                <a href={`https://wa.me/${siteSettings.whatsapp_number}?text=Hola, deseo agendar una cita`} 
-                   class="btn btn-light btn-lg fw-bold" target="_blank">
-                    💬 Agendar Cita por WhatsApp
-                </a>
-                <a href="#servicios" class="btn btn-outline-light btn-lg fw-bold">
-                    🏥 Ver Nuestros Servicios
-                </a>
-            </div>
-        </div>
-    </header>
+    <!-- Hero Section Avanzado -->
+    {(() => {
+        const heroConfig = siteSettings.hero || {};
+        const heroButtons = heroConfig.buttons || {};
+        
+        // Determinar título y subtítulo
+        const heroTitle = heroConfig.title_override || siteSettings.site_name;
+        const heroSubtitle = heroConfig.subtitle_override || siteSettings.slogan;
+        
+        // Obtener botones activos y ordenarlos
+        const activeButtons = Object.entries(heroButtons)
+            .filter(([key, button]: [string, any]) => button && button.enabled)
+            .sort(([, a]: [string, any], [, b]: [string, any]) => (a?.order || 999) - (b?.order || 999));
+        
+        // Función para generar enlace según tipo de botón
+        const getButtonLink = (buttonKey: string, button: any) => {
+            switch(buttonKey) {
+                case 'whatsapp':
+                    return `https://wa.me/${siteSettings.whatsapp_number}?text=Hola, deseo agendar una cita`;
+                case 'services':
+                    return button.link || '#servicios';
+                case 'emergency':
+                    return button.link || `tel:${siteSettings.phone_number.replace(/\s/g, '')}`;
+                default:
+                    return '#';
+            }
+        };
+        
+        // Función para generar clase CSS según color
+        const getButtonClass = (color: string) => {
+            switch(color) {
+                case 'primary': return 'btn-primary';
+                case 'success': return 'btn-success';
+                case 'outline-light': return 'btn-outline-light';
+                case 'light':
+                default: return 'btn-light';
+            }
+        };
+        
+        return (
+            <header class={`hero-section py-5 hero-${heroConfig.background_style || 'gradient_blue'}`}>
+                <style>
+                    {heroConfig.background_style === 'solid_color' && `
+                        .hero-section {
+                            background: ${heroConfig.background_color || '#003da2'} !important;
+                        }
+                    `}
+                    {heroConfig.background_style === 'gradient_green' && `
+                        .hero-section {
+                            background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%) !important;
+                        }
+                    `}
+                    {heroConfig.background_style === 'gradient_purple' && `
+                        .hero-section {
+                            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 50%, #6d28d9 100%) !important;
+                        }
+                    `}
+                </style>
+                <div class="container text-center py-5 position-relative">
+                    {siteSettings.hero_image ? (
+                        <img src={siteSettings.hero_image} alt={heroTitle} class="hero-image mb-4" style="max-height: 400px; border-radius: 20px;" />
+                    ) : (
+                        <h1 class="display-3 fw-bold text-white mb-4">{heroTitle}</h1>
+                    )}
+                    <p class="lead text-white mb-4">{heroSubtitle}</p>
+                    <div class="d-flex justify-content-center gap-3 flex-wrap">
+                        {activeButtons.map(([buttonKey, button]: [string, any]) => (
+                            <a href={getButtonLink(buttonKey, button)} 
+                               class={`btn btn-lg fw-bold ${getButtonClass(button?.color || 'light')}`}
+                               target={buttonKey === 'whatsapp' || buttonKey === 'emergency' ? '_blank' : '_self'}
+                               rel={buttonKey === 'whatsapp' || buttonKey === 'emergency' ? 'noopener noreferrer' : ''}>
+                                {button?.emoji || ''} {button?.text || ''}
+                            </a>
+                        ))}
+                    </div>
+                </div>
+            </header>
+        );
+    })()}
 
     <!-- Servicios Destacados -->
     {featuredServices.length > 0 && (
