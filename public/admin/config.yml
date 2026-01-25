@@ -23,9 +23,9 @@ collections:
           - { label: 'Nombre del Centro', name: 'site_name', widget: 'string' }
           - { label: 'Slogan', name: 'slogan', widget: 'string' }
           - { label: 'Descripción SEO', name: 'description', widget: 'text' }
-          - { label: 'Logo Principal', name: 'logo', widget: 'image' }
-          - { label: 'Favicon', name: 'favicon', widget: 'image' }
-          - { label: 'Imagen Hero', name: 'hero_image', widget: 'image' }
+          - { label: 'Logo Principal', name: 'logo', widget: 'image', hint: '📸 Dimensiones recomendadas: 300x100px. Formato PNG o JPG. Máximo 1MB.' }
+          - { label: 'Favicon', name: 'favicon', widget: 'image', hint: '🎨 Dimensiones: 32x32px ó 64x64px. Formato PNG o ICO. Máximo 500KB.' }
+          - { label: 'Imagen Hero', name: 'hero_image', widget: 'image', hint: '🏥 Dimensiones recomendadas: 1920x1080px. Imagen panorámica. Máximo 5MB.' }
           - { label: 'WhatsApp', name: 'whatsapp_number', widget: 'string' }
           - { label: 'Teléfono', name: 'phone_number', widget: 'string' }
           - { label: 'Email', name: 'email_contact', widget: 'string' }
@@ -90,11 +90,11 @@ collections:
     fields:
       - { label: 'Nombre del Estudio', name: 'title', widget: 'string' }
       - { label: 'Categoría', name: 'categoria', widget: 'select', options: ['Adulto', 'Embarazada', 'Pediatrico', 'Ginecologia', 'Cardiologia', 'Musculoesqueletico', 'Doppler', 'Tiroides', 'Mama', 'General'] }
-      - { label: 'Imagen Principal', name: 'image', widget: 'image' }
+       - { label: 'Imagen Principal', name: 'image', widget: 'image', hint: '📸 Dimensiones recomendadas: 1200x800px. Formato JPG. Máximo 3MB.' }
       - { label: 'Descripción Breve', name: 'description', widget: 'text' }
       - { label: 'Precio', name: 'price', widget: 'string', required: false }
       - { label: 'Duración', name: 'duration', widget: 'string', required: false }
-      - { label: 'Galería de Imágenes', name: 'gallery', widget: 'list', field: { name: 'image', widget: 'image' }, required: false }
+      - { label: 'Galería de Imágenes', name: 'gallery', widget: 'list', field: { name: 'image', widget: 'image' }, required: false, hint: '📸 Dimensiones recomendadas: 800x600px cada imagen. Máximo 2MB por imagen.' }
       - { label: 'Etiquetas', name: 'tags', widget: 'list', field: { name: 'tag', widget: 'string' }, required: false }
       - { label: 'Destacado', name: 'featured', widget: 'boolean', default: false }
       - { label: 'Contenido Detallado', name: 'body', widget: 'markdown' }
@@ -108,7 +108,7 @@ collections:
     fields:
       - { label: 'Título', name: 'title', widget: 'string' }
       - { label: 'URL Amigable', name: 'slug', widget: 'string' }
-      - { label: 'Imagen Destacada', name: 'image', widget: 'image', required: false }
+      - { label: 'Imagen Destacada', name: 'image', widget: 'image', required: false, hint: '📸 Dimensiones recomendadas: 1200x630px. Formato JPG. Máximo 2MB.' }
       - { label: 'Extracto', name: 'excerpt', widget: 'text' }
       - { label: 'Categoría', name: 'category', widget: 'select', options: ['Noticias', 'Promociones', 'Tips Médicos'] }
       - { label: 'Autor', name: 'author', widget: 'string' }
@@ -124,7 +124,7 @@ collections:
     slug: '{{slug}}'
     fields:
       - { label: 'Título de la Promoción', name: 'title', widget: 'string' }
-      - { label: 'Imagen', name: 'image', widget: 'image' }
+       - { label: 'Imagen', name: 'image', widget: 'image', hint: '📸 Dimensiones recomendadas: 800x600px. Formato JPG. Máximo 2MB.' }
       - { label: 'Descripción', name: 'description', widget: 'text' }
       - { label: 'Precio Normal', name: 'original_price', widget: 'string', required: false }
       - { label: 'Precio Promocional', name: 'price', widget: 'string', required: false }
@@ -159,7 +159,7 @@ collections:
     fields:
       - { label: 'Nombre del Doctor', name: 'name', widget: 'string' }
       - { label: 'Especialidad', name: 'specialty', widget: 'string' }
-      - { label: 'Foto', name: 'photo', widget: 'image' }
+       - { label: 'Foto', name: 'photo', widget: 'image', hint: '👤 Dimensiones recomendadas: 500x500px. Foto profesional. Máximo 1MB.' }
       - { label: 'Biografía', name: 'bio', widget: 'markdown' }
       - { label: 'Experiencia (años)', name: 'experience', widget: 'number', value_type: 'int', required: false }
       - { label: 'Educación', name: 'education', widget: 'list', field: { name: 'degree', widget: 'string' }, required: false }

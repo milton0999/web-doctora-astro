@@ -19,8 +19,8 @@ const servicios = defineCollection({
       'General'           // Otros estudios
     ]),
     subcategoria: z.string().optional(), // Ej: "Abdominal", "Vascular", etc.
-    price: z.string().optional(),    // Corregido a price para consistencia con archivos
-    duration: z.string().optional(),  // Corregido a duration para consistencia con archivos
+    price: z.string().optional(),    
+    duracion: z.string().optional(),  // Mantener consistencia con nombre en archivos
     preparacion: z.string().optional(),
     contraindicaciones: z.array(z.string()).optional(),
     gallery: z.array(z.string()).optional(),

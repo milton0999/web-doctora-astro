@@ -1,0 +1,25 @@
+---
+// src/components/SmartImage.astro
+const { src, alt, width = 1200, height = 800, type = "service", priority = false } = Astro.props;
+
+// Configuración simple por tipo de contenido
+const configs = {
+  service: { width: 1200, height: 800, quality: 85 },
+  team: { width: 500, height: 500, quality: 90 },
+  hero: { width: 1920, height: 1080, quality: 90 },
+  blog: { width: 1200, height: 630, quality: 85 }
+};
+
+const config = configs[type] || configs.service;
+---
+
+<img 
+  src={src}
+  alt={alt}
+  width={config.width}
+  height={config.height}
+  loading={priority ? "eager" : "lazy"}
+  decoding="async"
+  class="img-fluid"
+  style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"
+/>

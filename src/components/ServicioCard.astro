@@ -1,6 +1,9 @@
 ---
+import type { CollectionEntry } from "astro:content";
+import SmartImage from "./SmartImage.astro";
+
 interface Props {
-  servicio: any;  // Temporal, usaremos any hasta que arreglemos los tipos
+  servicio: CollectionEntry<"servicios">;
   showPrice?: boolean;
 }
 
@@ -11,11 +14,12 @@ const { servicio, showPrice = true } = Astro.props;
   <div class="card h-100 shadow-sm border-0">
     <div class="card-image-container position-relative">
       {servicio.data.image ? (
-        <img 
+        <SmartImage 
           src={servicio.data.image} 
           alt={servicio.data.title}
-          class="card-img-top"
-          style="height: 200px; object-fit: cover;"
+          type="service"
+          width={400}
+          height={200}
         />
       ) : (
         <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height: 200px;">
@@ -39,8 +43,8 @@ const { servicio, showPrice = true } = Astro.props;
         <div class="price-section mt-auto mb-3">
           <div class="p-3 bg-light rounded text-center">
             <span class="price h4 text-primary mb-0 d-block">${servicio.data.price}</span>
-            {servicio.data.duration && (
-              <span class="duration text-muted small">⏱️ {servicio.data.duration}</span>
+            {servicio.data.duracion && (
+              <span class="duration text-muted small">⏱️ {servicio.data.duracion}</span>
             )}
           </div>
         </div>
