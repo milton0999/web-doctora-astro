@@ -1,0 +1,114 @@
+# Configuración del Sistema de Imágenes Optimizadas
+# Generado automáticamente por el sistema
+
+# Optimización Balanceada
+optimization:
+  quality_level: "balanced"  # ultra_speed, speed, balanced, quality, maximum
+  webp_quality: 85          # Calidad para WebP (balanceado)
+  avif_quality: 80          # Calidad para AVIF (máxima compresión)
+  jpg_quality: 90          # Calidad para JPG fallback
+  
+# Tamaños de optimización
+responsive_sizes:
+  thumbnail: { width: 150, height: 150, quality: 90 }
+  small: { width: 300, height: 300, quality: 85 }
+  medium: { width: 800, height: 600, quality: 80 }
+  large: { width: 1200, height: 900, quality: 75 }
+  extra_large: { width: 1920, height: 1080, quality: 70 }
+  
+# Formatos generados
+formats: ["webp", "avif", "jpg"]
+
+# Caché
+cache:
+  enabled: true
+  max_size: 500 * 1024 * 1024  # 500MB
+  ttl: 86400                    # 24 horas
+  strategy: "lru"               # lru, fifo, ttl
+
+# Procesamiento automático
+auto_process:
+  enabled: true
+  face_detection: true
+  smart_crop: true
+  color_enhancement: true
+  noise_reduction: true
+
+# Estrategia de compresión por tipo
+compression:
+  medical_imaging:
+    quality: 88          # Priorizar detalles finos
+    noise_reduction: true
+    sharpen: true
+    contrast_enhancement: true
+    progressive: true
+  
+  logo_graphics:
+    quality: 95          # Máxima nitidez
+    remove_noise: false
+    enhance_edges: true
+    preserve_transparency: true
+  
+  photographs:
+    quality: 85          # Balanceado con compresión
+    auto_orientate: true
+    progressive: true
+  
+  screenshots_ui:
+    quality: 80          # Buena calidad para elementos de UI
+    max_size: 500KB
+    optimize_for_web: true
+
+# Sistema de generación de placeholders
+placeholders:
+  enabled: true
+  default_color: "#e9ecef"
+  blur_intensity: 10
+  generate_dominant_color: true
+  smart_patterns:
+    - medical_scan
+    - blueprints
+    - landscapes
+    - abstract
+
+# Sistema de fallbacks
+fallbacks:
+  medical_imaging: "/img/assets/fallback-medical.jpg"
+  logo: "/img/assets/fallback-logo.png"
+  hero: "/img/assets/fallback-hero.jpg"
+  general: "/img/assets/fallback-default.jpg"
+  error: "/img/assets/error-placeholder.png"
+
+# Rutas y URLs
+routes:
+  uploads: "/img/uploads/"
+  optimized: "/img/optimized/"
+  api:
+    process: "/api/image-process"
+    optimize: "/api/image-optimize"
+    upload: "/api/upload-image"
+  
+# Validación y calidad
+validation:
+  min_dimensions: { width: 150, height: 150 }
+  max_file_size: 10485760     # 10MB
+  supported_formats: ["jpg", "jpeg", "png", "webp", "avif"]
+  max_aspect_ratio: 3.0        # Máxima proporción
+  min_aspect_ratio: 0.3        # Mínima proporción
+  quality_threshold: 70            # Calidad mínima aceptable
+
+# Información de metadatos
+metadata:
+  extract_dominant_color: true
+  detect_faces: true
+  analyze_composition: true
+  detect_text_regions: true
+  generate_smart_tags: true
+  include_camera_info: true
+
+# Actualización automática
+auto_update:
+  enabled: true
+  cleanup_temp_files: true
+  regenerate_old_optimizations: true
+  monitoring: true
