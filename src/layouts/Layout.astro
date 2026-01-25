@@ -64,13 +64,22 @@ const activePromotions = promotions.filter(p =>
         :root {
             /* Colores principales (recuperados del sitio archivado) */
             --primary-color: #003da2;
-            --primary-hover: #002a7a;
-            --primary-light: #DBEAFE;
-            --secondary-color: #1E40AF;
-            --secondary-hover: #1E3A8A;
-
-            /* Colores adicionales del sitio archivado */
+            --primary-hover: #1e3a8a;
+            --accent-color: #dc2626;
+            --accent-hover: #991b1b;
+            --text-dark: #191919;
+            --text-light: #9CA3AF;
+            --bg-light: #f8f9fa;
+            --border-color: #dee2e6;
+            --success-color: #10b981;
             --phone-color: #666666;
+            
+            /* Variables mejoradas para footer - Accesibilidad WCAG */
+            --footer-text-primary: #1a1a1a;     /* Negro suave, WCAG AAA */
+            --footer-text-secondary: #4a5568;  /* Gris medio, WCAG AA */
+            --footer-links-hover: #003da2;     /* Azul primario, excelente contraste */
+            --footer-bg: #ffffff;               /* Blanco */
+            --footer-border: #e5e7eb;           /* Gris muy claro para bordes */
             --layer-bg: #e1e1e1;
 
             /* Colores complementarios */
@@ -342,16 +351,40 @@ const activePromotions = promotions.filter(p =>
             border-radius: 0;
         }
         
+        /* Footer mejorado - Accesibilidad y contraste */
+        .footer-wrapper {
+            background: var(--footer-bg);
+            border-top: 1px solid var(--footer-border);
+        }
+        
         .footer-links a {
-            color: #495057;
+            color: var(--footer-text-primary);
+            font-weight: 500;
             text-decoration: none;
-            transition: color 0.3s ease, transform 0.3s ease;
+            transition: all 0.3s ease;
         }
         
         .footer-links a:hover {
-            color: #e9ecef;
-            transform: translateY(-2px);
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            color: var(--footer-links-hover);
+            transform: translateY(-1px);
+            text-decoration: underline;
+            text-shadow: none;
+        }
+        
+        /* Estilos para información de contacto en footer */
+        .footer-wrapper p {
+            color: var(--footer-text-secondary);
+            font-weight: 500;
+        }
+        
+        .footer-wrapper p strong {
+            color: var(--footer-text-primary);
+        }
+        
+        /* Headings del footer */
+        .footer-wrapper h4 {
+            color: var(--footer-text-primary);
+            font-weight: 600;
         }
         
         .social-links a {
@@ -554,7 +587,7 @@ const activePromotions = promotions.filter(p =>
     </main>
 
      <!-- Footer (estilo archivado) -->
-     <footer class="footer-wrapper bg-white py-5 border-top">
+      <footer class="footer-wrapper py-5">
          <div class="container">
              <div class="row">
                  <div class="col-lg-4 py-2">
@@ -567,14 +600,14 @@ const activePromotions = promotions.filter(p =>
                          <div class="mb-2"><a href="/categoria-de-servicio/ecografias-adulto/" class="d-block text-decoration-none">Ultrasonido Adulto</a></div>
                          <div class="mb-2"><a href="/categoria-de-servicio/ecografias-pediatrico/" class="d-block text-decoration-none">Ultrasonido Pediatrico</a></div>
                          <div class="mb-2"><a href="/categoria-de-servicio/ecografias-materno/" class="d-block text-decoration-none">Ultrasonido Materno</a></div>
-                         <div class="mb-2"><a href="/categoria-de-servicio/ginecologia/" class="d-block text-decoration-none">Ultrasonido Ginegología</a></div>
+                          <div class="mb-2"><a href="/categoria-de-servicio/ginecologia/" class="d-block text-decoration-none">Ultrasonido Ginecología</a></div>
                          <div class="mb-2"><a href="/servicios/ecografia-de-prostata/" class="d-block text-decoration-none">Ecografía de Próstata</a></div>
-                         <div class="mb-0"><a href="/premum" class="d-block text-decoration-none">ECO 5D – Premom</a></div>
+                          <div class="mb-0"><a href="/categoria-de-servicio/eco-5d/" class="d-block text-decoration-none">ECO 5D – Premom</a></div>
                      </nav>
                  </div>
 
-                 <div class="col-lg py-2">
-                     <h4 class="h5 mb-3"></h4>
+                  <div class="col-lg py-2">
+                      <h4 class="h5 mb-3">Navegación Rápida</h4>
                      <nav class="footer-links">
                          <div class="mb-2"><a href="/nosotros" class="d-block text-decoration-none">Nosotros</a></div>
                          <div class="mb-2"><a href="/blog" class="d-block text-decoration-none">Blog</a></div>
@@ -583,9 +616,9 @@ const activePromotions = promotions.filter(p =>
                  </div>
 
                  <div class="col-lg py-2">
-                     <p class="mb-2" style="color: var(--phone-color);"><strong>Agenda una Cita por Whatsapp:</strong><br>{siteSettings.phone_number}</p>
-                     <p class="mb-2" style="color: var(--phone-color);"><strong>Citas Telefónicas:</strong><br>{siteSettings.phone_number}<br>81 1360 5630<br>81 3259 9030</p>
-                     <p class="mb-0">Av. Dr. José Eleuterio González 135,<br>Leones, 64600 Monterrey, N.L.</p>
+                      <p class="mb-2"><strong>Agenda una Cita por Whatsapp:</strong><br>{siteSettings.phone_number}</p>
+                      <p class="mb-2"><strong>Citas Telefónicas:</strong><br>81 1588 3775<br>81 1360 5630<br>81 3259 9030</p>
+                      <p class="mb-0"><strong>Dirección:</strong><br>Av. Dr. José Eleuterio González 135,<br>Leones, 64600 Monterrey, N.L.</p>
                  </div>
              </div>
          </div>

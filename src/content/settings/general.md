@@ -8,8 +8,9 @@ favicon: /img/screenshot-from-2025-12-20-12-55-25.png
 hero_image: /img/hero-medical-center.jpg
 whatsapp_number: "528115883775"
 phone_number: 81 1588 3775
+
 email_contact: info@centromedicogonzalitos.com
-address: Monterrey, Nuevo León, México
+address: Av. Dr. José Eleuterio González 135, Leones, 64600 Monterrey, N.L.
 hours: "Lunes a Viernes: 8:00 AM - 8:00 PM | Sábados: 8:00 AM - 2:00 PM"
 facebook_url: https://facebook.com/centromedicogonzalitos
 instagram_url: https://instagram.com/centromedicogonzalitos
