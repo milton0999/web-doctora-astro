@@ -5,7 +5,7 @@ description: Ecografías y ultrasonidos de alta calidad en Monterrey.
   Especialistas en estudios médicos para adultos, embarazadas y pediatría.
 logo: /img/servicios/logo-cmg-horizontal.png
 favicon: /img/logo-01.png
-hero_image: /img/hero-medical-center.jpg
+hero_image: /img/logo-01.png
 whatsapp_number: "528115883775"
 phone_number: 81 1588 3775
 email_contact: info@centromedicogonzalitos.com
@@ -18,20 +18,20 @@ hero:
   subtitle_override: null
   buttons:
     whatsapp:
-      text: 💬 Agendar Cita por WhatsApp
+      text: Agendar Cita por WhatsApp
       emoji: 💬
       color: light
       enabled: true
       order: 1
     services:
-      text: 🏥 Ver Nuestros Servicios
+      text: Ver Nuestros Servicios
       emoji: 🏥
       color: outline-light
       link: "#servicios"
       enabled: true
       order: 2
     emergency:
-      text: 🚨 Emergencia
+      text: Emergencia
       emoji: 🚨
       color: success
       link: tel:8115883775
