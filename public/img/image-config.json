@@ -84,9 +84,9 @@ routes:
   uploads: "/img/uploads/"
   optimized: "/img/optimized/"
   api:
-    process: "/api/image-process"
-    optimize: "/api/image-optimize"
-    upload: "/api/upload-image"
+    # process: "/api/image-process"  # Temporarily removed for v1.0 - reimplement in v1.1
+    # optimize: "/api/image-optimize"  # Planned for future version
+    # upload: "/api/upload-image"  # Planned for future version
   
 # Validación y calidad
 validation:
