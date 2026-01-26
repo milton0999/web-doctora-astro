@@ -1,0 +1,15 @@
+<!-- Placeholder para Eco Doppler Yugular -->
+<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="300" fill="#f8f9fa"/>
+  <rect x="60" y="80" width="280" height="140" fill="#e3f2fd" rx="10"/>
+  <path d="M200 80 Q80 120 T40 100" stroke="#dc3545" stroke-width="3" fill="none"/>
+  <circle cx="80" cy="100" r="25" fill="#dc3545" stroke="#1976d2" stroke-width="2"/>
+  <circle cx="320" cy="100" r="25" fill="#dc3545" stroke="#1976d2" stroke-width="2"/>
+  <rect x="140" y="140" width="120" height="60" fill="#ffffff" rx="8" opacity="0.9"/>
+  <text x="200" y="175" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#1976d2">DOPPLER YUGULAR</text>
+  <text x="200" y="25" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#1976d2" font-weight="bold">VENOUS ULTRASOUND</text>
+  <path d="M80 75 Q70 60 T80 70" stroke="#dc3545" stroke-width="2" fill="none"/>
+  <path d="M320 75 Q330 60 T310 70" stroke="#dc3545" stroke-width="2" fill="none"/>
+  <path d="M200 220 Q180 180 T160 190" stroke="#dc3545" stroke-width="2" fill="none"/>
+  <path d="M200 220 Q220 180 T240 190" stroke="#dc3545" stroke-width="2" fill="none"/>
+</svg>

@@ -1,0 +1,12 @@
+<!-- Placeholder para Eco Doppler Carotídeo -->
+<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="300" fill="#f8f9fa"/>
+  <rect x="50" y="100" width="300" height="100" fill="#e3f2fd" rx="10"/>
+  <rect x="100" y="50" width="200" height="200" fill="#2196f3" rx="8"/>
+  <rect x="320" y="180" width="60" height="80" fill="#dc3545" rx="6"/>
+  <text x="200" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#1976d2">CAROTID DOPPLER</text>
+  <text x="200" y="150" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#6c757d">Ultrasound Imaging</text>
+  <path d="M200 50 Q50 100 T350 100 Q350 150" stroke="#dc3545" stroke-width="2" fill="none"/>
+  <circle cx="320" cy="220" r="20" fill="#dc3545" stroke="#1976d2" stroke-width="2"/>
+  <path d="M320 200 Q380 180 L340 220" stroke="#dc3545" stroke-width="2" fill="none"/>
+</svg>
