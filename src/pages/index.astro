@@ -22,6 +22,13 @@ const activePromotions = promotions.filter(p =>
 // Servicios destacados
 const featuredServices = servicios.filter(s => s.data.featured);
 const regularServices = servicios.filter(s => !s.data.featured);
+
+// Agrupar servicios por categoría para filtrado
+const serviciosPorCategoria = {
+  adultos: servicios.filter(s => s.data.categoria === 'Adulto'),
+  embarazadas: servicios.filter(s => s.data.categoria === 'Embarazada'),
+  pediatrico: servicios.filter(s => s.data.categoria === 'Pediatrico')
+};
 ---
 
 <Layout title="Inicio" description={siteSettings.description}>
@@ -100,6 +107,25 @@ const regularServices = servicios.filter(s => !s.data.featured);
                         <h1 class="display-3 fw-bold text-white mb-4">{heroTitle}</h1>
                     )}
                     <p class="lead text-white mb-4">{heroSubtitle}</p>
+                    
+                    <!-- Trust Indicators -->
+                    <div class="trust-indicators mb-4">
+                        <div class="d-flex justify-content-center gap-3 flex-wrap">
+                            <div class="trust-item">
+                                <i class="fas fa-award text-warning me-2"></i>
+                                <span class="text-white small fw-medium">10+ Años</span>
+                            </div>
+                            <div class="trust-item">
+                                <i class="fas fa-users text-warning me-2"></i>
+                                <span class="text-white small fw-medium">5,000+ Pacientes</span>
+                            </div>
+                            <div class="trust-item">
+                                <i class="fas fa-certificate text-warning me-2"></i>
+                                <span class="text-white small fw-medium">Certificados</span>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <div class="d-flex justify-content-center gap-3 flex-wrap">
                         {activeButtons.map(([buttonKey, button]: [string, any]) => (
                             <a href={getButtonLink(buttonKey, button)} 
@@ -134,16 +160,36 @@ const regularServices = servicios.filter(s => !s.data.featured);
         </section>
     )}
 
-    <!-- Todos los Servicios -->
+    <!-- Todos los Servicios con Filtrado -->
     <section id="servicios" class="py-5">
         <div class="container">
             <div class="text-center mb-5">
-                <h2 class="display-5 fw-bold text-primary mb-3">🏥 Todos Nuestros Estudios</h2>
-                <p class="lead text-muted mb-4">Ofrecemos una amplia gama de servicios médicos de alta calidad</p>
+                <h2 class="display-5 fw-bold text-primary mb-3">🏥 Nuestros Estudios</h2>
+                <p class="lead text-muted mb-4">Filtra por categoría para encontrar tu estudio rápidamente</p>
             </div>
-            <div class="row g-4">
+            
+            <!-- Category Filter Buttons -->
+            <div class="text-center mb-5">
+                <div class="d-inline-flex gap-2 flex-wrap justify-content-center">
+                    <button class="category-btn active" data-category="all" onclick="filterServices('all')">
+                        Todos ({servicios.length})
+                    </button>
+                    <button class="category-btn" data-category="Adulto" onclick="filterServices('Adulto')">
+                        Adulto ({serviciosPorCategoria?.adultos?.length || 0})
+                    </button>
+                    <button class="category-btn" data-category="Embarazada" onclick="filterServices('Embarazada')">
+                        Embarazada ({serviciosPorCategoria?.embarazadas?.length || 0})
+                    </button>
+                    <button class="category-btn" data-category="Pediatrico" onclick="filterServices('Pediatrico')">
+                        Pediatría ({serviciosPorCategoria?.pediatrico?.length || 0})
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Services Grid -->
+            <div class="row g-4" id="servicesGrid">
                 {regularServices.map(servicio => (
-                    <div class="col-sm-12 col-md-6 col-lg-4">
+                    <div class="col-sm-12 col-md-6 col-lg-4 service-item" data-category={servicio.data.categoria}>
                         <ServicioCard servicio={servicio} />
                     </div>
                 ))}
@@ -161,25 +207,91 @@ const regularServices = servicios.filter(s => !s.data.featured);
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="py-5 cta-section">
-        <div class="container text-center py-5">
-            <h2 class="display-5 fw-bold text-white mb-4">¿Listo para tu estudio médico?</h2>
-            <p class="lead text-white mb-5">Agenda tu cita hoy mismo y recibe la mejor atención médica con tecnología de vanguardia</p>
-            <div class="d-flex justify-content-center gap-4">
-                <a href={`https://wa.me/${siteSettings.whatsapp_number}?text=Hola, deseo agendar una cita`}
-                   class="btn btn-light btn-lg fw-bold px-4" target="_blank">
-                    💬 Agendar Ahora
-                </a>
-                <a href="/contacto" class="btn btn-outline-light btn-lg fw-bold px-4">
-                    📞 Más Información
-                </a>
+    <!-- Enhanced CTA Section with Urgency -->
+    <section class="py-5 enhanced-cta-section">
+        <div class="container text-center py-5 position-relative">
+            <!-- Urgency Badge -->
+            <div class="urgency-badge mb-3">
+                <i class="fas fa-clock me-2"></i>
+                <span class="fw-bold">¡Citas Disponibles Hoy!</span>
+            </div>
+            
+            <h2 class="display-5 fw-bold text-white mb-4">
+                ¿Listo para tu estudio médico?
+            </h2>
+            <p class="lead text-white mb-4">
+                Agenda hoy mismo y recibe <strong>10% de descuento</strong> en tu primera cita
+            </p>
+            
+            <div class="row justify-content-center">
+                <div class="col-md-4 mb-3">
+                    <a href={`https://wa.me/${siteSettings.whatsapp_number}?text=Hola, deseo agendar una cita con 10% de descuento`}
+                       class="btn btn-light btn-lg fw-bold w-100" target="_blank">
+                        <i class="fab fa-whatsapp me-2"></i>
+                        Agendar por WhatsApp
+                    </a>
+                    <small class="text-white d-block mt-2">✓ Respuesta inmediata</small>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <a href="tel:${siteSettings.phone_number.replace(/\s/g, '')}"
+                       class="btn btn-outline-light btn-lg fw-bold w-100">
+                        <i class="fas fa-phone me-2"></i>
+                        Llamar Ahora
+                    </a>
+                    <small class="text-white d-block mt-2">📅 Horario: 8am-8pm</small>
+                </div>
+            </div>
+            
+            <!-- Trust Pills -->
+            <div class="row mt-5 justify-content-center">
+                <div class="col-auto mb-2">
+                    <div class="trust-pill">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        Sin Costos Ocultos
+                    </div>
+                </div>
+                <div class="col-auto mb-2">
+                    <div class="trust-pill">
+                        <i class="fas fa-shield-alt text-success me-2"></i>
+                        Resultados Confiables
+                    </div>
+                </div>
+                <div class="col-auto mb-2">
+                    <div class="trust-pill">
+                        <i class="fas fa-user-md text-success me-2"></i>
+                        Médicos Certificados
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 </Layout>
 
 <style>
+/* Trust Indicators */
+.trust-indicators {
+    opacity: 0.9;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 15px;
+    margin: 15px 0;
+}
+
+.trust-item {
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease;
+    padding: 6px 12px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.trust-item:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.15);
+}
+
 .hero-section {
     background: linear-gradient(135deg, var(--primary-color) 0%, #1e3a8a 50%, #1e1b4b 100%);
     position: relative;
@@ -206,6 +318,38 @@ const regularServices = servicios.filter(s => !s.data.featured);
 
 .hero-image:hover {
     transform: scale(1.02);
+}
+
+/* Service Filter Buttons */
+.category-btn {
+    background: var(--bg-light);
+    border: 2px solid var(--border-color);
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    font-size: 0.9rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.category-btn:hover {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.category-btn.active {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-md);
+}
+
+.service-item.hidden {
+    display: none;
 }
 
 .promotion-alert {
@@ -300,5 +444,105 @@ const regularServices = servicios.filter(s => !s.data.featured);
     .hero-section::before {
         background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.05) 0%, transparent 50%);
     }
+    
+    /* Responsive adjustments for filter buttons */
+    .category-btn {
+        font-size: 0.8rem;
+        padding: 8px 16px;
+    }
+}
+
+/* Enhanced CTA Styles */
+.urgency-badge {
+    background: rgba(239, 68, 68, 0.9);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-weight: 600;
+    animation: pulse 2s infinite;
+    display: inline-block;
+    backdrop-filter: blur(10px);
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.trust-pill {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 6px 16px;
+    border-radius: 20px;
+    color: white;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.trust-pill:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+}
+
+.enhanced-cta-section {
+    position: relative;
+    overflow: hidden;
+}
+
+.enhanced-cta-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 30% 70%, rgba(255,255,255,0.1) 0%, transparent 50%);
+    pointer-events: none;
 }
 </style>
+
+<script>
+function filterServices(category) {
+    // Remove active class from all buttons
+    document.querySelectorAll('.category-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    
+    // Add active class to clicked button
+    document.querySelector(`[data-category="${category}"]`).classList.add('active');
+    
+    // Filter services
+    const serviceItems = document.querySelectorAll('.service-item');
+    
+    serviceItems.forEach(item => {
+        const itemCategory = item.getAttribute('data-category');
+        
+        if (category === 'all' || itemCategory === category) {
+            item.classList.remove('hidden');
+        } else {
+            item.classList.add('hidden');
+        }
+    });
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+    // Trust items animation on scroll
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    });
+    
+    document.querySelectorAll('.trust-item').forEach(item => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateY(20px)';
+        item.style.transition = 'all 0.6s ease';
+        observer.observe(item);
+    });
+});
+</script>
