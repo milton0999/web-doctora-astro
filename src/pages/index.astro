@@ -125,7 +125,9 @@ const regularServices = servicios.filter(s => !s.data.featured);
                 </div>
                 <div class="row g-4 justify-content-center">
                     {featuredServices.map(servicio => (
-                        <ServicioCard servicio={servicio} />
+                        <div class="col-sm-12 col-md-6 col-lg-4">
+                            <ServicioCard servicio={servicio} />
+                        </div>
                     ))}
                 </div>
             </div>
@@ -141,7 +143,9 @@ const regularServices = servicios.filter(s => !s.data.featured);
             </div>
             <div class="row g-4">
                 {regularServices.map(servicio => (
-                    <ServicioCard servicio={servicio} />
+                    <div class="col-sm-12 col-md-6 col-lg-4">
+                        <ServicioCard servicio={servicio} />
+                    </div>
                 ))}
             </div>
             

@@ -100,7 +100,7 @@ const metadatos = categoryData[categoria as keyof typeof categoryData];
       {serviciosFiltrados.length > 0 ? (
         <div class="row g-4">
           {serviciosFiltrados.map(servicio => (
-            <div class="col-md-6 col-lg-4">
+            <div class="col-sm-12 col-md-6 col-lg-4">
               <ServicioCard servicio={servicio} />
             </div>
           ))}

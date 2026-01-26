@@ -13,7 +13,7 @@ const settings = await getCollection('settings');
 const whatsappNumber = settings[0]?.data.whatsapp_number || '528115883775';
 ---
 
-<div class="servicio-card {servicio.data.featured ? 'featured' : ''} col-md-4 mb-4">
+<div class="servicio-card {servicio.data.featured ? 'featured' : ''} mb-4">
   <div class="card h-100 shadow-sm border-0">
     <div class="card-image-container position-relative">
       {servicio.data.image ? (
