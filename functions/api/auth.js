@@ -18,7 +18,9 @@ export async function onRequest(context) {
         redirectUrl.searchParams.set('scope', 'repo user');
         redirectUrl.searchParams.set(
             'state',
-            crypto.getRandomValues(new Uint8Array(12)).join(''),
+            Array.from(crypto.getRandomValues(new Uint8Array(12)))
+                .map(b => b.toString(16).padStart(2, '0'))
+                .join('')
         );
         return Response.redirect(redirectUrl.href, 301);
 

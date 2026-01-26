@@ -3,27 +3,56 @@
 import { getCollection } from 'astro:content';
 const { title, description } = Astro.props;
 
-// Obtener configuración global
-const settings = await getCollection('settings');
-const siteSettings = settings[0]?.data || {
-  site_name: 'Centro Médico Gonzalitos',
-  slogan: 'Cuidando tu salud con la mejor tecnología y atención humana',
-  description: 'Ecografías y ultrasonidos de alta calidad en Monterrey',
-  logo: null,
-  whatsapp_number: '528115883775',
-  phone_number: '81 1588 3775',
-  email_contact: 'info@centromedicogonzalitos.com',
-  address: 'Monterrey, N.L.',
-  hours: 'Lun-Vie: 8am-8pm, Sáb: 8am-2pm',
-  facebook_url: null,
-  instagram_url: null
-};
+// Obtener configuración global con manejo de errores
+let siteSettings;
+try {
+  const settings = await getCollection('settings');
+  siteSettings = settings[0]?.data || {
+    site_name: 'Centro Médico Gonzalitos',
+    slogan: 'Cuidando tu salud con la mejor tecnología y atención humana',
+    description: 'Ecografías y ultrasonidos de alta calidad en Monterrey',
+    logo: null,
+    whatsapp_number: '528115883775',
+    phone_number: '81 1588 3775',
+    email_contact: 'info@centromedicogonzalitos.com',
+    address: 'Monterrey, N.L.',
+    hours: 'Lun-Vie: 8am-8pm, Sáb: 8am-2pm',
+    facebook_url: null,
+    instagram_url: null
+  };
+} catch (error) {
+  console.error('Error loading site settings:', error);
+  siteSettings = {
+    site_name: 'Centro Médico Gonzalitos',
+    slogan: 'Cuidando tu salud con la mejor tecnología y atención humana',
+    description: 'Ecografías y ultrasonidos de alta calidad en Monterrey',
+    logo: null,
+    whatsapp_number: '528115883775',
+    phone_number: '81 1588 3775',
+    email_contact: 'info@centromedicogonzalitos.com',
+    address: 'Monterrey, N.L.',
+    hours: 'Lun-Vie: 8am-8pm, Sáb: 8am-2pm',
+    facebook_url: null,
+    instagram_url: null
+  };
+}
 
-// Obtener colecciones para navegación
-const servicios = await getCollection('servicios');
-const adultos = servicios.filter(s => s.data.categoria === 'Adulto');
-const embarazadas = servicios.filter(s => s.data.categoria === 'Embarazada');
-const pediatrico = servicios.filter(s => s.data.categoria === 'Pediatrico');
+// Obtener colecciones para navegación (optimizado en una sola operación)
+let serviciosPorCategoria: { 
+  adultos: any[], 
+  embarazadas: any[], 
+  pediatrico: any[] 
+} = { adultos: [], embarazadas: [], pediatrico: [] };
+try {
+  const servicios = await getCollection('servicios');
+  serviciosPorCategoria = {
+    adultos: servicios.filter(s => s.data.categoria === 'Adulto'),
+    embarazadas: servicios.filter(s => s.data.categoria === 'Embarazada'),
+    pediatrico: servicios.filter(s => s.data.categoria === 'Pediatrico')
+  };
+} catch (error) {
+  console.error('Error loading servicios:', error);
+}
 
 // Obtener promociones activas
 const promotions = await getCollection('promotions');
@@ -541,7 +570,7 @@ const activePromotions = promotions.filter(p =>
                      <li class="nav-item dropdown me-lg-2">
                          <a class="nav-link dropdown-toggle fw-bold" href="#" role="button" data-bs-toggle="dropdown">Ultrasonido Adulto</a>
                          <ul class="dropdown-menu">
-                             {adultos.length > 0 ? adultos.map(s => (
+                              {serviciosPorCategoria.adultos.length > 0 ? serviciosPorCategoria.adultos.map(s => (
                                  <li><a class="dropdown-item" href={`/servicios/${s.slug}`}>{s.data.title}</a></li>
                              )) : <li><span class="dropdown-item disabled">Próximamente</span></li>}
                          </ul>
@@ -550,7 +579,7 @@ const activePromotions = promotions.filter(p =>
                      <li class="nav-item dropdown me-lg-2">
                          <a class="nav-link dropdown-toggle fw-bold" href="#" role="button" data-bs-toggle="dropdown">Ultrasonido de paciente embarazada</a>
                          <ul class="dropdown-menu">
-                             {embarazadas.length > 0 ? embarazadas.map(s => (
+                              {serviciosPorCategoria.embarazadas.length > 0 ? serviciosPorCategoria.embarazadas.map(s => (
                                  <li><a class="dropdown-item" href={`/servicios/${s.slug}`}>{s.data.title}</a></li>
                              )) : <li><span class="dropdown-item disabled">Próximamente</span></li>}
                          </ul>
@@ -559,7 +588,7 @@ const activePromotions = promotions.filter(p =>
                      <li class="nav-item dropdown me-lg-2">
                          <a class="nav-link dropdown-toggle fw-bold" href="#" role="button" data-bs-toggle="dropdown">Ultrasonido Pediatrico</a>
                          <ul class="dropdown-menu">
-                             {pediatrico.length > 0 ? pediatrico.map(s => (
+                              {serviciosPorCategoria.pediatrico.length > 0 ? serviciosPorCategoria.pediatrico.map(s => (
                                  <li><a class="dropdown-item" href={`/servicios/${s.slug}`}>{s.data.title}</a></li>
                              )) : <li><span class="dropdown-item disabled">Próximamente</span></li>}
                          </ul>
