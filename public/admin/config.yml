@@ -2,7 +2,7 @@ backend:
   name: github
   repo: milton0999/web-doctora-astro
   branch: main
-  base_url: https://centromedicogonzalitos.milcoms.org
+  base_url: https://centromedicogonzalitos.com
   auth_endpoint: /api/auth
 
 media_folder: public/img
