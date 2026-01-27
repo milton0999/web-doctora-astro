@@ -4,11 +4,18 @@ export async function onRequest(context) {
         env, // same as existing Worker API
         params, // if filename includes [id] or [[path]]
         waitUntil, // same as ctx.waitUntil in existing Worker API
-        next, // used for middleware or to fetch assets
+        next, // used for middleware or fetch assets
         data, // arbitrary space for passing data between middlewares
     } = context;
 
     const client_id = env.GITHUB_CLIENT_ID;
+    
+    // Debug logging
+    console.log('Environment variables check:', {
+        has_client_id: !!client_id,
+        has_secret: !!env.GITHUB_CLIENT_SECRET,
+        client_id_prefix: client_id ? client_id.substring(0, 8) + '...' : 'undefined'
+    });
 
     try {
         const url = new URL(request.url);
