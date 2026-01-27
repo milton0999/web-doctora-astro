@@ -2,7 +2,7 @@ backend:
   name: github
   repo: milton0999/web-doctora-astro
   branch: main
-  base_url: https://centromedicogonzalitos.milcoms.org
+  base_url: https://centromedicogonzalitos.com
   auth_endpoint: /api/auth
 
 media_folder: public/img
@@ -165,3 +165,7 @@ collections:
       - { label: 'Educación', name: 'education', widget: 'list', field: { name: 'degree', widget: 'string' }, required: false }
       - { label: 'Certificaciones', name: 'certifications', widget: 'list', field: { name: 'certification', widget: 'string' }, required: false }
       - { label: 'Idiomas', name: 'languages', widget: 'list', field: { name: 'language', widget: 'string' }, required: false }
+
+
+
+      

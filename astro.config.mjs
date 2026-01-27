@@ -2,10 +2,13 @@
 import { defineConfig } from 'astro/config';
 import cloudflare from '@astrojs/cloudflare';
 
-// https://astro.build/config
 export default defineConfig({
-  adapter: cloudflare(),
-  output: 'static',
+  // Cambiamos a 'server' o 'hybrid' para que las funciones de API funcionen bien
+  output: 'server', 
+  adapter: cloudflare({
+    // Esto asegura que Astro sepa que vas a usar el binding de KV
+    runtime: { mode: 'complete' } 
+  }),
   vite: {
     optimizeDeps: {
       exclude: ['decap-cms']
