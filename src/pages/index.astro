@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ServicioCard from '../components/ServicioCard.astro';
+import CTASection from '../components/CTASection.astro';
 import { getCollection } from 'astro:content';
 
 // Obtener datos del sitio
@@ -207,64 +208,8 @@ const serviciosPorCategoria = {
         </div>
     </section>
 
-    <!-- Enhanced CTA Section with Urgency -->
-    <section class="py-5 enhanced-cta-section">
-        <div class="container text-center py-5 position-relative">
-            <!-- Urgency Badge -->
-            <div class="urgency-badge mb-3">
-                <i class="fas fa-clock me-2"></i>
-                <span class="fw-bold">¡Citas Disponibles Hoy!</span>
-            </div>
-            
-            <h2 class="display-5 fw-bold text-white mb-4">
-                ¿Listo para tu estudio médico?
-            </h2>
-            <p class="lead text-white mb-4">
-                Agenda hoy mismo y recibe <strong>10% de descuento</strong> en tu primera cita
-            </p>
-            
-            <div class="row justify-content-center">
-                <div class="col-md-4 mb-3">
-                    <a href={`https://wa.me/${siteSettings.whatsapp_number}?text=Hola, deseo agendar una cita con 10% de descuento`}
-                       class="btn btn-light btn-lg fw-bold w-100" target="_blank">
-                        <i class="fab fa-whatsapp me-2"></i>
-                        Agendar por WhatsApp
-                    </a>
-                    <small class="text-white d-block mt-2">✓ Respuesta inmediata</small>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <a href="tel:${siteSettings.phone_number.replace(/\s/g, '')}"
-                       class="btn btn-outline-light btn-lg fw-bold w-100">
-                        <i class="fas fa-phone me-2"></i>
-                        Llamar Ahora
-                    </a>
-                    <small class="text-white d-block mt-2">📅 Horario: 8am-8pm</small>
-                </div>
-            </div>
-            
-            <!-- Trust Pills -->
-            <div class="row mt-5 justify-content-center">
-                <div class="col-auto mb-2">
-                    <div class="trust-pill">
-                        <i class="fas fa-check-circle text-success me-2"></i>
-                        Sin Costos Ocultos
-                    </div>
-                </div>
-                <div class="col-auto mb-2">
-                    <div class="trust-pill">
-                        <i class="fas fa-shield-alt text-success me-2"></i>
-                        Resultados Confiables
-                    </div>
-                </div>
-                <div class="col-auto mb-2">
-                    <div class="trust-pill">
-                        <i class="fas fa-user-md text-success me-2"></i>
-                        Médicos Certificados
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- Enhanced CTA Section with CMS Management -->
+    <CTASection settings={siteSettings} showOn={['home']} />
 </Layout>
 
 <style>

@@ -1,0 +1,242 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { getCollection } from 'astro:content';
+
+interface Props {
+  settings?: CollectionEntry<"settings">;
+  variant?: 'default' | 'compact' | 'minimal';
+  showOn?: string[];
+}
+
+const { settings, variant = 'default', showOn = ['home'] } = Astro.props;
+
+// Fallback to default settings if none provided
+const siteSettings = settings || (await getCollection('settings'))[0];
+const ctaConfig = siteSettings?.data.cta_section;
+
+// Early return if CTA is disabled or shouldn't show on current page
+if (!ctaConfig?.enabled || !showOn.includes(Astro.url.pathname === '/' ? 'home' : 'services')) {
+  return null;
+}
+
+// Helper function to generate button links
+function generateButtonLink(button: any) {
+  switch (button.link_type) {
+    case 'whatsapp':
+      return `https://wa.me/${siteSettings.data.whatsapp_number}${button.text.includes('descuento') ? '?text=Hola, deseo agendar una cita con descuento' : ''}`;
+    case 'phone':
+      return `tel:${siteSettings.data.phone_number.replace(/\s/g, '')}`;
+    case 'email':
+      return `mailto:${siteSettings.data.email_contact}`;
+    case 'custom':
+      return button.custom_link || '#';
+    default:
+      return '#';
+  }
+}
+
+// Sort buttons by order
+const sortedButtons = Object.values(ctaConfig.buttons)
+  .filter((btn: any) => btn && btn.enabled)
+  .sort((a: any, b: any) => (a?.order || 999) - (b?.order || 999));
+
+// Sort trust indicators
+const sortedIndicators = ctaConfig.trust_indicators
+  .filter((ind: any) => ind.enabled)
+  .sort((a: any, b: any) => (a?.order || 999) - (b?.order || 999));
+---
+
+{ctaConfig && (
+  <section class={`cta-section py-5 enhanced-cta-section cta-variant-${variant} ${ctaConfig.styling?.padding || 'normal'}`} data-aos="fade-up">
+    <div class="container text-center py-5 position-relative">
+      
+      <!-- Urgency Badge -->
+      {ctaConfig.urgency?.enabled && (
+        <div class={`urgency-badge mb-3 urgency-style-${ctaConfig.urgency?.style || 'pulse'}`}>
+          <i class={`${ctaConfig.urgency.icon} me-2`}></i>
+          <span class="fw-bold">{ctaConfig.urgency.text}</span>
+        </div>
+      )}
+      
+      <!-- Main CTA Content -->
+      <h2 class="display-5 fw-bold text-white mb-4">
+        {ctaConfig.content.title}
+      </h2>
+      <p class="lead text-white mb-4">
+        {ctaConfig.content.discount_enabled ? (
+          <>
+            {ctaConfig.content.description.split(ctaConfig.content.discount_percentage)[0]}
+            <strong>{ctaConfig.content.discount_percentage} {ctaConfig.content.discount_text}</strong>
+            {ctaConfig.content.description.split(ctaConfig.content.discount_percentage)[1] || ''}
+          </>
+        ) : (
+          ctaConfig.content.description
+        )}
+      </p>
+      
+      <!-- Action Buttons -->
+      <div class={`row justify-content-center ${ctaConfig.mobile?.stack_buttons ? 'g-2' : 'g-4'}`}>
+        {sortedButtons.map((button: any) => (
+          <div class="col-md-6 col-lg-4">
+            <a href={generateButtonLink(button)}
+               class={`btn btn-${button.color} btn-lg fw-bold w-100 ${ctaConfig.mobile?.stack_buttons ? 'd-block' : ''}`}
+               target={button.link_type === 'whatsapp' ? '_blank' : '_self'}
+               rel={button.link_type === 'whatsapp' ? 'noopener noreferrer' : ''}>
+              <i class={`${button.icon} me-2`}></i>
+              {button.text}
+            </a>
+            {button.subtext && (
+              <small class={`text-white d-block mt-2 ${ctaConfig.mobile?.reduce_text_size ? 'small' : ''}`}>
+                {button.subtext}
+              </small>
+            )}
+          </div>
+        ))}
+      </div>
+      
+      <!-- Trust Indicators -->
+      {sortedIndicators.length > 0 && !ctaConfig.mobile?.hide_indicators && (
+        <div class="row mt-5 justify-content-center">
+          {sortedIndicators.map((indicator: any) => (
+            <div class="col-auto mb-2">
+              <div class={`trust-pill trust-${indicator.icon_color}`}>
+                <i class={`${indicator.icon} me-2`}></i>
+                {indicator.text}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+      
+    </div>
+  </section>
+)}
+
+<style>
+/* Enhanced CTA Styles - inherit from existing styles */
+.enhanced-cta-section {
+  background: var(--gradient-primary);
+  position: relative;
+  overflow: hidden;
+  color: white;
+}
+
+/* Overlay profesional */
+.enhanced-cta-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 30% 70%, rgba(255,255,255,0.1) 0%, transparent 50%),
+              radial-gradient(circle at 70% 30%, rgba(40, 167, 69, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* Urgency Badge */
+.urgency-badge {
+  background: var(--danger-red);
+  color: white;
+  padding: 10px 22px;
+  border-radius: 25px;
+  font-weight: 600;
+  animation: pulse 2s infinite;
+  display: inline-block;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+}
+
+.urgency-style-pulse {
+  animation: pulse 2s infinite;
+}
+
+.urgency-style-badge {
+  animation: none;
+  background: var(--warning-amber);
+  padding: 12px 25px;
+  border-radius: 8px;
+}
+
+@keyframes pulse {
+  0%, 100% { 
+    transform: scale(1); 
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+  }
+  50% { 
+    transform: scale(1.05); 
+    box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+  }
+}
+
+/* Trust Indicator Cards */
+.trust-pill {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  padding: 10px 18px;
+  border-radius: 20px;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: center;
+  transition: all 0.3s ease;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.trust-pill:hover {
+  background: rgba(255, 255, 255, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+/* Color variants for trust indicators */
+.trust-success {
+  background: rgba(46, 204, 113, 0.9);
+  border-color: rgba(46, 204, 113, 0.7);
+}
+
+.trust-primary {
+  background: rgba(0, 61, 162, 0.9);
+  border-color: rgba(0, 61, 162, 0.7);
+}
+
+.trust-warning {
+  background: rgba(243, 156, 18, 0.9);
+  border-color: rgba(243, 156, 18, 0.7);
+}
+
+.trust-info {
+  background: rgba(59, 130, 246, 0.9);
+  border-color: rgba(59, 130, 246, 0.7);
+}
+
+/* Variantes de diseño */
+.cta-variant-compact {
+  padding: 2rem 0 !important;
+}
+
+.cta-variant-minimal {
+  padding: 1.5rem 0 !important;
+}
+
+/* Responsive mejorado */
+@media (max-width: 768px) {
+  .cta-variant-compact .display-5 {
+    font-size: 1.8rem;
+  }
+  
+  .cta-variant-minimal .display-5 {
+    font-size: 1.6rem;
+  }
+  
+  .cta-variant-minimal .lead {
+    font-size: 1.4rem;
+  }
+  
+  .trust-pill {
+    font-size: 0.8rem;
+    padding: 8px 14px;
+  }
+}
+</style>
