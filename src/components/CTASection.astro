@@ -12,22 +12,29 @@ const { settings, variant = 'default', showOn = ['home'] } = Astro.props;
 
 // Fallback to default settings if none provided
 const siteSettings = settings || (await getCollection('settings'))[0];
-const ctaConfig = siteSettings?.data.cta_section;
+const ctaConfig = siteSettings?.data?.cta_section;
 
 // Early return if CTA is disabled or shouldn't show on current page
-if (!ctaConfig?.enabled || !showOn.includes(Astro.url.pathname === '/' ? 'home' : 'services')) {
+const currentPage = Astro.url.pathname === '/' ? 'home' : Astro.url.pathname.slice(1);
+if (!ctaConfig?.enabled || !showOn.includes(currentPage)) {
   return null;
 }
 
 // Helper function to generate button links
 function generateButtonLink(button: any) {
   switch (button.link_type) {
-    case 'whatsapp':
-      return `https://wa.me/${siteSettings.data.whatsapp_number}${button.text.includes('descuento') ? '?text=Hola, deseo agendar una cita con descuento' : ''}`;
-    case 'phone':
-      return `tel:${siteSettings.data.phone_number.replace(/\s/g, '')}`;
-    case 'email':
-      return `mailto:${siteSettings.data.email_contact}`;
+    case 'whatsapp': {
+      const whatsappNumber = siteSettings?.data?.whatsapp_number || '528115883775';
+      return `https://wa.me/${whatsappNumber}${button.text.includes('descuento') ? '?text=Hola, deseo agendar una cita con descuento' : ''}`;
+    }
+    case 'phone': {
+      const phoneNumber = siteSettings?.data?.phone_number?.replace(/\s/g, '') || '8115883775';
+      return `tel:${phoneNumber}`;
+    }
+    case 'email': {
+      const emailContact = siteSettings?.data?.email_contact || 'info@centromedicogonzalitos.com';
+      return `mailto:${emailContact}`;
+    }
     case 'custom':
       return button.custom_link || '#';
     default:

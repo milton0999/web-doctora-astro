@@ -288,39 +288,17 @@ body {
                     </div>
                 </nav>
 
-                <!-- Botón móvil -->
-                <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#mobileNav">
+                <!-- Botón móvil único -->
+                <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" style="border-color: var(--primary-color);">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-            </div>
-
-            <!-- Navegación móvil expandida -->
-            <div class="collapse d-lg-none" id="mobileNav">
-                <div class="mobile-cta p-3 bg-light border-top mt-2 rounded">
-                    <a href="/nosotros" class="d-block mb-3 text-decoration-none fw-bold" style="color: var(--primary-color);">
-                        <i class="fas fa-users me-2"></i>Sobre Nosotros
-                    </a>
-
-                    <a href={`https://wa.me/${siteSettings.whatsapp_number}`} target="_blank"
-                       class="d-flex align-items-center gap-3 text-decoration-none p-3 rounded border"
-                       style="background: rgba(40, 167, 69, 0.1); border-color: rgba(40, 167, 69, 0.2) !important;">
-                        <i class="fab fa-whatsapp text-success fs-3"></i>
-                        <div>
-                            <div class="fw-bold mb-1" style="color: var(--phone-color);">Agenda tu Cita</div>
-                            <div style="color: var(--primary-color); font-weight: 600; font-size: 1.1rem;">{siteSettings.phone_number}</div>
-                        </div>
-                    </a>
-                </div>
             </div>
         </div>
     </header>
 
-     <!-- Navegación Principal (estilo archivado) -->
+     <!-- Navegación Principal Unificada -->
      <nav class="navbar navbar-expand-lg sticky-top shadow-sm">
          <div class="container">
-             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" style="border-color: rgba(255,255,255,0.5);">
-                 <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
-             </button>
              <div class="collapse navbar-collapse" id="mainNav">
                  <ul class="navbar-nav w-100 justify-content-center">
                      <li class="nav-item dropdown me-lg-2">
@@ -341,29 +319,43 @@ body {
                          </ul>
                      </li>
 
-                     <li class="nav-item dropdown me-lg-2">
-                         <a class="nav-link dropdown-toggle fw-bold" href="#" role="button" data-bs-toggle="dropdown">Ultrasonido Pediatrico</a>
-                         <ul class="dropdown-menu">
-                              {serviciosPorCategoria.pediatrico.length > 0 ? serviciosPorCategoria.pediatrico.map(s => (
-                                 <li><a class="dropdown-item" href={`/servicios/${s.slug}`}>{s.data.title}</a></li>
-                             )) : <li><span class="dropdown-item disabled">Próximamente</span></li>}
-                         </ul>
-                     </li>
+                      {serviciosPorCategoria.pediatrico.length > 0 && (
+                          <li class="nav-item dropdown me-lg-2">
+                              <a class="nav-link dropdown-toggle fw-bold" href="#" role="button" data-bs-toggle="dropdown">Ultrasonido Pediatrico</a>
+                              <ul class="dropdown-menu">
+                                   {serviciosPorCategoria.pediatrico.map(s => (
+                                      <li><a class="dropdown-item" href={`/servicios/${s.slug}`}>{s.data.title}</a></li>
+                                  ))}
+                              </ul>
+                          </li>
+                      )}
 
-                     <li class="nav-item dropdown me-lg-2">
-                         <a class="nav-link dropdown-toggle fw-bold" href="#" role="button" data-bs-toggle="dropdown">Ginecología</a>
-                         <ul class="dropdown-menu">
-                             <li><a class="dropdown-item" href="/servicios">Ver todos los servicios ginecológicos</a></li>
-                         </ul>
-                     </li>
+                      <li class="nav-item dropdown me-lg-2">
+                          <a class="nav-link dropdown-toggle fw-bold" href="#" role="button" data-bs-toggle="dropdown">Ginecología</a>
+                          <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="/servicios">Ver todos los servicios ginecológicos</a></li>
+                          </ul>
+                      </li>
 
-                     <li class="nav-item me-lg-2">
-                         <a class="nav-link fw-bold" href="/promociones">Ultrasonido de embarazo 5D</a>
-                     </li>
-                 </ul>
-             </div>
-         </div>
-     </nav>
+                      <li class="nav-item me-lg-2">
+                          <a class="nav-link fw-bold" href="/promociones">Ultrasonido de embarazo 5D</a>
+                      </li>
+
+                      <!-- Elementos móviles adicionales -->
+                      <li class="nav-item d-lg-none border-top mt-2 pt-2">
+                          <a class="nav-link fw-bold" href="/nosotros">
+                              <i class="fas fa-users me-1"></i>Sobre Nosotros
+                          </a>
+                      </li>
+                      <li class="nav-item d-lg-none">
+                          <a class="nav-link fw-bold text-success" href={`https://wa.me/${siteSettings.whatsapp_number}`} target="_blank">
+                              <i class="fab fa-whatsapp me-1"></i>Agenda tu Cita: {siteSettings.phone_number}
+                          </a>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+      </nav>
 
 
 
@@ -381,14 +373,13 @@ body {
 
                  <div class="col-lg py-2">
                      <h4 class="h5 mb-3">Servicios</h4>
-                     <nav class="footer-links">
-                         <div class="mb-2"><a href="/categoria-de-servicio/ecografias-adulto/" class="d-block text-decoration-none">Ultrasonido Adulto</a></div>
-                         <div class="mb-2"><a href="/categoria-de-servicio/ecografias-pediatrico/" class="d-block text-decoration-none">Ultrasonido Pediatrico</a></div>
-                         <div class="mb-2"><a href="/categoria-de-servicio/ecografias-materno/" class="d-block text-decoration-none">Ultrasonido Materno</a></div>
+                      <nav class="footer-links">
+                          <div class="mb-2"><a href="/categoria-de-servicio/ecografias-adulto/" class="d-block text-decoration-none">Ultrasonido Adulto</a></div>
+                          <div class="mb-2"><a href="/categoria-de-servicio/ecografias-materno/" class="d-block text-decoration-none">Ultrasonido de paciente embarazada</a></div>
                           <div class="mb-2"><a href="/categoria-de-servicio/ginecologia/" class="d-block text-decoration-none">Ultrasonido Ginecología</a></div>
-                         <div class="mb-2"><a href="/servicios/ecografia-de-prostata/" class="d-block text-decoration-none">Ecografía de Próstata</a></div>
-                          <div class="mb-0"><a href="/categoria-de-servicio/eco-5d/" class="d-block text-decoration-none">ECO 5D – Premom</a></div>
-                     </nav>
+                          <div class="mb-2"><a href="/categoria-de-servicio/eco-5d/" class="d-block text-decoration-none">Ultrasonido de embarazo 5D</a></div>
+                          <div class="mb-0"><a href="/servicios" class="d-block text-decoration-none">Ver todos los servicios</a></div>
+                      </nav>
                  </div>
 
                   <div class="col-lg py-2">

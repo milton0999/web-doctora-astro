@@ -47,6 +47,76 @@ const settings = defineCollection({
     facebook_url: z.string().optional(),
     instagram_url: z.string().optional(),
     
+    // Enhanced CTA Section Configuration
+    cta_section: z.object({
+      enabled: z.boolean(),
+      urgency: z.object({
+        enabled: z.boolean(),
+        icon: z.string(),
+        text: z.string(),
+        style: z.enum(['pulse', 'badge']).default('pulse'),
+      }).optional(),
+      content: z.object({
+        title: z.string(),
+        description: z.string(),
+        discount_enabled: z.boolean(),
+        discount_percentage: z.string(),
+        discount_text: z.string(),
+      }),
+      buttons: z.object({
+        primary: z.object({
+          text: z.string(),
+          icon: z.string(),
+          color: z.string(),
+          link_type: z.enum(['whatsapp', 'phone', 'email', 'custom']),
+          enabled: z.boolean(),
+          order: z.number(),
+          subtext: z.string().optional(),
+        }),
+        secondary: z.object({
+          text: z.string(),
+          icon: z.string(),
+          color: z.string(),
+          link_type: z.enum(['whatsapp', 'phone', 'email', 'custom']),
+          enabled: z.boolean(),
+          order: z.number(),
+          subtext: z.string().optional(),
+        }),
+        optional: z.object({
+          text: z.string(),
+          icon: z.string(),
+          color: z.string(),
+          link_type: z.enum(['whatsapp', 'phone', 'email', 'custom']),
+          custom_link: z.string().optional(),
+          enabled: z.boolean(),
+          order: z.number(),
+          subtext: z.string().optional(),
+        }),
+      }),
+      trust_indicators: z.array(z.object({
+        icon: z.string(),
+        text: z.string(),
+        icon_color: z.enum(['success', 'primary', 'warning', 'info']),
+        enabled: z.boolean(),
+        order: z.number(),
+      })),
+      styling: z.object({
+        background_style: z.string().optional(),
+        text_color: z.string().optional(),
+        padding: z.string().optional(),
+        animations_enabled: z.boolean().default(true),
+      }).optional(),
+      mobile: z.object({
+        stack_buttons: z.boolean().default(true),
+        reduce_text_size: z.boolean().default(true),
+        hide_indicators: z.boolean().default(false),
+      }).optional(),
+      display: z.object({
+        show_on_pages: z.array(z.string()).default(['home']),
+        a_b_testing: z.boolean().default(false),
+      }).optional(),
+    }).optional(),
+    
     // Hero Section Configuration
     hero: z.object({
       title_override: z.string().nullable().optional(),

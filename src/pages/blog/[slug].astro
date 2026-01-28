@@ -1,0 +1,203 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map(post => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+// Obtener configuración del sitio
+const settings = await getCollection('settings');
+const siteSettings = settings[0]?.data || {
+  site_name: 'Centro Médico Gonzalitos',
+  description: 'Ecografías y ultrasonidos de alta calidad en Monterrey'
+};
+---
+
+<Layout title={post.data.title} description={post.data.description || siteSettings.description}>
+  <!-- Title Bar -->
+  <div class="title-bar-wrapper border-bottom">
+    <div class="container">
+      <div class="row align-items-center py-4">
+        <div class="col-12 col-lg-6">
+          <h1 class="entry-title mb-0" style="color: var(--text-dark);">{post.data.title}</h1>
+        </div>
+        <div class="col-12 col-lg-6 text-lg-end">
+          <nav class="nav-breadcrumb" aria-label="breadcrumb">
+            <ol class="breadcrumb justify-content-lg-end mb-0">
+              <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+              <li class="breadcrumb-item"><a href="/blog">Blog</a></li>
+              <li class="breadcrumb-item active" aria-current="page">{post.data.title}</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <article class="blog-post">
+            <!-- Meta información -->
+            <div class="blog-meta mb-4">
+              <div class="d-flex align-items-center text-muted small mb-3">
+                {post.data.author && (
+                  <span class="me-3">
+                    <i class="fas fa-user me-1"></i> {post.data.author}
+                  </span>
+                )}
+                {post.data.publishDate && (
+                  <span class="me-3">
+                    <i class="fas fa-calendar me-1"></i> {new Date(post.data.publishDate).toLocaleDateString('es-MX', { 
+                      year: 'numeric', 
+                      month: 'long', 
+                      day: 'numeric' 
+                    })}
+                  </span>
+                )}
+                {post.data.category && (
+                  <span>
+                    <i class="fas fa-tag me-1"></i> {post.data.category}
+                  </span>
+                )}
+              </div>
+            </div>
+
+            <!-- Imagen destacada -->
+            {post.data.image && (
+              <div class="blog-image mb-4">
+                <img src={post.data.image} alt={post.data.title} class="img-fluid rounded" style="object-fit: cover; width: 100%; max-height: 400px;" />
+              </div>
+            )}
+
+            <!-- Contenido del post -->
+            <div class="blog-content prose">
+              <Content />
+            </div>
+
+            <!-- Tags -->
+            {post.data.tags && post.data.tags.length > 0 && (
+              <div class="blog-tags mt-4">
+                <h5 class="mb-3">Etiquetas</h5>
+                <div class="d-flex flex-wrap gap-2">
+                  {post.data.tags.map(tag => (
+                    <span class="badge bg-secondary">{tag}</span>
+                  ))}
+                </div>
+              </div>
+            )}
+          </article>
+        </div>
+
+        <div class="col-lg-4">
+          <!-- Sidebar -->
+          <aside class="blog-sidebar">
+            <!-- CTA Section -->
+            <div class="layer p-4 mb-4" style="background-color: var(--layer-bg); border-radius: 8px;">
+              <h5 class="mb-3">¿Necesitas agendar una cita?</h5>
+              <p class="mb-3">Contáctanos hoy mismo por WhatsApp para obtener atención médica de calidad.</p>
+              <a href={`https://wa.me/${siteSettings.whatsapp_number}`} 
+                 class="btn btn-success w-100" target="_blank">
+                <i class="fab fa-whatsapp me-2"></i>Agendar Cita
+              </a>
+            </div>
+
+            <!-- Navegación de posts relacionados (si existen) -->
+            <div class="related-posts p-4" style="background-color: var(--bg-light); border-radius: 8px;">
+              <h5 class="mb-3">Artículos Recientes</h5>
+              <p class="text-muted small">Pronto podrás ver artículos relacionados aquí.</p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+.title-bar-wrapper {
+  background: var(--bg-white);
+}
+
+.breadcrumb {
+  background: transparent;
+  padding: 0;
+  margin: 0;
+}
+
+.breadcrumb-item a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.breadcrumb-item.active {
+  color: var(--text-muted);
+}
+
+.blog-meta {
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1rem;
+}
+
+.blog-image img {
+  transition: transform 0.3s ease;
+}
+
+.blog-image img:hover {
+  transform: scale(1.02);
+}
+
+.blog-content {
+  line-height: 1.7;
+}
+
+.blog-content h2,
+.blog-content h3,
+.blog-content h4 {
+  color: var(--text-dark);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.blog-content p {
+  margin-bottom: 1.5rem;
+}
+
+.blog-content ul,
+.blog-content ol {
+  margin-bottom: 1.5rem;
+  padding-left: 1.5rem;
+}
+
+.blog-content blockquote {
+  border-left: 4px solid var(--primary-color);
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+.layer {
+  box-shadow: var(--shadow-sm);
+}
+
+.prose {
+  max-width: none;
+}
+
+@media (max-width: 768px) {
+  .blog-sidebar {
+    margin-top: 2rem;
+  }
+}
+</style>
