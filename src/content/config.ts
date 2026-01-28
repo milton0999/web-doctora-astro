@@ -20,7 +20,7 @@ const servicios = defineCollection({
     ]),
     subcategoria: z.string().optional(), // Ej: "Abdominal", "Vascular", etc.
     price: z.string().optional(),    
-    duracion: z.string().optional(),  // Mantener consistencia con nombre en archivos
+    duration: z.string().optional(),  // Mantener consistencia con nombre en archivos
     preparacion: z.string().optional(),
     contraindicaciones: z.array(z.string()).optional(),
     gallery: z.array(z.string()).optional(),
