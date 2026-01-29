@@ -1,13 +1,20 @@
 ---
-title: "Eco Doppler Yugular"
-categoria: "Adulto"
-image: "/img/servicios/eco-doppler-yugular.jpg"
-price: "$3,200"
-duration: "30 minutos"
-description: "Evaluación del sistema venoso del cuello y venas subclavias mediante ultrasonido Doppler."
+title: Eco Doppler Yugular
+categoria: Adulto
+image: /img/675b893d-2365-4062-ac3f-672a4658631b.jpg
+description: Evaluación del sistema venoso del cuello y venas subclavias
+  mediante ultrasonido Doppler.
+price: $3,200
+duration: 30 minutos
+gallery:
+  - /img/servicios/eco-doppler-yugular.jpg
+tags:
+  - Doppler
+  - Yugular
+  - Adulto
+  - Vascular
+  - Cuello
 featured: true
-tags: ["Doppler", "Yugular", "Adulto", "Vascular", "Cuello"]
-gallery: ["/img/servicios/eco-doppler-yugular.jpg"]
 ---
 
 # Eco Doppler Yugular
