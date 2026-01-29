@@ -20,7 +20,7 @@ instagram_url: https://instagram.com/centromedicogonzalitos
 
 # Enhanced CTA Section Configuration
 cta_section:
-  enabled: true
+  enabled: false
     
   urgency:
     enabled: true
