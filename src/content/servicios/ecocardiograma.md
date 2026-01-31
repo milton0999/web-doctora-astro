@@ -1,6 +1,6 @@
 ---
 title: "Ecocardiograma"
-categoria: "Adulto"
+categoria: Cardiologia
 image: "/img/servicios/ecocardiograma.jpg"
 price: "$2,500"
 duration: "30 minutos"

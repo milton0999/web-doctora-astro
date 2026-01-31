@@ -1,6 +1,6 @@
 ---
 title: Eco Doppler Yugular
-categoria: Adulto
+categoria: Doppler
 image: /img/675b893d-2365-4062-ac3f-672a4658631b.jpg
 description: Evaluación del sistema venoso del cuello y venas subclavias
   mediante ultrasonido Doppler.

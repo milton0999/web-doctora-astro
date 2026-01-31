@@ -3,21 +3,25 @@ import Layout from '../layouts/Layout.astro';
 import ServicioCard from '../components/ServicioCard.astro';
 import { getCollection } from 'astro:content';
 
+// Meta tags optimizados para SEO local
+const serviciosPageTitle = "Servicios Médicos de Ultrasonido en Monterrey | Centro Médico Gonzalitos";
+const serviciosPageDescription = "Ofrecemos estudios especializados de ultrasonido, ecografía y diagnóstico por imagen en Monterrey, Nuevo León. Atención para adultos, embarazadas y pediatría.";
+
 // Obtener todos los servicios
 const servicios = await getCollection('servicios');
 
 // Agrupar servicios por categoría
-const serviciosPorCategoria = servicios.reduce((acc, servicio) => {
+const serviciosPorCategoria: Record<string, any[]> = servicios.reduce((acc, servicio) => {
   const categoria = servicio.data.categoria;
   if (!acc[categoria]) {
     acc[categoria] = [];
   }
   acc[categoria].push(servicio);
   return acc;
-}, {});
+}, {} as Record<string, any[]>);
 
 // Mapeo de nombres de categorías para mostrar
-const nombresCategorias = {
+const nombresCategorias: Record<string, string> = {
   'Adulto': 'Ecografías para Adulto',
   'Embarazada': 'Ecografías Materno-Fetales',
   'Pediatrico': 'Ecografías Pediátricas',
@@ -30,15 +34,11 @@ const nombresCategorias = {
   'General': 'Estudios Generales'
 };
 
-// Orden de categorías
-const ordenCategorias = ['Adulto', 'Embarazada', 'Pediatrico', 'Ginecologia'];
+// Orden de categorías - actualizado para incluir todas las especialidades médicas
+const ordenCategorias = ['Adulto', 'Embarazada', 'Pediatrico', 'Ginecologia', 'Cardiologia', 'Musculoesqueletico', 'Doppler', 'Tiroides', 'Mama', 'General'];
 ---
 
----
-// Meta tags optimizados para SEO local
-const serviciosPageTitle = "Servicios Médicos de Ultrasonido en Monterrey | Centro Médico Gonzalitos";
-const serviciosPageDescription = "Ofrecemos estudios especializados de ultrasonido, ecografía y diagnóstico por imagen en Monterrey, Nuevo León. Atención para adultos, embarazadas y pediatría.";
----
+
 
 <Layout title={serviciosPageTitle} description={serviciosPageDescription}>
   <!-- Hero Section -->
@@ -70,7 +70,7 @@ const serviciosPageDescription = "Ofrecemos estudios especializados de ultrasoni
             <!-- Sección de Categoría -->
             <div class="mb-5">
               <div class="text-center mb-4">
-                <h2 class="h2 fw-bold">{nombresCategorias[categoria]}</h2>
+                <h2 class="h2 fw-bold">{nombresCategorias[categoria] || categoria}</h2>
                 <p class="text-muted">
                   {serviciosPorCategoria[categoria].length} estudio{serviciosPorCategoria[categoria].length > 1 ? 's' : ''} disponible{serviciosPorCategoria[categoria].length > 1 ? 's' : ''}
                 </p>
@@ -97,7 +97,7 @@ const serviciosPageDescription = "Ofrecemos estudios especializados de ultrasoni
         !ordenCategorias.includes(categoria) && serviciosPorCategoria[categoria] && (
           <div class="mb-5">
             <div class="text-center mb-4">
-              <h2 class="h2 fw-bold">{nombresCategorias[categoria]}</h2>
+              <h2 class="h2 fw-bold">{nombresCategorias[categoria] || categoria}</h2>
               <p class="text-muted">
                 {serviciosPorCategoria[categoria].length} estudio{serviciosPorCategoria[categoria].length > 1 ? 's' : ''} disponible{serviciosPorCategoria[categoria].length > 1 ? 's' : ''}
               </p>

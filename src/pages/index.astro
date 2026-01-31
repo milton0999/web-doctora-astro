@@ -192,6 +192,21 @@ const serviciosPorCategoria = {
                     <button class="category-btn" data-category="Pediatrico" onclick="filterServices('Pediatrico')" type="button" aria-pressed="false">
                         Pediatría ({serviciosPorCategoria?.pediatrico?.length || 0})
                     </button>
+                    <button class="category-btn" data-category="Cardiologia" onclick="filterServices('Cardiologia')" type="button" aria-pressed="false">
+                        Cardiología ({servicios.filter(s => s.data.categoria === 'Cardiologia').length})
+                    </button>
+                    <button class="category-btn" data-category="Doppler" onclick="filterServices('Doppler')" type="button" aria-pressed="false">
+                        Doppler ({servicios.filter(s => s.data.categoria === 'Doppler').length})
+                    </button>
+                    <button class="category-btn" data-category="Tiroides" onclick="filterServices('Tiroides')" type="button" aria-pressed="false">
+                        Tiroides ({servicios.filter(s => s.data.categoria === 'Tiroides').length})
+                    </button>
+                    <button class="category-btn" data-category="Mama" onclick="filterServices('Mama')" type="button" aria-pressed="false">
+                        Mama ({servicios.filter(s => s.data.categoria === 'Mama').length})
+                    </button>
+                    <button class="category-btn" data-category="Musculoesqueletico" onclick="filterServices('Musculoesqueletico')" type="button" aria-pressed="false">
+                        Musculoesquelético ({servicios.filter(s => s.data.categoria === 'Musculoesqueletico').length})
+                    </button>
                 </div>
             </div>
             

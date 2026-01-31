@@ -1,6 +1,6 @@
 ---
 title: "Ecografía Doppler Testicular"
-categoria: "Adulto"
+categoria: Doppler
 image: "/img/servicios/ecografia-doppler-testicular.jpg"
 price: "$2,200"
 duration: "30 minutos"

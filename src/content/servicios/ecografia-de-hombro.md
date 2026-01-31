@@ -1,6 +1,6 @@
 ---
 title: "Ecografía de Hombro"
-categoria: "Adulto"
+categoria: Musculoesqueletico
 image: "/img/servicios/ecografia-hombro.jpg"
 price: "$1,800"
 duration: "30 minutos"

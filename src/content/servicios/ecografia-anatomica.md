@@ -1,6 +1,6 @@
 ---
 title: "Ecografía Anatómica"
-categoria: "Embarazada"
+categoria: Embarazada
 image: "/img/servicios/ecografia-anatomica.jpg"
 price: "$2,000"
 duration: "45 minutos"

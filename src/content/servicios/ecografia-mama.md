@@ -1,6 +1,6 @@
 ---
 title: "Ecografía de Mama"
-categoria: "Adulto"
+categoria: Mama
 image: "/img/servicios/ecografia-mama.jpg"
 price: "$1,500"
 duration: "30 minutos"

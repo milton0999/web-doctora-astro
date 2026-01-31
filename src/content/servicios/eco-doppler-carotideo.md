@@ -1,6 +1,6 @@
 ---
 title: "Eco Doppler Carotídeo"
-categoria: "Adulto"
+categoria: Doppler
 image: "/img/servicios/eco-doppler-carotideo.jpg"
 price: "$3,500"
 duration: "30 minutos"

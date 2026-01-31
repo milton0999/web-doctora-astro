@@ -1,6 +1,6 @@
 ---
 title: "Ecografía 4D"
-categoria: "Embarazada"
+categoria: Embarazada
 image: "/img/servicios/logo-cmg-horizontal.png"
 price: "$1,500"
 duration: "45 minutos"

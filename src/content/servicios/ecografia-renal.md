@@ -1,6 +1,6 @@
 ---
 title: "Ecografía Renal"
-categoria: "Adulto"
+categoria: Adulto
 image: "/img/servicios/ecografia-renal.jpg"
 price: "$1,600"
 duration: "30 minutos"

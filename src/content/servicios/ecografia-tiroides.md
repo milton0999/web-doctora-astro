@@ -1,6 +1,6 @@
 ---
 title: "Ecografía de Tiroides"
-categoria: "Adulto"
+categoria: Tiroides
 image: "/img/servicios/ecografia-tiroides.jpg"
 price: "$2,000"
 duration: "30 minutos"
