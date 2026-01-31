@@ -485,16 +485,25 @@ function filterServices(category) {
         activeBtn.setAttribute('aria-pressed', 'true');
     }
     
-    // Filter services with normalized comparison
+    // Filter services with normalized comparison and debugging
     const serviceItems = document.querySelectorAll('.service-item');
     let visibleCount = 0;
     
-    serviceItems.forEach(item => {
+    console.log('🔍 Filter Services Called:', category);
+    console.log('📊 Total service items found:', serviceItems.length);
+    
+    serviceItems.forEach((item, index) => {
         const itemCategory = item.getAttribute('data-category');
         
         // Normalize both values for comparison
         const normalizedItemCategory = itemCategory ? itemCategory.trim() : '';
         const normalizedFilterCategory = category ? category.trim() : '';
+        
+        console.log(`🏷️ Service ${index}:`, {
+            category: itemCategory,
+            normalized: normalizedItemCategory,
+            match: normalizedItemCategory === normalizedFilterCategory
+        });
         
         if (category === 'all' || normalizedItemCategory === normalizedFilterCategory) {
             item.classList.remove('hidden');
@@ -503,6 +512,8 @@ function filterServices(category) {
             item.classList.add('hidden');
         }
     });
+    
+    console.log('📈 Services to show:', visibleCount);
     
     // Announce to screen readers
     const announcement = document.createElement('div');

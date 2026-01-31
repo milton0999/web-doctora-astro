@@ -48,8 +48,8 @@ try {
   const servicios = await getCollection('servicios');
   serviciosPorCategoria = {
     adultos: servicios.filter(s => s.data.categoria === 'Adulto'),
-    embarazadas: servicios.filter(s => s.data.categoria === 'Ultrasonido de Paciente Embarazada'),
-     pediatrico: servicios.filter(s => s.data.categoria === 'Ultrasonido Pediátrico')
+    embarazadas: servicios.filter(s => s.data.categoria === 'Embarazada'),
+    pediatrico: servicios.filter(s => s.data.categoria === 'Pediatrico')
   };
 } catch (error) {
   console.error('Error loading servicios:', error);

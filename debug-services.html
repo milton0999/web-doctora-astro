@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Services</title>
+</head>
+<body>
+    <h1>Services Debug</h1>
+    <div id="services"></div>
+    
+    <script>
+        // Mock the Astro content structure to test the logic
+        const servicios = [
+            { data: { categoria: "Ultrasonido Adulto", title: "Ecografía de Tiroides" } },
+            { data: { categoria: "Ultrasonido Adulto", title: "Ecocardiograma" } },
+            { data: { categoria: "Ultrasonido de Paciente Embarazada", title: "Ecografía Anatómica" } },
+            { data: { categoria: "Ultrasonido de Embarazo 5D", title: "Ecografía 4D" } },
+            // ... more services
+        ];
+
+        // Test the current servicios.astro logic
+        const serviciosPorCategoria = servicios.reduce((acc, servicio) => {
+            const categoria = servicio.data.categoria;
+            if (!acc[categoria]) {
+                acc[categoria] = [];
+            }
+            acc[categoria].push(servicio);
+            return acc;
+        }, {});
+
+        console.log('Services by category:', serviciosPorCategoria);
+
+        // Test the Layout.astro logic
+        const serviciosPorCategoriaLayout = {
+            adultos: servicios.filter(s => s.data.categoria === 'Adulto'),
+            embarazadas: servicios.filter(s => s.data.categoria === 'Embarazada'),
+            pediatrico: servicios.filter(s => s.data.categoria === 'Pediatrico')
+        };
+
+        console.log('Layout categories (should be empty):', serviciosPorCategoriaLayout);
+
+        // Display results
+        document.getElementById('services').innerHTML = `
+            <h2>Actual Categories (from servicios.astro):</h2>
+            <pre>${JSON.stringify(serviciosPorCategoria, null, 2)}</pre>
+            
+            <h2>Layout Categories (from Layout.astro):</h2>
+            <pre>${JSON.stringify(serviciosPorCategoriaLayout, null, 2)}</pre>
+        `;
+    </script>
+</body>
+</html>
