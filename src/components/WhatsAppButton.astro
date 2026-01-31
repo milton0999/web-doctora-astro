@@ -1,0 +1,228 @@
+---
+import { getCollection } from 'astro:content';
+
+interface Props {
+  variant?: 'fab' | 'inline' | 'card' | 'cta' | 'header';
+  message?: string;
+  phoneNumber?: string;
+  size?: 'sm' | 'md' | 'lg';
+  text?: string;
+  showIcon?: boolean;
+}
+
+const { 
+  variant = 'inline', 
+  message = 'Hola, deseo agendar una cita',
+  phoneNumber: propPhoneNumber,
+  size = 'md',
+  text,
+  showIcon = true 
+} = Astro.props;
+
+// Obtener número de WhatsApp desde settings
+let settings;
+try {
+  const settingsCollection = await getCollection('settings');
+  settings = settingsCollection[0]?.data;
+} catch (error) {
+  console.warn('Error loading settings for WhatsApp button:', error);
+}
+
+const whatsappNumber = propPhoneNumber || settings?.whatsapp_number || '528115883775';
+const buttonText = text || '💬 Contactar por WhatsApp';
+
+// Generar URL de WhatsApp con mensaje codificado
+const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+
+// Clases CSS según variante y tamaño
+const getButtonClasses = () => {
+  const baseClasses = 'btn btn-whatsapp';
+  const variantClasses = {
+    fab: 'btn-whatsapp-fab d-lg-none',
+    inline: 'btn-whatsapp-inline',
+    card: 'btn-whatsapp-card btn-sm',
+    cta: 'btn-whatsapp-cta btn-lg',
+    header: 'btn-whatsapp-header'
+  };
+  return `${baseClasses} ${variantClasses[variant]} size-${size}`;
+};
+
+// Atributos de accesibilidad
+const getAccessibilityAttributes = () => {
+  return {
+    'aria-label': variant === 'fab' 
+      ? 'Contactar por WhatsApp (abre en nueva ventana)'
+      : 'Contactar por WhatsApp en nueva ventana',
+    'role': 'button',
+    'target': '_blank',
+    'rel': 'noopener noreferrer',
+    'tabindex': '0'
+  };
+};
+---
+
+<!-- WhatsApp Button Component Unificado -->
+<a 
+  href={whatsappUrl}
+  class={getButtonClasses()}
+  {...getAccessibilityAttributes()}
+>
+  {showIcon && (
+    <i class="fab fa-whatsapp me-2" aria-hidden="true"></i>
+  )}
+  <span>{buttonText}</span>
+</a>
+
+<style>
+/* Estilos unificados para WhatsApp - Color oficial #25D366 */
+:root {
+  --whatsapp-green: #25D366;
+  --whatsapp-green-hover: #128C7E;
+  --whatsapp-green-light: #DCF8C6;
+}
+
+/* Botón base */
+.btn-whatsapp {
+  background: linear-gradient(135deg, var(--whatsapp-green) 0%, var(--whatsapp-green-hover) 100%);
+  border: 2px solid var(--whatsapp-green);
+  color: white !important;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border-radius: 50px;
+  padding: 12px 24px;
+  text-decoration: none !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+}
+
+.btn-whatsapp:hover,
+.btn-whatsapp:focus {
+  background: linear-gradient(135deg, var(--whatsapp-green-hover) 0%, #0A6E5F 100%);
+  color: white !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+  text-decoration: none !important;
+  border-color: var(--whatsapp-green-hover);
+}
+
+.btn-whatsapp:focus {
+  outline: 3px solid var(--whatsapp-green-light);
+  outline-offset: 2px;
+}
+
+.btn-whatsapp:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 10px rgba(37, 211, 102, 0.3);
+}
+
+/* Variante FAB (Floating Action Button) */
+.btn-whatsapp-fab {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  padding: 0;
+  font-size: 24px;
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+}
+
+.btn-whatsapp-fab:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6);
+}
+
+.btn-whatsapp-fab i {
+  margin: 0 !important;
+}
+
+/* Variante Inline (uso general) */
+.btn-whatsapp-inline {
+  font-size: 0.95rem;
+}
+
+/* Variante Card (para tarjetas de servicio) */
+.btn-whatsapp-card {
+  width: 100%;
+  font-size: 0.875rem;
+  padding: 10px 20px;
+}
+
+/* Variante CTA (para secciones de llamada a la acción) */
+.btn-whatsapp-cta {
+  font-size: 1.1rem;
+  padding: 16px 32px;
+}
+
+/* Variante Header (para navegación principal) */
+.btn-whatsapp-header {
+  background: transparent !important;
+  border: none;
+  color: var(--primary-color) !important;
+  font-weight: 700;
+  padding: 8px 12px;
+  box-shadow: none;
+  text-decoration: underline !important;
+  text-decoration-color: var(--primary-color) !important;
+  text-underline-offset: 2px;
+}
+
+.btn-whatsapp-header:hover,
+.btn-whatsapp-header:focus {
+  background: rgba(37, 211, 102, 0.1) !important;
+  color: var(--whatsapp-green) !important;
+  text-decoration: none !important;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Tamaños responsivos */
+.size-sm {
+  font-size: 0.875rem;
+  padding: 8px 16px;
+}
+
+.size-md {
+  font-size: 1rem;
+  padding: 12px 24px;
+}
+
+.size-lg {
+  font-size: 1.125rem;
+  padding: 16px 32px;
+}
+
+/* Mejoras de accesibilidad */
+.btn-whatsapp:focus-visible {
+  outline: 3px solid var(--whatsapp-green-light);
+  outline-offset: 2px;
+}
+
+/* Soporte para modo oscuro (si se implementa en el futuro) */
+@media (prefers-color-scheme: dark) {
+  .btn-whatsapp {
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.5);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .btn-whatsapp-fab {
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+    bottom: 16px;
+    right: 16px;
+  }
+  
+  .btn-whatsapp-cta {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+}
+</style>

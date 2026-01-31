@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import WhatsAppButton from "./WhatsAppButton.astro";
 import { getCollection } from 'astro:content';
 
 interface Props {
@@ -83,22 +84,41 @@ const sortedIndicators = ctaConfig.trust_indicators
       
       <!-- Action Buttons -->
       <div class={`row justify-content-center ${ctaConfig.mobile?.stack_buttons ? 'g-2' : 'g-4'}`}>
-        {sortedButtons.map((button: any) => (
-          <div class="col-md-6 col-lg-4">
-            <a href={generateButtonLink(button)}
-               class={`btn btn-${button.color} btn-lg fw-bold w-100 ${ctaConfig.mobile?.stack_buttons ? 'd-block' : ''}`}
-               target={button.link_type === 'whatsapp' ? '_blank' : '_self'}
-               rel={button.link_type === 'whatsapp' ? 'noopener noreferrer' : ''}>
-              <i class={`${button.icon} me-2`}></i>
-              {button.text}
-            </a>
-            {button.subtext && (
-              <small class={`text-white d-block mt-2 ${ctaConfig.mobile?.reduce_text_size ? 'small' : ''}`}>
-                {button.subtext}
-              </small>
-            )}
-          </div>
-        ))}
+        {sortedButtons.map((button: any) => {
+          if (button.link_type === 'whatsapp') {
+            return (
+              <div class="col-md-6 col-lg-4">
+                <WhatsAppButton 
+                  variant="cta"
+                  text={button.text}
+                  message={button.text.includes('descuento') ? 'Hola, deseo agendar una cita con descuento' : 'Hola, deseo agendar una cita'}
+                />
+                {button.subtext && (
+                  <small class={`text-white d-block mt-2 ${ctaConfig.mobile?.reduce_text_size ? 'small' : ''}`}>
+                    {button.subtext}
+                  </small>
+                )}
+              </div>
+            );
+          } else {
+            return (
+              <div class="col-md-6 col-lg-4">
+                <a href={generateButtonLink(button)}
+                   class={`btn btn-${button.color} btn-lg fw-bold w-100 ${ctaConfig.mobile?.stack_buttons ? 'd-block' : ''}`}
+                   target={button.link_type === 'phone' ? '_blank' : '_self'}
+                   rel={button.link_type === 'phone' ? 'noopener noreferrer' : ''}>
+                  <i class={`${button.icon} me-2`}></i>
+                  {button.text}
+                </a>
+                {button.subtext && (
+                  <small class={`text-white d-block mt-2 ${ctaConfig.mobile?.reduce_text_size ? 'small' : ''}`}>
+                    {button.subtext}
+                  </small>
+                )}
+              </div>
+            );
+          }
+        })}
       </div>
       
       <!-- Trust Indicators -->

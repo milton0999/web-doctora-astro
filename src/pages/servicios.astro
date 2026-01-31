@@ -34,14 +34,20 @@ const nombresCategorias = {
 const ordenCategorias = ['Adulto', 'Embarazada', 'Pediatrico', 'Ginecologia'];
 ---
 
-<Layout title="Servicios - Centro Médico Gonzalitos" description="Conoce todos nuestros servicios de ultrasonido y estudios diagnósticos">
+---
+// Meta tags optimizados para SEO local
+const serviciosPageTitle = "Servicios Médicos de Ultrasonido en Monterrey | Centro Médico Gonzalitos";
+const serviciosPageDescription = "Ofrecemos estudios especializados de ultrasonido, ecografía y diagnóstico por imagen en Monterrey, Nuevo León. Atención para adultos, embarazadas y pediatría.";
+---
+
+<Layout title={serviciosPageTitle} description={serviciosPageDescription}>
   <!-- Hero Section -->
   <section class="py-5 bg-primary">
     <div class="container">
       <div class="row align-items-center">
         <div class="col-lg-8">
-          <h1 class="display-4 fw-bold text-white mb-3">Nuestros Servicios</h1>
-          <p class="lead text-white-50">Ofrecemos una amplia gama de estudios de ultrasonido con tecnología de punta para brindarte el mejor diagnóstico.</p>
+          <h1 class="display-4 fw-bold text-white mb-3">Servicios Médicos en Monterrey</h1>
+          <p class="lead text-white-50">Ofrecemos una amplia gama de estudios de ultrasonido con tecnología de punta en Monterrey, Nuevo León. Atención especializada para adultos, embarazadas y pediatría.</p>
         </div>
         <div class="col-lg-4">
           <div class="bg-white bg-opacity-10 rounded-3 p-4">

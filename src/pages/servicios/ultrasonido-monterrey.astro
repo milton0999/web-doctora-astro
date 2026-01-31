@@ -1,0 +1,585 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import WhatsAppButton from '../../components/WhatsAppButton.astro';
+import ServicioCard from '../../components/ServicioCard.astro';
+import { getCollection } from 'astro:content';
+
+const services = await getCollection('servicios');
+const settings = await getCollection('settings');
+const siteSettings = settings[0]?.data;
+
+// Meta tags optimizados para SEO local
+const pageTitle = "Ultrasonido en Monterrey | Centro Médico Gonzalitos";
+const pageDescription = "Especialistas en ultrasonido diagnóstico en Monterrey, Nuevo León. Equipamiento de última generación en la zona de Gonzalitos. Citas inmediatas.";
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <!-- Schema específico para la página -->
+  <script type="application/ld+json" slot="head">
+  {
+    "@context": "https://schema.org",
+    "@type": "HealthcareService",
+    "name": "Servicios de Ultrasonido en Monterrey",
+    "description": "Estudios especializados de ultrasonido diagnóstico en Monterrey, Nuevo León",
+    "provider": {
+      "@type": "MedicalClinic",
+      "name": "Centro Médico Gonzalitos",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Avenida Dr. José Eleuterio González 135",
+        "addressLocality": "Monterrey",
+        "addressRegion": "Nuevo León",
+        "postalCode": "64600",
+        "addressCountry": "MX"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "25.6714",
+        "longitude": "-100.3090"
+      }
+    },
+    "areaServed": {
+      "@type": "City",
+      "name": "Monterrey",
+      "addressCountry": "MX"
+    },
+    "availableTest": [
+      "Ultrasonido Abdominal",
+      "Ultrasonido Pélvico", 
+      "Ultrasonido de Tiroides",
+      "Ultrasonido Mamario",
+      "Ultrasonido Musculoesquelético"
+    ],
+    "openingHours": "Mo-Fr 08:00-20:00, Sa 08:00-14:00"
+  }
+  </script>
+
+  <!-- Hero Section Optimizado -->
+  <section class="py-5 bg-primary text-white">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6">
+          <div class="hero-content">
+            <h1 class="display-4 fw-bold mb-4">Ultrasonido en Monterrey</h1>
+            <p class="lead mb-4">
+              Especialistas en diagnóstico por imagen con tecnología de vanguardia 
+              en la zona de Gonzalitos, Monterrey. Atención para adultos, 
+              embarazadas y pediatría con resultados precisos y rápidos.
+            </p>
+            <div class="d-flex gap-3 flex-wrap">
+              <WhatsAppButton 
+                variant="cta" 
+                message="Hola, deseo agendar una cita para ultrasonido en Monterrey"
+                text="🏥 Agendar Cita"
+              />
+              <a href="#servicios" class="btn btn-outline-light btn-lg">Ver Servicios</a>
+            </div>
+            
+            <!-- Trust Indicators Locales -->
+            <div class="trust-local mt-4">
+              <div class="d-flex gap-3 flex-wrap">
+                <span class="trust-item">
+                  <i class="fas fa-map-marker-alt me-1"></i>
+                  Gonzalitos
+                </span>
+                <span class="trust-item">
+                  <i class="fas fa-certificate me-1"></i>
+                  Certificado
+                </span>
+                <span class="trust-item">
+                  <i class="fas fa-shield-alt me-1"></i>
+                  Confiable
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="text-center">
+            <img src="/img/servicios/ultrasonido-monterrey-hero.jpg" 
+                 alt="Sala de ultrasonido en Centro Médico Gonzalitos Monterrey"
+                 class="img-fluid rounded-3 shadow-lg hero-image"
+                 style="max-height: 400px; width: auto;"
+                 onerror="this.src='/img/servicios/logo-cmg-horizontal.png'">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección de Beneficios Locales -->
+  <section class="py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 mb-4">
+          <div class="benefit-card h-100">
+            <div class="benefit-icon">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <h4 class="card-title">Ubicación Céntrica</h4>
+            <p class="card-text">
+              En el corazón de Gonzalitos, Monterrey. Fácil acceso en transporte público, 
+              estacionamiento propio y excelentes vías de comunicación.
+            </p>
+          </div>
+        </div>
+        <div class="col-lg-4 mb-4">
+          <div class="benefit-card h-100">
+            <div class="benefit-icon">
+              <i class="fas fa-clock"></i>
+            </div>
+            <h4 class="card-title">Horarios Amplios</h4>
+            <p class="card-text">
+              Lunes a Viernes 8am-8pm y Sábados 8am-2pm para tu comodidad. 
+              Citas prioritarias disponibles el mismo día.
+            </p>
+          </div>
+        </div>
+        <div class="col-lg-4 mb-4">
+          <div class="benefit-card h-100">
+            <div class="benefit-icon">
+              <i class="fas fa-mobile-alt"></i>
+            </div>
+            <h4 class="card-title">Contacto Rápido</h4>
+            <p class="card-text">
+              Agenda tu ultrasonido por WhatsApp directamente. Respuesta inmediata y 
+              confirmación de cita en minutos.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Grid de Servicios -->
+  <section class="py-5 bg-light" id="servicios">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="display-5 fw-bold">Nuestros Estudios de Ultrasonido en Monterrey</h2>
+        <p class="lead text-muted">Diagnóstico preciso con tecnología de última generación</p>
+      </div>
+      
+      <!-- Services by Category -->
+      <div class="category-tabs mb-5">
+        <div class="text-center">
+          <button class="category-tab active" onclick="showCategory('all')">Todos</button>
+          <button class="category-tab" onclick="showCategory('Adulto')">Adulto</button>
+          <button class="category-tab" onclick="showCategory('Embarazada')">Embarazada</button>
+          <button class="category-tab" onclick="showCategory('Pediatrico')">Pediatría</button>
+        </div>
+      </div>
+      
+      <div class="row g-4" id="servicesGrid">
+        {services.map(servicio => (
+          <div class="col-md-6 col-lg-4 service-item" data-category={servicio.data.categoria}>
+            <div class="service-card-local h-100">
+              <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                  <div class="service-header mb-3">
+                    <span class="category-badge local-badge">{servicio.data.categoria}</span>
+                    <h5 class="card-title fw-bold">{servicio.data.title}</h5>
+                  </div>
+                  <p class="card-text text-muted">{servicio.data.description}</p>
+                  {servicio.data.price && (
+                    <div class="price-info mt-auto">
+                      <span class="price-local fw-bold text-primary">{servicio.data.price}</span>
+                      {servicio.data.duration && (
+                        <span class="duration-local text-muted small"> • {servicio.data.duration}</span>
+                      )}
+                    </div>
+                  )}
+                  <div class="action-buttons mt-3 d-grid gap-2">
+                    <a href={`/servicios/${servicio.slug}`} class="btn btn-outline-primary btn-sm">
+                      Ver Detalles
+                    </a>
+                    <WhatsAppButton 
+                      variant="card" 
+                      message={`Hola, deseo agendar una cita para: ${servicio.data.title} en Monterrey`}
+                      size="sm"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección de Ubicación Detallada -->
+  <section class="py-5" id="ubicacion">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="display-5 fw-bold">🗺️ Visítanos en Monterrey</h2>
+        <p class="lead text-muted">Estamos convenientemente ubicados en la zona de Gonzalitos</p>
+      </div>
+      
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="location-info-card mb-4">
+            <h4 class="fw-bold mb-3">📍 Dirección</h4>
+            <div class="address-card-local">
+              <p class="mb-2"><strong>Centro Médico Gonzalitos</strong></p>
+              <address class="mb-0">
+                Avenida Dr. José Eleuterio González 135<br>
+                Colonia Leones, Monterrey<br>
+                Nuevo León, México 64600<br>
+                <small class="text-muted">Entre Calle Laredo y Calle Matamoros</small>
+              </address>
+            </div>
+          </div>
+          
+          <div class="contact-info-card mb-4">
+            <h4 class="fw-bold mb-3">📞 Contacto</h4>
+            <p><strong>Teléfono:</strong> {siteSettings.phone_number}</p>
+            <p><strong>WhatsApp:</strong> +52 8115883775</p>
+            <p><strong>Horarios:</strong> Lun-Vie: 8am-8pm, Sáb: 8am-2pm</p>
+          </div>
+          
+          <div>
+            <WhatsAppButton 
+              variant="cta" 
+              message="Hola, deseo agendar una cita para ultrasonido en Monterrey"
+              text="🏥 Agendar Ahora"
+            />
+          </div>
+        </div>
+        
+        <div class="col-lg-6">
+          <div class="map-container-local">
+            <iframe
+              src="https://www.google.com/maps/embed/v1/place?key=AIzaSyB2E7wXVc0H0r8bM7X3A7t9fYj8hZ6h9kWq&q=25.6714,-100.3090&zoom=16"
+              width="100%"
+              height="400"
+              style="border:0; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);"
+              allowfullscreen
+              loading="lazy"
+              aria-label="Mapa de ubicación del Centro Médico Gonzalitos para ultrasonido en Monterrey">
+            </iframe>
+          </div>
+          
+          <!-- Áreas de Servicio -->
+          <div class="service-areas mt-4">
+            <h5 class="fw-bold mb-3">Áreas de Servicio</h5>
+            <div class="row text-center">
+              <div class="col-6 mb-3">
+                <div class="area-item">
+                  <strong>Monterrey Centro</strong>
+                  <p class="small text-muted mb-0">A 10 min</p>
+                </div>
+              </div>
+              <div class="col-6 mb-3">
+                <div class="area-item">
+                  <strong>San Pedro</strong>
+                  <p class="small text-muted mb-0">A 15 min</p>
+                </div>
+              </div>
+              <div class="col-6 mb-3">
+                <div class="area-item">
+                  <strong>San Nicolás</strong>
+                  <p class="small text-muted mb-0">A 20 min</p>
+                </div>
+              </div>
+              <div class="col-6 mb-3">
+                <div class="area-item">
+                  <strong>Guadalupe</strong>
+                  <p class="small text-muted mb-0">A 25 min</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección de Testimonios Locales -->
+  <section class="py-5 bg-light">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="display-5 fw-bold">⭐ Opiniones de Nuestros Pacientes</h2>
+        <p class="lead text-muted">Confianza de la comunidad de Monterrey</p>
+      </div>
+      
+      <div class="row">
+        <div class="col-lg-4 mb-4">
+          <div class="testimonial-card h-100">
+            <div class="testimonial-content">
+              <div class="stars mb-3">
+                <i class="fas fa-star text-warning"></i>
+                <i class="fas fa-star text-warning"></i>
+                <i class="fas fa-star text-warning"></i>
+                <i class="fas fa-star text-warning"></i>
+                <i class="fas fa-star text-warning"></i>
+              </div>
+              <p class="testimonial-text">
+                "Excelente atención y profesionalismo. Mi ultrasonido abdominal fue rápido y preciso. 
+                Recomendado al 100%."
+              </p>
+              <div class="testimonial-author">
+                <strong>María García</strong>
+                <p class="small text-muted mb-0">Monterrey</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-lg-4 mb-4">
+          <div class="testimonial-card h-100">
+            <div class="testimonial-content">
+              <div class="stars mb-3">
+                <i class="fas fa-star text-warning"></i>
+                <i class="fas fa-star text-warning"></i>
+                <i class="fas fa-star text-warning"></i>
+                <i class="fas fa-star text-warning"></i>
+                <i class="fas fa-star text-warning"></i>
+              </div>
+              <p class="testimonial-text">
+                "La ubicación es muy conveniente y el equipo de última generación. 
+                Excelente servicio en Monterrey."
+              </p>
+              <div class="testimonial-author">
+                <strong>Roberto Martínez</strong>
+                <p class="small text-muted mb-0">San Pedro Garza García</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-lg-4 mb-4">
+          <div class="testimonial-card h-100">
+            <div class="testimonial-content">
+              <div class="stars mb-3">
+                <i class="fas fa-star text-warning"></i>
+                <i class="fas fa-star text-warning"></i>
+                <i class="fas fa-star text-warning"></i>
+                <i class="fas fa-star text-warning"></i>
+                <i class="fas fa-star-half-alt text-warning"></i>
+              </div>
+              <p class="testimonial-text">
+                "Muy buen servicio, personal amable y resultados rápidos. 
+                La mejor opción de ultrasonido en la zona."
+              </p>
+              <div class="testimonial-author">
+                <strong>Luis Hernández</strong>
+                <p class="small text-muted mb-0">Gonzalitos</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Final Optimizado -->
+  <section class="py-5 bg-primary text-white">
+    <div class="container text-center">
+      <h2 class="display-5 fw-bold mb-4">🏥 ¿Listo para tu Ultrasonido en Monterrey?</h2>
+      <p class="lead mb-4">
+        Agenda tu cita hoy mismo y recibe atención médica de calidad con tecnología de vanguardia 
+        en el corazón de Gonzalitos, Monterrey.
+      </p>
+      <div class="d-flex gap-3 justify-content-center flex-wrap">
+        <WhatsAppButton 
+          variant="cta" 
+          message="Hola, deseo agendar una cita para ultrasonido en Monterrey"
+        />
+        <a href="/contacto" class="btn btn-outline-light btn-lg">Ver Ubicación</a>
+        <a href="tel:+528115883775" class="btn btn-light btn-lg">Llamar Ahora</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+.hero-image {
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  transition: transform 0.3s ease;
+}
+
+.hero-image:hover {
+  transform: scale(1.02);
+}
+
+.trust-local {
+  margin-top: 20px;
+}
+
+.trust-item {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  backdrop-filter: blur(10px);
+}
+
+.benefit-card {
+  text-align: center;
+  padding: 30px 20px;
+  border-radius: 15px;
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+  background: var(--bg-white);
+}
+
+.benefit-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-color);
+}
+
+.benefit-icon {
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.category-tabs {
+  margin-bottom: 40px;
+}
+
+.category-tab {
+  background: var(--bg-white);
+  border: 2px solid var(--border-color);
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.category-tab:hover, .category-tab.active {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.service-card-local {
+  transition: all 0.3s ease;
+}
+
+.service-card-local:hover {
+  transform: translateY(-5px);
+}
+
+.local-badge {
+  background: linear-gradient(135deg, var(--primary-color) 0%, #1e3a8a 100%);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.price-local {
+  font-size: 1.25rem;
+  color: var(--primary-color);
+}
+
+.service-item.hidden {
+  display: none;
+}
+
+.location-info-card, .contact-info-card {
+  background: var(--bg-white);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 20px;
+}
+
+.address-card-local {
+  background: linear-gradient(135deg, var(--bg-light) 0%, #f8fafc 100%);
+  padding: 20px;
+  border-radius: 12px;
+  border-left: 4px solid var(--primary-color);
+}
+
+.map-container-local {
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+.area-item {
+  background: var(--bg-white);
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid var(--border-light);
+  transition: all 0.3s ease;
+}
+
+.area-item:hover {
+  border-color: var(--primary-color);
+  transform: translateY(-2px);
+}
+
+.testimonial-card {
+  background: var(--bg-white);
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s ease;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.stars {
+  color: var(--warning-color);
+  font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+  .benefit-card {
+    padding: 20px 15px;
+    margin-bottom: 20px;
+  }
+  
+  .benefit-icon {
+    font-size: 2rem;
+    margin-bottom: 15px;
+  }
+  
+  .category-tab {
+    padding: 8px 16px;
+    font-size: 0.8rem;
+    margin: 5px;
+  }
+  
+  .location-info-card, .contact-info-card {
+    padding: 20px;
+  }
+  
+  .map-container-local iframe {
+    height: 300px;
+  }
+}
+</style>
+
+<script>
+function showCategory(category) {
+  const items = document.querySelectorAll('.service-item');
+  
+  items.forEach(item => {
+    const itemCategory = item.getAttribute('data-category');
+    if (category === 'all' || itemCategory === category) {
+      item.classList.remove('hidden');
+    } else {
+      item.classList.add('hidden');
+    }
+  });
+  
+  // Update tab states
+  document.querySelectorAll('.category-tab').forEach(tab => {
+    tab.classList.remove('active');
+  });
+  event.target.classList.add('active');
+}
+</script>

@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import SmartImage from "./SmartImage.astro";
+import WhatsAppButton from "./WhatsAppButton.astro";
 import { getCollection } from "astro:content";
 
 interface Props {
@@ -46,8 +47,8 @@ const whatsappNumber = settings[0]?.data.whatsapp_number || '528115883775';
         <div class="price-section mt-auto mb-3">
           <div class="p-3 bg-light rounded text-center">
             <span class="price h4 text-primary mb-0 d-block">${servicio.data.price}</span>
-            {servicio.data.duracion && (
-              <span class="duration text-muted small">⏱️ {servicio.data.duracion}</span>
+            {servicio.data.duration && (
+              <span class="duration text-muted small">⏱️ {servicio.data.duration}</span>
             )}
           </div>
         </div>
@@ -57,10 +58,11 @@ const whatsappNumber = settings[0]?.data.whatsapp_number || '528115883775';
         <a href={`/servicios/${servicio.slug}`} class="btn btn-primary">
           Ver Detalles
         </a>
-        <a href={`https://wa.me/${whatsappNumber}?text=Hola, estoy interesado en: ${servicio.data.title}`} 
-           class="btn btn-success" target="_blank">
-          💬 WhatsApp
-        </a>
+        <WhatsAppButton 
+          variant="card"
+          message={`Hola, estoy interesado en: ${servicio.data.title}`}
+          size="sm"
+        />
       </div>
     </div>
   </div>

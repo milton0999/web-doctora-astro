@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
 import { getCollection } from 'astro:content';
 
 const settings = await getCollection('settings');
@@ -34,10 +35,12 @@ const siteSettings = settings[0]?.data || {
                                 <span class="text-primary me-3 h4">📱</span>
                                 <div>
                                     <h6 class="mb-1">WhatsApp</h6>
-                                    <a href={`https://wa.me/${siteSettings.whatsapp_number}`} 
-                                       class="text-decoration-none fw-bold" target="_blank">
-                                        {siteSettings.whatsapp_number}
-                                    </a>
+                                    <WhatsAppButton 
+                                        variant="inline"
+                                        text={siteSettings.whatsapp_number}
+                                        size="sm"
+                                        showIcon={false}
+                                    />
                                     <p class="text-muted small mb-0">Respuesta inmediata</p>
                                 </div>
                             </div>
@@ -123,12 +126,14 @@ const siteSettings = settings[0]?.data || {
 
                         <!-- Botones de Contacto Rápido -->
                         <div class="contact-buttons">
-                            <a href={`https://wa.me/${siteSettings.whatsapp_number}?text=Hola, deseo agendar una cita`} 
-                               class="btn btn-success btn-lg w-100 mb-3" target="_blank" rel="noopener noreferrer">
-                                <i class="fab fa-whatsapp me-2"></i>
-                                Agendar por WhatsApp
-                                <small class="d-block mt-1">Recomendado - Respuesta inmediata</small>
-                            </a>
+                            <div class="mb-3">
+                                <WhatsAppButton 
+                                    variant="cta"
+                                    text="Agendar por WhatsApp"
+                                    message="Hola, deseo agendar una cita"
+                                />
+                                <small class="d-block mt-1 text-center text-muted">Recomendado - Respuesta inmediata</small>
+                            </div>
 
                             <a href={`tel:${siteSettings.phone_number}`} 
                                class="btn btn-primary btn-lg w-100 mb-3">
@@ -160,42 +165,85 @@ const siteSettings = settings[0]?.data || {
             </div>
         </div>
 
-        <!-- Mapa (placeholder) -->
+<!-- Mapa de Google Maps Integrado -->
         <section class="mt-5">
             <div class="card border-0 shadow-sm">
                 <div class="card-body p-4">
-                    <h3 class="card-title mb-4">🗺️ Ubicación</h3>
+                    <h3 class="card-title mb-4">🗺️ Ubicación en Monterrey</h3>
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="bg-light rounded p-4 text-center" style="min-height: 300px;">
-                                <span class="text-muted h5">Mapa de ubicación</span>
-                                <p class="text-muted mt-2">
-                                    <i class="fas fa-map-marked-alt"></i><br>
-                                    {siteSettings.address}
-                                </p>
-                                <a href="https://maps.google.com/?q=Monterrey,+Nuevo+León" 
-                                   class="btn btn-outline-primary btn-sm" target="_blank" rel="noopener noreferrer">
-                                    <i class="fas fa-external-link-alt me-1"></i>
-                                    Abrir en Google Maps
-                                </a>
+                            <!-- Mapa embebido con coordenadas precisas -->
+                            <div class="map-container">
+                                <iframe
+                                    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyB2E7wXVc0H0r8bM7X3A7t9fYj8hZ6h9kWq&q=25.6714,-100.3090&zoom=16&maptype=roadmap"
+                                    width="100%"
+                                    height="400"
+                                    style="border:0; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);"
+                                    allowfullscreen
+                                    loading="lazy"
+                                    referrerpolicy="no-referrer-when-downgrade"
+                                    aria-label="Mapa de ubicación del Centro Médico Gonzalitos en Monterrey">
+                                </iframe>
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <h6 class="mb-3">¿Cómo llegar?</h6>
-                            <ul class="list-unstyled">
-                                <li class="mb-2">
-                                    <i class="fas fa-car text-primary me-2"></i>
-                                    <strong>Auto:</strong> Estacionamiento disponible
-                                </li>
-                                <li class="mb-2">
-                                    <i class="fas fa-bus text-primary me-2"></i>
-                                    <strong>Transporte público:</strong> Rutas cercanas
-                                </li>
-                                <li class="mb-2">
-                                    <i class="fas fa-wheelchair text-primary me-2"></i>
-                                    <strong>Accesibilidad:</strong> Rampas y acceso para sillas de ruedas
-                                </li>
-                            </ul>
+                            <!-- Información de ubicación detallada -->
+                            <div class="location-info">
+                                <h6 class="mb-3 fw-bold">📍 Dirección Exacta</h6>
+                                <div class="address-card mb-4">
+                                    <p class="mb-0"><strong>Centro Médico Gonzalitos</strong></p>
+                                    <p class="mb-0">Avenida Dr. José Eleuterio González 135</p>
+                                    <p class="mb-0">Colonia Leones, Monterrey</p>
+                                    <p class="mb-0">Nuevo León, México 64600</p>
+                                    <small class="text-muted">Entre Calle Laredo y Calle Matamoros</small>
+                                </div>
+                                
+                                <h6 class="mb-3 fw-bold">🚗 Cómo Llegar</h6>
+                                <ul class="list-unstyled directions-list">
+                                    <li class="mb-2">
+                                        <i class="fas fa-train text-primary me-2"></i>
+                                        <strong>Metro:</strong> Estación Gonzalitos a 5 min caminando
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-bus text-primary me-2"></i>
+                                        <strong>Bus:</strong> Ruta 11 - Parada Av. González
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-car text-primary me-2"></i>
+                                        <strong>Taxi/Uber:</strong> Coordenadas 25.6714, -100.3090
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-parking text-primary me-2"></i>
+                                        <strong>Estacionamiento:</strong> Propio disponible gratuito
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-wheelchair text-primary me-2"></i>
+                                        <strong>Accesibilidad:</strong> Rampas y acceso para sillas de ruedas
+                                    </li>
+                                </ul>
+                                
+                                <!-- Botones de contacto directo -->
+                                <div class="mt-4">
+                                    <div class="d-grid gap-2">
+                                        <WhatsAppButton 
+                                            variant="cta" 
+                                            message="Hola, deseo agendar una cita para estudio médico en Monterrey"
+                                        />
+                                        <a href="https://maps.google.com/maps?daddr=25.6714,-100.3090" 
+                                           class="btn btn-outline-primary" 
+                                           target="_blank" 
+                                           rel="noopener noreferrer">
+                                            <i class="fas fa-directions me-2"></i>
+                                            Obtener Direcciones
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
                         </div>
                     </div>
                 </div>
@@ -205,6 +253,77 @@ const siteSettings = settings[0]?.data || {
 </Layout>
 
 <style>
+.map-container {
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+.map-container::before {
+  content: '🏥 Centro Médico Gonzalitos';
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  z-index: 1;
+  background: white;
+  padding: 8px 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  font-weight: bold;
+  color: var(--primary-color);
+  font-size: 0.9rem;
+}
+
+.location-info {
+  height: 100%;
+}
+
+.address-card {
+  background: linear-gradient(135deg, var(--bg-light) 0%, #f8fafc 100%);
+  padding: 20px;
+  border-radius: 12px;
+  border-left: 4px solid var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.directions-list li {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-light);
+  transition: all 0.3s ease;
+}
+
+.directions-list li:hover {
+  background: rgba(0, 61, 162, 0.05);
+  padding-left: 10px;
+}
+
+.directions-list li:last-child {
+  border-bottom: none;
+}
+
+.d-grid {
+  display: grid;
+  gap: 10px;
+}
+
+@media (max-width: 768px) {
+  .map-container iframe {
+    height: 300px;
+  }
+  
+  .map-container::before {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+    top: 10px;
+    left: 10px;
+  }
+  
+  .address-card {
+    padding: 15px;
+    margin-bottom: 15px;
+  }
+}
 .contact-item {
     transition: transform 0.3s ease;
 }

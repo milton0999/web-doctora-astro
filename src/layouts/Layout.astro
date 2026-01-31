@@ -1,6 +1,7 @@
 ---
 // src/layouts/Layout.astro
 import { getCollection } from 'astro:content';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
 const { title, description } = Astro.props;
 
 // Obtener configuración global con manejo de errores
@@ -84,6 +85,90 @@ const activePromotions = promotions.filter(p =>
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    
+    <!-- Meta Tags Geográficos para SEO Local -->
+    <meta name="geo.region" content="MX-NLE">
+    <meta name="geo.placename" content="Monterrey, Nuevo León">
+    <meta name="geo.position" content="25.6714;-100.3090">
+    <meta name="ICBM" content="25.6714, -100.3090">
+    <meta name="distribution" content="local">
+    <meta name="rating" content="General">
+    <meta name="revisit-after" content="7 days">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href={`https://centromedicogonzalitos.milcoms.org${Astro.url.pathname}`} />
+    
+    <!-- Datos Estructurados Schema.org - MedicalClinic -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "MedicalClinic",
+          "@id": "https://centromedicogonzalitos.milcoms.org/#clinic",
+          "name": "Centro Médico Gonzalitos",
+          "alternateName": "Clínica de Ultrasonidos Monterrey",
+          "description": "Atención médica especializada en ultrasonografía y diagnóstico por imagen en Monterrey",
+          "url": "https://centromedicogonzalitos.milcoms.org",
+          "telephone": "+528115883775",
+          "email": "info@centromedicogonzalitos.com",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Avenida Dr. José Eleuterio González 135",
+            "addressLocality": "Monterrey",
+            "addressRegion": "Nuevo León",
+            "postalCode": "64600",
+            "addressCountry": "MX",
+            "addressLocalityAlternate": "Colonia Leones"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": "25.6714",
+            "longitude": "-100.3090"
+          },
+          "openingHours": [
+            "Mo-Fr 08:00-20:00",
+            "Sa 08:00-14:00",
+            "Su Closed"
+          ],
+          "medicalSpecialty": "Radiology",
+          "availableService": [
+            {
+              "@type": "MedicalTest",
+              "name": "Ultrasonido",
+              "description": "Estudios de ultrasonografía diagnóstica para adultos y pediatría"
+            },
+            {
+              "@type": "MedicalTest", 
+              "name": "Ecografía",
+              "description": "Estudios ecográficos especializados incluyendo embarazo y ginecología"
+            },
+            {
+              "@type": "MedicalTest",
+              "name": "Ecocardiograma", 
+              "description": "Estudios cardíacos con tecnología avanzada"
+            }
+          ],
+          "hasCertification": [
+            {
+              "@type": "Certification",
+              "name": "Certificación Secretaría de Salud México",
+              "issuedBy": "Secretaría de Salud"
+            }
+          ],
+          "isAcceptingNewPatients": "http://schema.org/True",
+          "paymentAccepted": ["Cash", "Credit Card"],
+          "priceRange": "$$"
+        },
+        {
+          "@type": "LocalBusiness",
+          "@id": "https://centromedicogonzalitos.milcoms.org/#business",
+          "name": "Centro Médico Gonzalitos",
+          "image": "https://centromedicogonzalitos.milcoms.org/img/servicios/logo-cmg-horizontal.png",
+          "priceRange": "$$"
+        }
+      ]
+    }
+    </script>
     
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -183,36 +268,7 @@ const activePromotions = promotions.filter(p =>
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
         }
 
-        /* Mobile WhatsApp FAB */
-        .mobile-whatsapp-fab {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--success-color) 0%, #059669 100%);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
-            z-index: 1000;
-            transition: all 0.3s ease;
-            text-decoration: none;
-        }
-
-        .mobile-whatsapp-fab:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 30px rgba(16, 185, 129, 0.6);
-            color: white;
-            text-decoration: none;
-        }
-
-        .mobile-whatsapp-fab:active {
-            transform: scale(0.95);
-        }
+        /* WhatsApp styles moved to component for consistency */
 
         /* Animaciones */
         @keyframes fadeInUp {
@@ -275,6 +331,223 @@ const activePromotions = promotions.filter(p =>
                 font-size: 0.95rem;
             }
         }
+
+        /* Skip Link Styles */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 6px;
+            background: var(--primary-color);
+            color: white;
+            padding: 8px;
+            text-decoration: none;
+            border-radius: 4px;
+            z-index: 10000;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+.skip-link:focus {
+            top: 6px;
+        }
+
+        /* Mejoras para SEO Local */
+        .address-card {
+          background: linear-gradient(135deg, var(--bg-light) 0%, #f8fafc 100%);
+          padding: 20px;
+          border-radius: 12px;
+          border-left: 4px solid var(--primary-color);
+          margin-bottom: 20px;
+          box-shadow: var(--shadow-sm);
+        }
+
+        .area-service {
+          background: var(--bg-white);
+          padding: 15px;
+          border-radius: 8px;
+          border: 1px solid var(--border-light);
+          transition: all 0.3s ease;
+          margin-bottom: 15px;
+        }
+
+        .area-service:hover {
+          border-color: var(--primary-color);
+          transform: translateY(-2px);
+          box-shadow: var(--shadow-md);
+        }
+
+        .local-highlight {
+          background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+          color: white;
+          padding: 20px;
+          border-radius: 15px;
+          margin: 20px 0;
+          box-shadow: var(--shadow-lg);
+        }
+
+        .local-highlight h4 {
+          color: white !important;
+        }
+
+        .schema-rich-result {
+          background: #f0f9ff;
+          border: 1px solid #bae6fd;
+          border-radius: 8px;
+          padding: 15px;
+          margin: 20px 0;
+        }
+
+        .schema-rich-result::before {
+          content: '🏥';
+          font-size: 1.5rem;
+          margin-right: 10px;
+        }
+
+        .service-local-badge {
+          background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+          color: white;
+          font-size: 0.75rem;
+          text-transform: uppercase;
+          font-weight: 600;
+          letter-spacing: 0.5px;
+          padding: 4px 8px;
+          border-radius: 4px;
+          display: inline-block;
+          margin-bottom: 8px;
+        }
+
+        .location-info {
+          background: var(--bg-white);
+          border: 1px solid var(--border-color);
+          border-radius: 12px;
+          padding: 20px;
+          box-shadow: var(--shadow-sm);
+          margin: 20px 0;
+        }
+
+        .directions-info ul {
+          list-style: none;
+          padding-left: 0;
+          margin: 0;
+        }
+
+        .directions-info li {
+          padding: 8px 0;
+          border-bottom: 1px solid var(--border-light);
+          transition: background-color 0.3s ease;
+        }
+
+        .directions-info li:hover {
+          background: rgba(0, 61, 162, 0.05);
+        }
+
+        .directions-info li:last-child {
+          border-bottom: none;
+        }
+
+        /* Geo-specific optimizations */
+        .geo-tag {
+          background: rgba(0, 61, 162, 0.1);
+          color: var(--primary-color);
+          padding: 4px 8px;
+          border-radius: 15px;
+          font-size: 0.8rem;
+          font-weight: 500;
+          display: inline-block;
+          margin: 0 4px 8px 0;
+        }
+
+        .service-area-indicator {
+          background: var(--success-color);
+          color: white;
+          padding: 2px 6px;
+          border-radius: 3px;
+          font-size: 0.75rem;
+          font-weight: 600;
+          margin-left: 8px;
+        }
+
+        /* Local business cards for better UX */
+        .local-business-card {
+          background: var(--bg-white);
+          border: 1px solid var(--border-color);
+          border-radius: 15px;
+          padding: 25px;
+          box-shadow: var(--shadow-md);
+          transition: all 0.3s ease;
+        }
+
+        .local-business-card:hover {
+          transform: translateY(-3px);
+          box-shadow: var(--shadow-lg);
+        }
+
+        /* Breadcrumb navigation for local SEO */
+        .breadcrumb-local {
+          background: var(--bg-light);
+          padding: 10px 0;
+          border-bottom: 1px solid var(--border-light);
+        }
+
+        .breadcrumb-local .breadcrumb {
+          background: transparent;
+          padding: 0;
+          margin: 0;
+        }
+
+        .breadcrumb-local .breadcrumb-item + .breadcrumb-item::before {
+          content: "›";
+          color: var(--text-muted);
+          font-weight: bold;
+        }
+
+        /* Rich snippet optimizations */
+        .rating-display {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          margin: 10px 0;
+        }
+
+        .rating-stars {
+          color: var(--warning-color);
+          font-size: 1.2rem;
+        }
+
+        .rating-number {
+          font-weight: bold;
+          color: var(--text-dark);
+          margin-left: 5px;
+        }
+
+        /* Mobile local optimizations */
+        @media (max-width: 768px) {
+          .address-card {
+            padding: 15px;
+            margin-bottom: 15px;
+          }
+
+          .area-service {
+            padding: 12px;
+            margin-bottom: 10px;
+          }
+
+          .local-highlight {
+            padding: 15px;
+            margin: 15px 0;
+          }
+
+          .service-local-badge {
+            font-size: 0.7rem;
+            padding: 3px 6px;
+          }
+
+          .geo-tag {
+            font-size: 0.75rem;
+            padding: 3px 6px;
+            margin: 0 2px 6px 0;
+          }
+        }
     </style>
 </head>
 <body>
@@ -287,6 +560,9 @@ const activePromotions = promotions.filter(p =>
             </div>
         </div>
     )}
+    
+    <!-- Skip Links for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     
     <!-- Header Principal Reorganizado -->
     <header class="header-wrapper bg-white border-bottom">
@@ -311,16 +587,23 @@ const activePromotions = promotions.filter(p =>
                     <div class="cta-whatsapp d-flex align-items-center gap-2 px-3 py-2 rounded-pill" style="background: rgba(40, 167, 69, 0.1); border: 1px solid rgba(40, 167, 69, 0.2);">
                         <i class="fab fa-whatsapp text-success fs-5"></i>
                         <span class="fw-bold" style="color: var(--phone-color); font-size: 0.9rem;">Agenda tu Cita:</span>
-                        <a href={`https://wa.me/${siteSettings.whatsapp_number}`} target="_blank"
-                           class="btn-whatsapp-link fw-bold text-decoration-none"
-                           style="color: var(--primary-color);">
-                            {siteSettings.phone_number}
-                        </a>
+                        <WhatsAppButton 
+                            variant="header" 
+                            text={siteSettings.phone_number}
+                            message="Hola, deseo agendar una cita"
+                            size="sm"
+                            showIcon={false}
+                        />
                     </div>
                 </nav>
 
                 <!-- Botón móvil único -->
-                <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" style="border-color: var(--primary-color);">
+                <button class="navbar-toggler d-lg-none" type="button" 
+                        data-bs-toggle="collapse" data-bs-target="#mainNav" 
+                        style="border-color: var(--primary-color);"
+                        aria-label="Toggle navigation menu"
+                        aria-expanded="false"
+                        aria-controls="mainNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
             </div>
@@ -332,8 +615,8 @@ const activePromotions = promotions.filter(p =>
          <div class="container">
              <div class="collapse navbar-collapse" id="mainNav">
                  <ul class="navbar-nav w-100 justify-content-center">
-                     <li class="nav-item dropdown me-lg-2">
-                         <a class="nav-link dropdown-toggle fw-bold" href="#" role="button" data-bs-toggle="dropdown">Ultrasonido Adulto</a>
+<li class="nav-item dropdown me-lg-2">
+                          <a class="nav-link dropdown-toggle fw-bold" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ultrasonido Adulto</a>
                          <ul class="dropdown-menu">
                               {serviciosPorCategoria.adultos.length > 0 ? serviciosPorCategoria.adultos.map(s => (
                                  <li><a class="dropdown-item" href={`/servicios/${s.slug}`}>{s.data.title}</a></li>
@@ -341,8 +624,8 @@ const activePromotions = promotions.filter(p =>
                          </ul>
                      </li>
 
-                     <li class="nav-item dropdown me-lg-2">
-                         <a class="nav-link dropdown-toggle fw-bold" href="#" role="button" data-bs-toggle="dropdown">Ultrasonido de paciente embarazada</a>
+<li class="nav-item dropdown me-lg-2">
+                          <a class="nav-link dropdown-toggle fw-bold" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ultrasonido de paciente embarazada</a>
                          <ul class="dropdown-menu">
                               {serviciosPorCategoria.embarazadas.length > 0 ? serviciosPorCategoria.embarazadas.map(s => (
                                  <li><a class="dropdown-item" href={`/servicios/${s.slug}`}>{s.data.title}</a></li>
@@ -351,8 +634,8 @@ const activePromotions = promotions.filter(p =>
                      </li>
 
                       {serviciosPorCategoria.pediatrico.length > 0 && (
-                          <li class="nav-item dropdown me-lg-2">
-                              <a class="nav-link dropdown-toggle fw-bold" href="#" role="button" data-bs-toggle="dropdown">Ultrasonido Pediatrico</a>
+<li class="nav-item dropdown me-lg-2">
+                               <a class="nav-link dropdown-toggle fw-bold" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ultrasonido Pediatrico</a>
                               <ul class="dropdown-menu">
                                    {serviciosPorCategoria.pediatrico.map(s => (
                                       <li><a class="dropdown-item" href={`/servicios/${s.slug}`}>{s.data.title}</a></li>
@@ -361,8 +644,8 @@ const activePromotions = promotions.filter(p =>
                           </li>
                       )}
 
-                      <li class="nav-item dropdown me-lg-2">
-                          <a class="nav-link dropdown-toggle fw-bold" href="#" role="button" data-bs-toggle="dropdown">Ginecología</a>
+<li class="nav-item dropdown me-lg-2">
+                           <a class="nav-link dropdown-toggle fw-bold" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ginecología</a>
                           <ul class="dropdown-menu">
                               <li><a class="dropdown-item" href="/servicios">Ver todos los servicios ginecológicos</a></li>
                           </ul>
@@ -378,9 +661,12 @@ const activePromotions = promotions.filter(p =>
                               <i class="fas fa-users me-1"></i>Sobre Nosotros
                           </a>
                       </li>
-                      <li class="nav-item d-lg-none">
-                          <a class="nav-link fw-bold text-success" href={`https://wa.me/${siteSettings.whatsapp_number}`} target="_blank">
-                              <i class="fab fa-whatsapp me-1"></i>Agenda tu Cita: {siteSettings.phone_number}
+<li class="nav-item d-lg-none">
+                           <WhatsAppButton 
+                               variant="inline" 
+                               text={`📱 ${siteSettings.phone_number}`}
+                               size="sm"
+                           />
                           </a>
                       </li>
                   </ul>
@@ -390,7 +676,7 @@ const activePromotions = promotions.filter(p =>
 
 
 
-    <main>
+    <main id="main-content">
         <slot />
     </main>
 
@@ -398,9 +684,33 @@ const activePromotions = promotions.filter(p =>
       <footer class="footer-wrapper py-5">
          <div class="container">
              <div class="row">
-                 <div class="col-lg-4 py-2">
-                     <img src="/img/servicios/logo-cmg-horizontal.png" alt={siteSettings.site_name} class="mb-3" style="max-width: 205px; height: auto;">
-                 </div>
+<div class="col-lg-4 py-2">
+                      <img src="/img/servicios/logo-cmg-horizontal.png" alt={siteSettings.site_name} class="mb-3" style="max-width: 205px; height: auto;">
+                      
+                      <!-- Social Media Links -->
+                      <div class="social-media-links mb-3">
+                          {siteSettings.facebook_url && (
+                              <a href={siteSettings.facebook_url} 
+                                 target="_blank" 
+                                 rel="noopener noreferrer"
+                                 class="social-link facebook"
+                                 aria-label="Síguenos en Facebook (abre en nueva ventana)">
+                                  <i class="fab fa-facebook-f"></i>
+                              </a>
+                          )}
+                          {siteSettings.instagram_url && (
+                              <a href={siteSettings.instagram_url} 
+                                 target="_blank" 
+                                 rel="noopener noreferrer"
+                                 class="social-link instagram"
+                                 aria-label="Síguenos en Instagram (abre en nueva ventana)">
+                                  <i class="fab fa-instagram"></i>
+                              </a>
+                          )}
+                      </div>
+                      
+                      <p class="small text-muted">Síguenos en nuestras redes sociales</p>
+                  </div>
 
                  <div class="col-lg py-2">
                      <h4 class="h5 mb-3">Servicios</h4>
@@ -483,11 +793,9 @@ const activePromotions = promotions.filter(p =>
     </script>
     
     <!-- Mobile Sticky WhatsApp Button -->
-    <a href={`https://wa.me/${siteSettings.whatsapp_number}`} 
-       class="mobile-whatsapp-fab d-lg-none"
-       target="_blank"
-       rel="noopener noreferrer">
-        <i class="fab fa-whatsapp"></i>
-    </a>
+    <WhatsAppButton 
+        variant="fab" 
+        message="Hola, deseo agendar una cita"
+    />
 </body>
 </html>

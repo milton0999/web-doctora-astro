@@ -1,0 +1,524 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import WhatsAppButton from '../../components/WhatsAppButton.astro';
+import ServicioCard from '../../components/ServicioCard.astro';
+import { getCollection } from 'astro:content';
+
+const services = await getCollection('servicios');
+const settings = await getCollection('settings');
+const siteSettings = settings[0]?.data;
+
+// Meta tags optimizados para SEO local
+const pageTitle = "Ecografía en Gonzalitos, Monterrey | Centro Médico Gonzalitos";
+const pageDescription = "Especialistas en ecografía diagnóstica en la zona de Gonzalitos, Monterrey. Atención para mujeres embarazadas, ginecología y salud femenina.";
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <!-- Schema específico para la página -->
+  <script type="application/ld+json" slot="head">
+  {
+    "@context": "https://schema.org",
+    "@type": "HealthcareService",
+    "name": "Servicios de Ecografía en Gonzalitos, Monterrey",
+    "description": "Estudios especializados de ecografía diagnóstica en la zona de Gonzalitos, Monterrey",
+    "provider": {
+      "@type": "MedicalClinic",
+      "name": "Centro Médico Gonzalitos",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Avenida Dr. José Eleuterio González 135",
+        "addressLocality": "Monterrey",
+        "addressRegion": "Nuevo León",
+        "postalCode": "64600",
+        "addressCountry": "MX"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "25.6714",
+        "longitude": "-100.3090"
+      }
+    },
+    "areaServed": {
+      "@type": "City",
+      "name": "Monterrey",
+      "addressCountry": "MX"
+    },
+    "availableTest": [
+      "Ecografía Obstétrica",
+      "Ecografía Pélvica", 
+      "Ecografía Transvaginal",
+      "Ecografía Mamaria",
+      "Ecografía Doppler"
+    ],
+    "openingHours": "Mo-Fr 08:00-20:00, Sa 08:00-14:00"
+  }
+  </script>
+
+  <!-- Hero Section Especializado -->
+  <section class="py-5 bg-gradient-woman text-white">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6">
+          <div class="hero-content">
+            <h1 class="display-4 fw-bold mb-4">Ecografía en Gonzalitos, Monterrey</h1>
+            <p class="lead mb-4">
+              Especialistas en estudios ecográficos para mujeres en la zona de Gonzalitos. 
+              Tecnología de última generación para atención materna, ginecológica y salud femenina 
+              con el cuidado que mereces.
+            </p>
+            <div class="d-flex gap-3 flex-wrap">
+              <WhatsAppButton 
+                variant="cta" 
+                message="Hola, deseo agendar una cita para ecografía en Gonzalitos, Monterrey"
+                text="👩‍⚕️ Agendar Cita"
+              />
+              <a href="#servicios" class="btn btn-outline-light btn-lg">Ver Servicios</a>
+            </div>
+            
+            <!-- Trust Indicators Específicos -->
+            <div class="trust-women mt-4">
+              <div class="d-flex gap-3 flex-wrap">
+                <span class="trust-item">
+                  <i class="fas fa-user-md me-1"></i>
+                  Especialistas
+                </span>
+                <span class="trust-item">
+                  <i class="fas fa-shield-alt me-1"></i>
+                  Seguro
+                </span>
+                <span class="trust-item">
+                  <i class="fas fa-heart me-1"></i>
+                  Cuidado
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="text-center">
+            <img src="/img/servicios/ecografia-gonzalitos-hero.jpg" 
+                 alt="Sala de ecografía para mujeres en Centro Médico Gonzalitos"
+                 class="img-fluid rounded-3 shadow-lg hero-image-women"
+                 style="max-height: 400px; width: auto;"
+                 onerror="this.src='/img/servicios/logo-cmg-horizontal.png'">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección de Especialidades -->
+  <section class="py-5">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="display-5 fw-bold">👩‍⚕️ Especialidades de Ecografía</h2>
+        <p class="lead text-muted">Atención especializada para cada etapa de la vida de la mujer</p>
+      </div>
+      
+      <div class="row">
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="specialty-card h-100">
+            <div class="specialty-icon">
+              <i class="fas fa-baby"></i>
+            </div>
+            <h4 class="card-title">Ecografía Obstétrica</h4>
+            <p class="card-text">
+              Seguimiento del embarazo con tecnología 3D/4D para ver el desarrollo 
+              del bebé y asegurar la salud materna.
+            </p>
+          </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="specialty-card h-100">
+            <div class="specialty-icon">
+              <i class="fas fa-female"></i>
+            </div>
+            <h4 class="card-title">Ecografía Ginecológica</h4>
+            <p class="card-text">
+              Estudios preventivos y diagnósticos para salud reproductiva y 
+              detección temprana de condiciones ginecológicas.
+            </p>
+          </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="specialty-card h-100">
+            <div class="specialty-icon">
+              <i class="fas fa-ribbon"></i>
+            </div>
+            <h4 class="card-title">Ecografía Mamaria</h4>
+            <p class="card-text">
+              Estudios complementarios a la mastografía para detección temprana 
+              y evaluación de tejido mamario.
+            </p>
+          </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="specialty-card h-100">
+            <div class="specialty-icon">
+              <i class="fas fa-heartbeat"></i>
+            </div>
+            <h4 class="card-title">Ecografía Doppler</h4>
+            <p class="card-text">
+              Evaluación del flujo sanguíneo para diagnóstico vascular y 
+              estudio de órganos con alta precisión.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Servicios Filtrados -->
+  <section class="py-5 bg-light" id="servicios">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="display-5 fw-bold">🏥 Estudios de Ecografía Disponibles</h2>
+        <p class="lead text-muted">Conoce todos nuestros servicios especializados</p>
+      </div>
+      
+      <!-- Filtros por Tipo -->
+      <div class="filter-tabs mb-5">
+        <div class="text-center">
+          <button class="filter-tab active" onclick="filterServices('all')">Todos</button>
+          <button class="filter-tab" onclick="filterServices('Embarazada')">Embarazada</button>
+          <button class="filter-tab" onclick="filterServices('Ginecologia')">Ginecología</button>
+          <button class="filter-tab" onclick="filterServices('Mama')">Mamario</button>
+        </div>
+      </div>
+      
+      <!-- Services Grid -->
+      <div class="row g-4" id="servicesGrid">
+        {services.filter(s => ['Embarazada', 'Ginecologia', 'Mama', 'Pediatrico'].includes(s.data.categoria)).map(servicio => (
+          <div class="col-md-6 col-lg-4 service-item-women" data-category={servicio.data.categoria}>
+            <div class="service-card-women h-100">
+              <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                  <div class="service-header-women mb-3">
+                    <span class="category-badge women-badge">{servicio.data.categoria}</span>
+                    <h5 class="card-title fw-bold">{servicio.data.title}</h5>
+                  </div>
+                  <p class="card-text text-muted">{servicio.data.description}</p>
+                  {servicio.data.price && (
+                    <div class="price-info-women mt-auto">
+                      <span class="price-women fw-bold text-primary">{servicio.data.price}</span>
+                      {servicio.data.duration && (
+                        <span class="duration-women text-muted small"> • {servicio.data.duration}</span>
+                      )}
+                    </div>
+                  )}
+                  <div class="action-buttons-women mt-3 d-grid gap-2">
+                    <a href={`/servicios/${servicio.slug}`} class="btn btn-outline-primary btn-sm">
+                      Ver Detalles
+                    </a>
+                    <WhatsAppButton 
+                      variant="card" 
+                      message={`Hola, deseo agendar una cita para: ${servicio.data.title} en Gonzalitos, Monterrey`}
+                      size="sm"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección de Ubicación en Gonzalitos -->
+  <section class="py-5" id="ubicacion">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="display-5 fw-bold">📍 Visítanos en Gonzalitos</h2>
+        <p class="lead text-muted">Ubicación céntrica y de fácil acceso en Monterrey</p>
+      </div>
+      
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="location-women-card mb-4">
+            <h4 class="fw-bold mb-3">📍 Ubicación Específica</h4>
+            <div class="address-card-women">
+              <p class="mb-2"><strong>Centro Médico Gonzalitos</strong></p>
+              <address class="mb-0">
+                Avenida Dr. José Eleuterio González 135<br>
+                Colonia Leones (Gonzalitos)<br>
+                Monterrey, Nuevo León 64600<br>
+                <small class="text-muted">Esquina con Calle Matamoros</small>
+              </address>
+            </div>
+          </div>
+          
+          <div class="access-info mb-4">
+            <h4 class="fw-bold mb-3">🚗 Acceso y Transporte</h4>
+            <ul class="list-unstyled access-list">
+              <li class="mb-2">
+                <i class="fas fa-train text-primary me-2"></i>
+                <strong>Metro:</strong> Estación Gonzalitos (Línea 2) - 3 min
+              </li>
+              <li class="mb-2">
+                <i class="fas fa-bus text-primary me-2"></i>
+                <strong>Bus:</strong> Rutas 11, 22, 33 - Parada enfrente
+              </li>
+              <li class="mb-2">
+                <i class="fas fa-parking text-primary me-2"></i>
+                <strong>Estacionamiento:</strong> Propio gratuito para pacientes
+              </li>
+              <li class="mb-2">
+                <i class="fas fa-wheelchair text-primary me-2"></i>
+                <strong>Accesibilidad:</strong> Rampa y acceso sin barreras
+              </li>
+            </ul>
+          </div>
+          
+          <div>
+            <WhatsAppButton 
+              variant="cta" 
+              message="Hola, deseo agendar una cita para ecografía en Gonzalitos, Monterrey"
+              text="👩‍⚕️ Agendar Ahora"
+            />
+          </div>
+        </div>
+        
+        <div class="col-lg-6">
+          <div class="map-women">
+            <iframe
+              src="https://www.google.com/maps/embed/v1/place?key=AIzaSyB2E7wXVc0H0r8bM7X3A7t9fYj8hZ6h9kWq&q=25.6714,-100.3090&zoom=16"
+              width="100%"
+              height="400"
+              style="border:0; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);"
+              allowfullscreen
+              loading="lazy"
+              aria-label="Mapa de ubicación del Centro Médico Gonzalitos para ecografía en Gonzalitos">
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Especializado -->
+  <section class="py-5 bg-gradient-woman text-white">
+    <div class="container text-center">
+      <h2 class="display-5 fw-bold mb-4">👩‍⚕️ Tu Salud Femenina en Expertas Manos</h2>
+      <p class="lead mb-4">
+        Agenda tu ecografía hoy mismo en Gonzalitos, Monterrey. Atención especializada 
+        con tecnología de vanguardia y el trato humano que mereces.
+      </p>
+      <div class="d-flex gap-3 justify-content-center flex-wrap">
+        <WhatsAppButton 
+          variant="cta" 
+          message="Hola, deseo agendar una cita para ecografía en Gonzalitos, Monterrey"
+        />
+        <a href="/contacto" class="btn btn-outline-light btn-lg">Ver Ubicación</a>
+        <a href="tel:+528115883775" class="btn btn-light btn-lg">Llamar Ahora</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+.bg-gradient-woman {
+  background: linear-gradient(135deg, #ec4899 0%, #be185d 50%, #831843 100%);
+}
+
+.hero-image-women {
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(236, 72, 153, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.hero-image-women:hover {
+  transform: scale(1.02);
+}
+
+.trust-women {
+  margin-top: 20px;
+}
+
+.trust-item {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  backdrop-filter: blur(10px);
+}
+
+.specialty-card {
+  text-align: center;
+  padding: 30px 20px;
+  border-radius: 15px;
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+  background: var(--bg-white);
+  height: 100%;
+}
+
+.specialty-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(236, 72, 153, 0.2);
+  border-color: #ec4899;
+}
+
+.specialty-icon {
+  font-size: 2.5rem;
+  color: #ec4899;
+  margin-bottom: 20px;
+}
+
+.filter-tabs {
+  margin-bottom: 40px;
+}
+
+.filter-tab {
+  background: var(--bg-white);
+  border: 2px solid var(--border-color);
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin: 5px;
+}
+
+.filter-tab:hover, .filter-tab.active {
+  background: #ec4899;
+  color: white;
+  border-color: #ec4899;
+}
+
+.service-card-women {
+  transition: all 0.3s ease;
+}
+
+.service-card-women:hover {
+  transform: translateY(-5px);
+}
+
+.service-header-women {
+  margin-bottom: 15px;
+}
+
+.women-badge {
+  background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.price-women {
+  font-size: 1.25rem;
+  color: #ec4899;
+}
+
+.service-item-women.hidden {
+  display: none;
+}
+
+.location-women-card {
+  background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%);
+  border: 1px solid #fbcfe8;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 20px;
+}
+
+.address-card-women {
+  background: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 12px;
+  border-left: 4px solid #ec4899;
+}
+
+.access-info {
+  background: var(--bg-white);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 20px;
+}
+
+.access-list li {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.access-list li:last-child {
+  border-bottom: none;
+}
+
+.map-women {
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+.map-women::before {
+  content: '🏥 Centro Médico Gonzalitos';
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  z-index: 1;
+  background: white;
+  padding: 8px 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  font-weight: bold;
+  color: #ec4899;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .specialty-card {
+    padding: 20px 15px;
+    margin-bottom: 20px;
+  }
+  
+  .specialty-icon {
+    font-size: 2rem;
+    margin-bottom: 15px;
+  }
+  
+  .filter-tab {
+    padding: 8px 16px;
+    font-size: 0.8rem;
+    margin: 5px;
+  }
+  
+  .location-women-card, .access-info {
+    padding: 20px;
+  }
+  
+  .map-women iframe {
+    height: 300px;
+  }
+}
+</style>
+
+<script>
+function filterServices(category) {
+  const items = document.querySelectorAll('.service-item-women');
+  
+  items.forEach(item => {
+    const itemCategory = item.getAttribute('data-category');
+    if (category === 'all' || itemCategory === category) {
+      item.classList.remove('hidden');
+    } else {
+      item.classList.add('hidden');
+    }
+  });
+  
+  // Update tab states
+  document.querySelectorAll('.filter-tab').forEach(tab => {
+    tab.classList.remove('active');
+  });
+  event.target.classList.add('active');
+}
+</script>

@@ -1,0 +1,195 @@
+---
+interface Props {
+  showMap?: boolean;
+  showDirections?: boolean;
+  title?: string;
+  compact?: boolean;
+}
+
+const { showMap = true, showDirections = true, title = "📍 Ubicación", compact = false } = Astro.props;
+---
+
+<div class={`local-business-card ${compact ? 'compact' : ''}`}>
+  <h4 class="card-title fw-bold mb-3">{title}</h4>
+  <div class="business-info">
+    <p class="mb-2"><strong>Centro Médico Gonzalitos</strong></p>
+    <address class="mb-3">
+      Avenida Dr. José Eleuterio González 135<br>
+      Colonia Leones, Monterrey<br>
+      Nuevo León, México 64600<br>
+      <small class="text-muted">Coordenadas: 25.6714, -100.3090</small>
+    </address>
+  </div>
+  
+  {showDirections && (
+    <div class="directions-info mt-3">
+      <h6 class="fw-bold mb-3">🚗 Cómo Llegar</h6>
+      <ul class="list-unstyled directions-list">
+        <li class="mb-2">
+          <i class="fas fa-train text-primary me-2"></i>
+          <strong>Metro:</strong> Estación Gonzalitos (Línea 2) - 5 min caminando
+        </li>
+        <li class="mb-2">
+          <i class="fas fa-bus text-primary me-2"></i>
+          <strong>Bus:</strong> Ruta 11 - Parada Av. González
+        </li>
+        <li class="mb-2">
+          <i class="fas fa-car text-primary me-2"></i>
+          <strong>Taxi/Uber:</strong> Coordenadas 25.6714, -100.3090
+        </li>
+        <li class="mb-2">
+          <i class="fas fa-parking text-primary me-2"></i>
+          <strong>Estacionamiento:</strong> Propio disponible gratuito
+        </li>
+        <li class="mb-2">
+          <i class="fas fa-wheelchair text-primary me-2"></i>
+          <strong>Accesibilidad:</strong> Rampa y acceso para sillas de ruedas
+        </li>
+      </ul>
+    </div>
+  )}
+  
+  {showMap && (
+    <div class="map-container mt-4">
+      <iframe
+        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyB2E7wXVc0H0r8bM7X3A7t9fYj8hZ6h9kWq&q=25.6714,-100.3090&zoom=16"
+        width="100%"
+        height={compact ? "200" : "350"}
+        style="border:0; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);"
+        allowfullscreen
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        aria-label="Mapa de ubicación del Centro Médico Gonzalitos en Monterrey">
+      </iframe>
+    </div>
+  )}
+</div>
+
+<style>
+.local-business-card {
+  background: var(--bg-white);
+  border: 1px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.local-business-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+
+.local-business-card.compact {
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.business-info p, .business-info address {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+}
+
+.directions-info h6 {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.directions-list li {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-light);
+  line-height: 1.5;
+  transition: background-color 0.3s ease;
+}
+
+.directions-list li:hover {
+  background: rgba(0, 61, 162, 0.05);
+  padding-left: 8px;
+}
+
+.directions-list li:last-child {
+  border-bottom: none;
+}
+
+.map-container {
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  position: relative;
+}
+
+.map-container::before {
+  content: '🏥 Centro Médico Gonzalitos';
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  z-index: 1;
+  background: white;
+  padding: 8px 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  font-weight: bold;
+  color: var(--primary-color);
+  font-size: 0.9rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .local-business-card {
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .local-business-card.compact {
+    padding: 15px;
+  }
+  
+  .directions-list li {
+    font-size: 0.9rem;
+    padding: 6px 0;
+  }
+  
+  .map-container iframe {
+    height: 250px;
+  }
+  
+  .map-container::before {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+    top: 10px;
+    left: 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  .directions-list li {
+    font-size: 0.85rem;
+  }
+  
+  .map-container iframe {
+    height: 200px;
+  }
+}
+
+/* Compact version for small spaces */
+.local-business-card.compact .directions-list li {
+  padding: 4px 0;
+  font-size: 0.85rem;
+}
+
+.local-business-card.compact .directions-list li i {
+  font-size: 0.8rem;
+  width: 20px;
+}
+
+.local-business-card.compact .map-container iframe {
+  height: 200px;
+}
+
+.local-business-card.compact .map-container::before {
+  font-size: 0.75rem;
+  padding: 4px 8px;
+}
+</style>
