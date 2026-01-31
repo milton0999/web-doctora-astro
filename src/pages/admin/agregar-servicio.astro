@@ -1,0 +1,350 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+// Obtener todos los servicios y categorías existentes
+const servicios = await getCollection('servicios');
+const categoriasExistentes = [...new Set(servicios.map(s => s.data.categoria))];
+
+// Generar categorías disponibles para el select
+const categoriasDisponibles = [
+  'Ultrasonido Adulto',
+  'Ultrasonido de Paciente Embarazada', 
+  'Ultrasonido Ginecología',
+  'Ultrasonido de Embarazo 5D',
+  'Ultrasonido Pediátrico'
+];
+---
+<Layout title="Agregar Servicio" description="Panel para agregar nuevos servicios">
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="card shadow-sm">
+          <div class="card-body p-4">
+            <h2 class="card-title mb-4">🏥 Agregar Nuevo Servicio</h2>
+            
+            <form id="addServiceForm">
+              <!-- Nombre del Servicio -->
+              <div class="mb-3">
+                <label for="serviceName" class="form-label fw-bold">Nombre del Servicio *</label>
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  id="serviceName" 
+                  name="serviceName"
+                  placeholder="Ej: Ecografía Cardíaca"
+                  required
+                >
+              </div>
+              
+              <!-- Categoría con Detección Automática -->
+              <div class="mb-3">
+                <label for="categoria" class="form-label fw-bold">Categoría *</label>
+                <select class="form-select" id="categoria" name="categoria" required>
+                  <option value="">Seleccionar categoría...</option>
+                  {categoriasDisponibles.map(cat => (
+                    <option value={cat}>
+                      {cat} {categoriasExistentes.includes(cat) && '(✅ tiene servicios)'}
+                    </option>
+                  ))}
+                </select>
+                <small class="text-muted">
+                  💡 Las categorías marcadas con (✅) ya tienen servicios registrados
+                </small>
+              </div>
+              
+              <!-- Descripción -->
+              <div class="mb-3">
+                <label for="description" class="form-label fw-bold">Descripción *</label>
+                <textarea 
+                  class="form-control" 
+                  id="description" 
+                  name="description"
+                  rows="3"
+                  placeholder="Describe brevemente el servicio..."
+                  required
+                ></textarea>
+              </div>
+              
+              <!-- Precio y Duración -->
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="price" class="form-label fw-bold">Precio</label>
+                  <div class="input-group">
+                    <span class="input-group-text">$</span>
+                    <input 
+                      type="number" 
+                      class="form-control" 
+                      id="price" 
+                      name="price"
+                      placeholder="2,500"
+                    >
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="duration" class="form-label fw-bold">Duración</label>
+                  <div class="input-group">
+                    <input 
+                      type="number" 
+                      class="form-control" 
+                      id="duration" 
+                      name="duration"
+                      placeholder="30"
+                    >
+                    <span class="input-group-text">minutos</span>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Imagen -->
+              <div class="mb-3">
+                <label for="image" class="form-label fw-bold">Imagen</label>
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  id="image" 
+                  name="image"
+                  placeholder="/img/servicios/nombre-del-servicio.jpg"
+                >
+                <small class="text-muted">
+                  📁 Ruta relativa a la carpeta de imágenes
+                </small>
+              </div>
+              
+              <!-- Destacado -->
+              <div class="mb-3">
+                <div class="form-check">
+                  <input 
+                    class="form-check-input" 
+                    type="checkbox" 
+                    id="featured" 
+                    name="featured"
+                    value="true"
+                  >
+                  <label class="form-check-label" for="featured">
+                    ⭐ Mostrar en sección de servicios destacados
+                  </label>
+                </div>
+              </div>
+              
+              <!-- Etiquetas -->
+              <div class="mb-4">
+                <label for="tags" class="form-label fw-bold">Etiquetas (opcional)</label>
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  id="tags" 
+                  name="tags"
+                  placeholder="Cardiología, Adulto, Diagnóstico (separadas por comas)"
+                >
+                <small class="text-muted">
+                  🏷️ Separa las etiquetas con comas
+                </small>
+              </div>
+              
+              <!-- Botones -->
+              <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary">
+                  💾 Generar Archivo Markdown
+                </button>
+                <button type="button" class="btn btn-outline-secondary" onclick="resetForm()">
+                  🔄 Limpiar Formulario
+                </button>
+              </div>
+            </form>
+            
+            <!-- Área de Resultado -->
+            <div id="result" class="mt-4" style="display: none;">
+              <div class="alert alert-success">
+                <h5 class="alert-heading">✅ ¡Servicio Generado!</h5>
+                <p class="mb-2">Copia el siguiente contenido y guárdalo en un archivo <code>.md</code> en la carpeta <code>src/content/servicios/</code></p>
+                <pre id="generatedContent" class="bg-light p-3 rounded" style="max-height: 300px; overflow-y: auto;"></pre>
+                <div class="mt-3">
+                  <h6>📁 Instrucciones:</h6>
+                  <ol class="small">
+                    <li>Crea un nuevo archivo con nombre: <code id="fileName">nombre-del-servicio.md</code></li>
+                    <li>Guarda el archivo en: <code>src/content/servicios/</code></li>
+                    <li>El servicio aparecerá automáticamente en el sitio</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Categorías Actuales -->
+  <div class="container mb-5">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h3 class="card-title mb-3">📊 Estado Actual de Categorías</h3>
+        
+        <div class="row">
+          {categoriasDisponibles.map(cat => {
+            const count = servicios.filter(s => s.data.categoria === cat).length;
+            const hasServices = count > 0;
+            
+            return (
+              <div class={`col-md-6 col-lg-4 mb-3`}>
+                <div class={`p-3 rounded border ${hasServices ? 'border-success bg-success-light' : 'border-secondary bg-light'}`}>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <strong>{cat}</strong>
+                    <span class={`badge ${hasServices ? 'bg-success' : 'bg-secondary'}`}>
+                      {count} servicio{count !== 1 ? 's' : ''}
+                    </span>
+                  </div>
+                  {!hasServices && (
+                    <small class="text-muted">⚠️ Sin servicios registrados</small>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        
+        <div class="mt-3 text-center">
+          <small class="text-muted">
+            Total de servicios: <strong>{servicios.length}</strong> en 
+            <strong>{categoriasExistentes.length}</strong> categorías activas
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+function generateMarkdown() {
+  // Obtener valores del formulario
+  const serviceName = document.getElementById('serviceName').value.trim();
+  const categoria = document.getElementById('categoria').value.trim();
+  const description = document.getElementById('description').value.trim();
+  const price = document.getElementById('price').value.trim();
+  const duration = document.getElementById('duration').value.trim();
+  const image = document.getElementById('image').value.trim();
+  const featured = document.getElementById('featured').checked;
+  const tags = document.getElementById('tags').value.trim();
+  
+  // Validar campos requeridos
+  if (!serviceName || !categoria || !description) {
+    alert('❌ Por favor completa todos los campos requeridos (*)');
+    return;
+  }
+  
+  // Generar nombre de archivo (slugify)
+  const fileName = serviceName
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '') + '.md';
+  
+  // Generar tags array
+  const tagsArray = tags ? tags.split(',').map(tag => tag.trim()).filter(tag => tag) : [];
+  
+  // Generar contenido markdown
+  const markdown = `---
+title: "${serviceName}"
+categoria: "${categoria}"
+image: "${image || '/img/servicios/default.jpg'}"
+price: "$${price}"
+duration: "${duration} minutos"
+description: "${description}"
+featured: ${featured}${tagsArray.length > 0 ? `
+tags: [${tagsArray.map(tag => `"${tag}"`).join(', ')}]` : ''}
+---
+
+# ${serviceName}
+
+${description}
+
+${price ? `**Precio:** $${price}` : ''}
+${duration ? `**Duración:** ${duration} minutos` : ''}
+${image ? `**Imagen:** ${image}` : ''}
+${featured ? '⭐ Servicio destacado' : ''}
+${tagsArray.length > 0 ? `**Etiquetas:** ${tagsArray.join(', ')}` : ''}
+`;
+  
+  // Mostrar resultado
+  document.getElementById('fileName').textContent = fileName;
+  document.getElementById('generatedContent').textContent = markdown;
+  document.getElementById('result').style.display = 'block';
+  
+  // Hacer scroll al resultado
+  document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+}
+
+function resetForm() {
+  document.getElementById('addServiceForm').reset();
+  document.getElementById('result').style.display = 'none';
+}
+
+// Asignar evento al formulario
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('addServiceForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    generateMarkdown();
+  });
+});
+</script>
+
+<style>
+.form-control, .form-select {
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+  padding: 12px 16px;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+.btn {
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.d-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.alert {
+  border-radius: 12px;
+  border: none;
+}
+
+#generatedContent {
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.card {
+  border-radius: 15px;
+  border: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.border-success {
+  border-width: 2px !important;
+}
+
+.bg-success-light {
+  background-color: #d1e7dd !important;
+}
+
+@media (max-width: 768px) {
+  .d-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>

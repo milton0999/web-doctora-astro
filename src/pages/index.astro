@@ -21,18 +21,14 @@ const activePromotions = promotions.filter(p =>
   p.data.active && new Date(p.data.valid_until) > new Date()
 );
 
-// Servicios destacados
+// Servicios destacados (para sección de featured)
 const featuredServices = servicios.filter(s => s.data.featured);
-const regularServices = servicios.filter(s => !s.data.featured);
+// Ya no separamos servicios regulares, usamos TODOS los servicios en el grid filtrable
 
-// Agrupar servicios por categoría para filtrado (actualizado con nuevas categorías)
-const serviciosPorCategoria = {
-  'Ultrasonido Adulto': servicios.filter(s => s.data.categoria === 'Ultrasonido Adulto'),
-  'Ultrasonido de Paciente Embarazada': servicios.filter(s => s.data.categoria === 'Ultrasonido de Paciente Embarazada'),
-  'Ultrasonido Ginecología': servicios.filter(s => s.data.categoria === 'Ultrasonido Ginecología'),
-  'Ultrasonido de Embarazo 5D': servicios.filter(s => s.data.categoria === 'Ultrasonido de Embarazo 5D'),
-  'Ultrasonido Pediátrico': servicios.filter(s => s.data.categoria === 'Ultrasonido Pediátrico')
-};
+// Categorías con servicios disponibles (generado dinámicamente)
+const categoriasConServicios = [
+  ...new Set(servicios.map(s => s.data.categoria))
+];
 ---
 
 <Layout title="Inicio" description={siteSettings.description}>
@@ -179,33 +175,40 @@ const serviciosPorCategoria = {
                 <p class="lead text-muted mb-4">Filtra por categoría para encontrar tu servicio rápidamente</p>
             </div>
             
-            <!-- Category Filter Buttons -->
+            <!-- Category Filter Buttons - Solo categorías con servicios reales -->
             <div class="text-center mb-5">
                 <div class="d-inline-flex gap-2 flex-wrap justify-content-center">
                     <button class="category-btn active" data-category="all" onclick="filterServices('all')" type="button" aria-pressed="true">
                         Ver todos los servicios ({servicios.length})
                     </button>
-                    <button class="category-btn" data-category="Ultrasonido Adulto" onclick="filterServices('Ultrasonido Adulto')" type="button" aria-pressed="false">
-                        Ultrasonido Adulto ({servicios.filter(s => s.data.categoria === 'Ultrasonido Adulto').length})
-                    </button>
-                    <button class="category-btn" data-category="Ultrasonido de Paciente Embarazada" onclick="filterServices('Ultrasonido de Paciente Embarazada')" type="button" aria-pressed="false">
-                        Ultrasonido de Paciente Embarazada ({servicios.filter(s => s.data.categoria === 'Ultrasonido de Paciente Embarazada').length})
-                    </button>
-                    <button class="category-btn" data-category="Ultrasonido Ginecología" onclick="filterServices('Ultrasonido Ginecología')" type="button" aria-pressed="false">
-                        Ultrasonido Ginecología ({servicios.filter(s => s.data.categoria === 'Ultrasonido Ginecología').length})
-                    </button>
-                    <button class="category-btn" data-category="Ultrasonido de Embarazo 5D" onclick="filterServices('Ultrasonido de Embarazo 5D')" type="button" aria-pressed="false">
-                        Ultrasonido de Embarazo 5D ({servicios.filter(s => s.data.categoria === 'Ultrasonido de Embarazo 5D').length})
-                    </button>
-                    <button class="category-btn" data-category="Ultrasonido Pediátrico" onclick="filterServices('Ultrasonido Pediátrico')" type="button" aria-pressed="false">
-                        Ultrasonido Pediátrico ({servicios.filter(s => s.data.categoria === 'Ultrasonido Pediátrico').length})
-                    </button>
+                    {
+                        // Solo mostrar botones de categorías que tienen servicios
+                        servicios.filter(s => s.data.categoria === 'Ultrasonido Adulto').length > 0 && (
+                            <button class="category-btn" data-category="Ultrasonido Adulto" onclick="filterServices('Ultrasonido Adulto')" type="button" aria-pressed="false">
+                                Ultrasonido Adulto ({servicios.filter(s => s.data.categoria === 'Ultrasonido Adulto').length})
+                            </button>
+                        )
+                    }
+                    {
+                        servicios.filter(s => s.data.categoria === 'Ultrasonido de Paciente Embarazada').length > 0 && (
+                            <button class="category-btn" data-category="Ultrasonido de Paciente Embarazada" onclick="filterServices('Ultrasonido de Paciente Embarazada')" type="button" aria-pressed="false">
+                                Ultrasonido de Paciente Embarazada ({servicios.filter(s => s.data.categoria === 'Ultrasonido de Paciente Embarazada').length})
+                            </button>
+                        )
+                    }
+                    {
+                        servicios.filter(s => s.data.categoria === 'Ultrasonido de Embarazo 5D').length > 0 && (
+                            <button class="category-btn" data-category="Ultrasonido de Embarazo 5D" onclick="filterServices('Ultrasonido de Embarazo 5D')" type="button" aria-pressed="false">
+                                Ultrasonido de Embarazo 5D ({servicios.filter(s => s.data.categoria === 'Ultrasonido de Embarazo 5D').length})
+                            </button>
+                        )
+                    }
                 </div>
             </div>
             
             <!-- Services Grid -->
             <div class="row g-4" id="servicesGrid">
-                {regularServices.map(servicio => (
+                {servicios.map(servicio => (
                     <div class="col-sm-12 col-md-6 col-lg-4 service-item" data-category={servicio.data.categoria?.trim()}>
                         <ServicioCard servicio={servicio} />
                     </div>
