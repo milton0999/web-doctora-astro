@@ -1,6 +1,6 @@
 ---
 title: "Ecocardiograma"
-categoria: Cardiologia
+categoria: Ultrasonido Adulto
 image: "/img/servicios/ecocardiograma.jpg"
 price: "$2,500"
 duration: "30 minutos"

@@ -1,9 +1,9 @@
 ---
-title: "Estudios Ginecológicos"
-description: "Estudios especializados para diagnóstico y prevención ginecológica con tecnología avanzada y personal experto."
+title: "Ultrasonido Ginecología"
+description: "Servicios especializados para diagnóstico y prevención ginecológica con tecnología avanzada y personal experto."
 hero_image: "/img/servicios/ginecologia-hero.jpg"
-seo_title: "Estudios Ginecológicos - Centro Médico Gonzalitos"
-seo_description: "Estudios de ultrasonido ginecológico en Monterrey. Diagnóstico preciso con tecnología avanzada y médicos especialistas."
+seo_title: "Ultrasonido Ginecología - Centro Médico Gonzalitos"
+seo_description: "Servicios de ultrasonido ginecológico en Monterrey. Diagnóstico preciso con tecnología avanzada y médicos especialistas."
 ---
 
 # Estudios Ginecológicos

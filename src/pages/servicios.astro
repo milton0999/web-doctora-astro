@@ -22,20 +22,15 @@ const serviciosPorCategoria: Record<string, any[]> = servicios.reduce((acc, serv
 
 // Mapeo de nombres de categorías para mostrar
 const nombresCategorias: Record<string, string> = {
-  'Adulto': 'Ecografías para Adulto',
-  'Embarazada': 'Ecografías Materno-Fetales',
-  'Pediatrico': 'Ecografías Pediátricas',
-  'Ginecologia': 'Estudios Ginecológicos',
-  'Cardiologia': 'Ecografías Cardíacas',
-  'Musculoesqueletico': 'Ecografías Musculoesqueléticas',
-  'Doppler': 'Estudios Doppler',
-  'Tiroides': 'Ecografías de Tiroides',
-  'Mama': 'Ecografías de Mama',
-  'General': 'Estudios Generales'
+  'Ultrasonido Adulto': 'Ultrasonido Adulto',
+  'Ultrasonido de Paciente Embarazada': 'Ultrasonido de Paciente Embarazada',
+  'Ultrasonido Ginecología': 'Ultrasonido Ginecología',
+  'Ultrasonido de Embarazo 5D': 'Ultrasonido de Embarazo 5D',
+  'Ultrasonido Pediátrico': 'Ultrasonido Pediátrico'
 };
 
-// Orden de categorías - actualizado para incluir todas las especialidades médicas
-const ordenCategorias = ['Adulto', 'Embarazada', 'Pediatrico', 'Ginecologia', 'Cardiologia', 'Musculoesqueletico', 'Doppler', 'Tiroides', 'Mama', 'General'];
+// Orden de categorías - actualizado para nuevas categorías unificadas
+const ordenCategorias = ['Ultrasonido Adulto', 'Ultrasonido de Paciente Embarazada', 'Ultrasonido Ginecología', 'Ultrasonido de Embarazo 5D', 'Ultrasonido Pediátrico'];
 ---
 
 
@@ -47,13 +42,13 @@ const ordenCategorias = ['Adulto', 'Embarazada', 'Pediatrico', 'Ginecologia', 'C
       <div class="row align-items-center">
         <div class="col-lg-8">
           <h1 class="display-4 fw-bold text-white mb-3">Servicios Médicos en Monterrey</h1>
-          <p class="lead text-white-50">Ofrecemos una amplia gama de estudios de ultrasonido con tecnología de punta en Monterrey, Nuevo León. Atención especializada para adultos, embarazadas y pediatría.</p>
+          <p class="lead text-white-50">Ofrecemos servicios médicos especializados de ultrasonido con tecnología de punta en Monterrey, Nuevo León. Atención especializada para adultos, embarazadas y pediatría.</p>
         </div>
         <div class="col-lg-4">
           <div class="bg-white bg-opacity-10 rounded-3 p-4">
             <div class="text-center">
               <h3 class="text-white mb-0">{servicios.length}</h3>
-              <p class="text-white-50">Servicios Disponibles</p>
+              <p class="text-white-50">Servicios Médicos Disponibles</p>
             </div>
           </div>
         </div>

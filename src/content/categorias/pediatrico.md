@@ -1,9 +1,9 @@
 ---
-title: "Ecografías Pediátricas"
-description: "Estudios de ultrasonido diseñados específicamente para pacientes pediátricos con tecnología adaptada y personal especializado."
+title: "Ultrasonido Pediátrico"
+description: "Servicios de ultrasonido diseñados específicamente para pacientes pediátricos con tecnología adaptada y personal especializado."
 hero_image: "/img/servicios/pediatrico-hero.jpg"
-seo_title: "Ecografías Pediátricas - Centro Médico Gonzalitos"
-seo_description: "Estudios de ultrasonido pediátrico en Monterrey. Atención especializada para niños con tecnología adaptada y médicos expertos."
+seo_title: "Ultrasonido Pediátrico - Centro Médico Gonzalitos"
+seo_description: "Servicios de ultrasonido pediátrico en Monterrey. Atención especializada para niños con tecnología adaptada y médicos expertos."
 ---
 
 # Ecografías Pediátricas

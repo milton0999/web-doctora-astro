@@ -7,16 +7,11 @@ const servicios = defineCollection({
     image: z.string().optional(),
     description: z.string(),
     categoria: z.enum([
-      'Adulto',           // 30+ servicios del archivado
-      'Embarazada',       // 6 servicios maternos
-      'Pediatrico',       // 20+ servicios pediátricos
-      'Ginecologia',      // 3 servicios ginecológicos
-      'Cardiologia',      // Para ecocardiograma
-      'Musculoesqueletico', // Para ortopedia
-      'Doppler',          // Estudios vasculares
-      'Tiroides',         // Estudios endocrinos
-      'Mama',             // Mastografías/estudios mamarios
-      'General'           // Otros estudios
+      'Ultrasonido Adulto',                    // Para estudios de adultos todas las especialidades
+      'Ultrasonido de Paciente Embarazada',    // Estudios maternos y fetales
+      'Ultrasonido Ginecología',               // Estudios ginecológicos específicos
+      'Ultrasonido de Embarazo 5D',            // Estudios 4D/5D de alta definición
+      'Ultrasonido Pediátrico'                // Estudios para niños
     ]),
     subcategoria: z.string().optional(), // Ej: "Abdominal", "Vascular", etc.
     price: z.string().optional(),    

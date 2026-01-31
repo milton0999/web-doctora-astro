@@ -173,39 +173,30 @@ const serviciosPorCategoria = {
     <section id="servicios" class="py-5">
         <div class="container">
             <div class="text-center mb-5">
-                <h2 class="display-5 fw-bold text-primary mb-3">🏥 Nuestros Estudios</h2>
-                <p class="lead text-muted mb-4">Filtra por categoría para encontrar tu estudio rápidamente</p>
+                <h2 class="display-5 fw-bold text-primary mb-3">🏥 Nuestros Servicios</h2>
+                <p class="lead text-muted mb-4">Filtra por categoría para encontrar tu servicio rápidamente</p>
             </div>
             
             <!-- Category Filter Buttons -->
             <div class="text-center mb-5">
                 <div class="d-inline-flex gap-2 flex-wrap justify-content-center">
                     <button class="category-btn active" data-category="all" onclick="filterServices('all')" type="button" aria-pressed="true">
-                        Todos ({servicios.length})
+                        Ver todos los servicios ({servicios.length})
                     </button>
-                    <button class="category-btn" data-category="Adulto" onclick="filterServices('Adulto')" type="button" aria-pressed="false">
-                        Adulto ({serviciosPorCategoria?.adultos?.length || 0})
+                    <button class="category-btn" data-category="Ultrasonido Adulto" onclick="filterServices('Ultrasonido Adulto')" type="button" aria-pressed="false">
+                        Ultrasonido Adulto ({servicios.filter(s => s.data.categoria === 'Ultrasonido Adulto').length})
                     </button>
-                    <button class="category-btn" data-category="Embarazada" onclick="filterServices('Embarazada')" type="button" aria-pressed="false">
-                        Embarazada ({serviciosPorCategoria?.embarazadas?.length || 0})
+                    <button class="category-btn" data-category="Ultrasonido de Paciente Embarazada" onclick="filterServices('Ultrasonido de Paciente Embarazada')" type="button" aria-pressed="false">
+                        Ultrasonido de Paciente Embarazada ({servicios.filter(s => s.data.categoria === 'Ultrasonido de Paciente Embarazada').length})
                     </button>
-                    <button class="category-btn" data-category="Pediatrico" onclick="filterServices('Pediatrico')" type="button" aria-pressed="false">
-                        Pediatría ({serviciosPorCategoria?.pediatrico?.length || 0})
+                    <button class="category-btn" data-category="Ultrasonido Ginecología" onclick="filterServices('Ultrasonido Ginecología')" type="button" aria-pressed="false">
+                        Ultrasonido Ginecología ({servicios.filter(s => s.data.categoria === 'Ultrasonido Ginecología').length})
                     </button>
-                    <button class="category-btn" data-category="Cardiologia" onclick="filterServices('Cardiologia')" type="button" aria-pressed="false">
-                        Cardiología ({servicios.filter(s => s.data.categoria === 'Cardiologia').length})
+                    <button class="category-btn" data-category="Ultrasonido de Embarazo 5D" onclick="filterServices('Ultrasonido de Embarazo 5D')" type="button" aria-pressed="false">
+                        Ultrasonido de Embarazo 5D ({servicios.filter(s => s.data.categoria === 'Ultrasonido de Embarazo 5D').length})
                     </button>
-                    <button class="category-btn" data-category="Doppler" onclick="filterServices('Doppler')" type="button" aria-pressed="false">
-                        Doppler ({servicios.filter(s => s.data.categoria === 'Doppler').length})
-                    </button>
-                    <button class="category-btn" data-category="Tiroides" onclick="filterServices('Tiroides')" type="button" aria-pressed="false">
-                        Tiroides ({servicios.filter(s => s.data.categoria === 'Tiroides').length})
-                    </button>
-                    <button class="category-btn" data-category="Mama" onclick="filterServices('Mama')" type="button" aria-pressed="false">
-                        Mama ({servicios.filter(s => s.data.categoria === 'Mama').length})
-                    </button>
-                    <button class="category-btn" data-category="Musculoesqueletico" onclick="filterServices('Musculoesqueletico')" type="button" aria-pressed="false">
-                        Musculoesquelético ({servicios.filter(s => s.data.categoria === 'Musculoesqueletico').length})
+                    <button class="category-btn" data-category="Ultrasonido Pediátrico" onclick="filterServices('Ultrasonido Pediátrico')" type="button" aria-pressed="false">
+                        Ultrasonido Pediátrico ({servicios.filter(s => s.data.categoria === 'Ultrasonido Pediátrico').length})
                     </button>
                 </div>
             </div>

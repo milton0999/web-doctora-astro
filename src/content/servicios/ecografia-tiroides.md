@@ -1,6 +1,6 @@
 ---
 title: "Ecografía de Tiroides"
-categoria: Tiroides
+categoria: Ultrasonido Adulto
 image: "/img/servicios/ecografia-tiroides.jpg"
 price: "$2,000"
 duration: "30 minutos"

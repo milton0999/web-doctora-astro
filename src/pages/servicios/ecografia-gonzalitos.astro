@@ -182,18 +182,18 @@ const pageDescription = "Especialistas en ecografía diagnóstica en la zona de 
       <!-- Filtros por Tipo -->
       <div class="filter-tabs mb-5">
         <div class="text-center">
-          <button class="filter-tab active" onclick="filterServices('all')">Todos</button>
-          <button class="filter-tab" onclick="filterServices('Embarazada')">Embarazada</button>
-          <button class="filter-tab" onclick="filterServices('Ginecologia')">Ginecología</button>
-          <button class="filter-tab" onclick="filterServices('Mama')">Mamario</button>
-          <button class="filter-tab" onclick="filterServices('Tiroides')">Tiroides</button>
-          <button class="filter-tab" onclick="filterServices('Pediatrico')">Pediatría</button>
+          <button class="filter-tab active" onclick="filterServices('all')">Ver todos los servicios</button>
+          <button class="filter-tab" onclick="filterServices('Ultrasonido Adulto')">Ultrasonido Adulto</button>
+          <button class="filter-tab" onclick="filterServices('Ultrasonido de Paciente Embarazada')">Ultrasonido de Paciente Embarazada</button>
+          <button class="filter-tab" onclick="filterServices('Ultrasonido Ginecología')">Ultrasonido Ginecología</button>
+          <button class="filter-tab" onclick="filterServices('Ultrasonido de Embarazo 5D')">Ultrasonido de Embarazo 5D</button>
+          <button class="filter-tab" onclick="filterServices('Ultrasonido Pediátrico')">Ultrasonido Pediátrico</button>
         </div>
       </div>
       
       <!-- Services Grid -->
       <div class="row g-4" id="servicesGrid">
-        {services.filter(s => ['Embarazada', 'Ginecologia', 'Mama', 'Pediatrico', 'Tiroides'].includes(s.data.categoria)).map(servicio => (
+        {services.filter(s => ['Ultrasonido Adulto', 'Ultrasonido de Paciente Embarazada', 'Ultrasonido Ginecología', 'Ultrasonido de Embarazo 5D', 'Ultrasonido Pediátrico'].includes(s.data.categoria)).map(servicio => (
           <div class="col-md-6 col-lg-4 service-item-women" data-category={servicio.data.categoria}>
             <div class="service-card-women h-100">
               <div class="card border-0 shadow-sm h-100">

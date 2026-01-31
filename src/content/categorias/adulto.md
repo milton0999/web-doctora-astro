@@ -1,9 +1,9 @@
 ---
-title: "Ecografías para Adulto"
-description: "Estudios de ultrasonido especializados para adultos con tecnología de última generación para diagnóstico preciso y confiable."
+title: "Ultrasonido Adulto"
+description: "Servicios de ultrasonido especializados para adultos con tecnología de última generación para diagnóstico preciso y confiable."
 hero_image: "/img/servicios/adulto-hero.jpg"
-seo_title: "Ecografías para Adulto - Centro Médico Gonzalitos"
-seo_description: "Estudios de ultrasonido para adultos con tecnología avanzada en Monterrey. Diagnóstico preciso y profesional."
+seo_title: "Ultrasonido Adulto - Centro Médico Gonzalitos"
+seo_description: "Servicios de ultrasonido para adultos con tecnología avanzada en Monterrey. Diagnóstico preciso y profesional."
 ---
 
 # Ecografías para Adulto

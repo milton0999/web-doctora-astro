@@ -1,6 +1,6 @@
 ---
 title: "Ecografía de Próstata"
-categoria: Adulto
+categoria: Ultrasonido Adulto
 image: "/img/servicios/ecografia-prostata.jpg"
 price: "$1,800"
 duration: "20 minutos"

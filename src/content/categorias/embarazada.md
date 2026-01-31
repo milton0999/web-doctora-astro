@@ -1,9 +1,9 @@
 ---
-title: "Ecografías Materno-Fetales"
-description: "Estudios especializados para el seguimiento del embarazo y bienestar del bebé con tecnología 4D y 5D."
+title: "Ultrasonido de Paciente Embarazada"
+description: "Servicios especializados para el seguimiento del embarazo y bienestar del bebé con tecnología 4D y 5D."
 hero_image: "/img/servicios/embarazada-hero.jpg"
-seo_title: "Ecografías Materno-Fetales - Centro Médico Gonzalitos"
-seo_description: "Ecografías de embarazo 4D y 5D en Monterrey. Seguimiento completo del desarrollo fetal con tecnología avanzada."
+seo_title: "Ultrasonido de Paciente Embarazada - Centro Médico Gonzalitos"
+seo_description: "Servicios de ultrasonido de embarazo 4D y 5D en Monterrey. Seguimiento completo del desarrollo fetal con tecnología avanzada."
 ---
 
 # Ecografías Materno-Fetales

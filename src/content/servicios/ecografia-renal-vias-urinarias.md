@@ -1,6 +1,6 @@
 ---
 title: "Ecografía Renal y Vías Urinarias"
-categoria: Adulto
+categoria: Ultrasonido Adulto
 image: "/img/servicios/ecografia-renal-vias-urinarias.jpg"
 price: "$1,800"
 duration: "30 minutos"

@@ -1,6 +1,6 @@
 ---
 title: "Ecografía 4D"
-categoria: Embarazada
+categoria: Ultrasonido de Embarazo 5D
 image: "/img/servicios/logo-cmg-horizontal.png"
 price: "$1,500"
 duration: "45 minutos"
