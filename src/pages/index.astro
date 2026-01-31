@@ -25,11 +25,13 @@ const activePromotions = promotions.filter(p =>
 const featuredServices = servicios.filter(s => s.data.featured);
 const regularServices = servicios.filter(s => !s.data.featured);
 
-// Agrupar servicios por categoría para filtrado
+// Agrupar servicios por categoría para filtrado (actualizado con nuevas categorías)
 const serviciosPorCategoria = {
-  adultos: servicios.filter(s => s.data.categoria === 'Adulto'),
-  embarazadas: servicios.filter(s => s.data.categoria === 'Embarazada'),
-  pediatrico: servicios.filter(s => s.data.categoria === 'Pediatrico')
+  'Ultrasonido Adulto': servicios.filter(s => s.data.categoria === 'Ultrasonido Adulto'),
+  'Ultrasonido de Paciente Embarazada': servicios.filter(s => s.data.categoria === 'Ultrasonido de Paciente Embarazada'),
+  'Ultrasonido Ginecología': servicios.filter(s => s.data.categoria === 'Ultrasonido Ginecología'),
+  'Ultrasonido de Embarazo 5D': servicios.filter(s => s.data.categoria === 'Ultrasonido de Embarazo 5D'),
+  'Ultrasonido Pediátrico': servicios.filter(s => s.data.categoria === 'Ultrasonido Pediátrico')
 };
 ---
 
@@ -204,7 +206,7 @@ const serviciosPorCategoria = {
             <!-- Services Grid -->
             <div class="row g-4" id="servicesGrid">
                 {regularServices.map(servicio => (
-                    <div class="col-sm-12 col-md-6 col-lg-4 service-item" data-category={servicio.data.categoria}>
+                    <div class="col-sm-12 col-md-6 col-lg-4 service-item" data-category={servicio.data.categoria?.trim()}>
                         <ServicioCard servicio={servicio} />
                     </div>
                 ))}
@@ -480,14 +482,18 @@ function filterServices(category) {
         activeBtn.setAttribute('aria-pressed', 'true');
     }
     
-    // Filter services
+    // Filter services with normalized comparison
     const serviceItems = document.querySelectorAll('.service-item');
     let visibleCount = 0;
     
     serviceItems.forEach(item => {
         const itemCategory = item.getAttribute('data-category');
         
-        if (category === 'all' || itemCategory === category) {
+        // Normalize both values for comparison
+        const normalizedItemCategory = itemCategory ? itemCategory.trim() : '';
+        const normalizedFilterCategory = category ? category.trim() : '';
+        
+        if (category === 'all' || normalizedItemCategory === normalizedFilterCategory) {
             item.classList.remove('hidden');
             visibleCount++;
         } else {
