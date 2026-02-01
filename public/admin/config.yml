@@ -1,5 +1,6 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: milton0999/web-doctora-astro
   branch: main
 
 media_folder: public/img
