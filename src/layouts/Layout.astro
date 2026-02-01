@@ -42,14 +42,18 @@ try {
 let serviciosPorCategoria: { 
   adultos: any[], 
   embarazadas: any[], 
+  ginecologia: any[],
+  cincoD: any[],
   pediatrico: any[] 
-} = { adultos: [], embarazadas: [], pediatrico: [] };
+} = { adultos: [], embarazadas: [], ginecologia: [], cincoD: [], pediatrico: [] };
 try {
   const servicios = await getCollection('servicios');
   serviciosPorCategoria = {
-    adultos: servicios.filter(s => s.data.categoria === 'Adulto'),
+    adultos: servicios.filter(s => s.data.categoria === 'Ultrasonido Adulto'),
     embarazadas: servicios.filter(s => s.data.categoria === 'Ultrasonido de Paciente Embarazada'),
-     pediatrico: servicios.filter(s => s.data.categoria === 'Ultrasonido Pediátrico')
+    ginecologia: servicios.filter(s => s.data.categoria === 'Ultrasonido Ginecología'),
+    cincoD: servicios.filter(s => s.data.categoria === 'Ultrasonido de Embarazo 5D'),
+    pediatrico: servicios.filter(s => s.data.categoria === 'Ultrasonido Pediátrico')
   };
 } catch (error) {
   console.error('Error loading servicios:', error);
@@ -647,13 +651,20 @@ const activePromotions = promotions.filter(p =>
 <li class="nav-item dropdown me-lg-2">
                            <a class="nav-link dropdown-toggle fw-bold" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ginecología</a>
                           <ul class="dropdown-menu">
-                              <li><a class="dropdown-item" href="/servicios">Ver todos los servicios ginecológicos</a></li>
+                              {serviciosPorCategoria.ginecologia.length > 0 ? serviciosPorCategoria.ginecologia.map(s => (
+                                 <li><a class="dropdown-item" href={`/servicios/${s.slug}`}>{s.data.title}</a></li>
+                             )) : <li><span class="dropdown-item disabled">Próximamente</span></li>}
                           </ul>
                       </li>
 
-                      <li class="nav-item me-lg-2">
-                          <a class="nav-link fw-bold" href="/promociones">Ultrasonido de embarazo 5D</a>
-                      </li>
+                      <li class="nav-item dropdown me-lg-2">
+                          <a class="nav-link dropdown-toggle fw-bold" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ultrasonido de embarazo 5D</a>
+                         <ul class="dropdown-menu">
+                              {serviciosPorCategoria.cincoD.length > 0 ? serviciosPorCategoria.cincoD.map(s => (
+                                 <li><a class="dropdown-item" href={`/servicios/${s.slug}`}>{s.data.title}</a></li>
+                             )) : <li><span class="dropdown-item disabled">Próximamente</span></li>}
+                         </ul>
+                     </li>
 
                       <!-- Elementos móviles adicionales -->
                       <li class="nav-item d-lg-none border-top mt-2 pt-2">

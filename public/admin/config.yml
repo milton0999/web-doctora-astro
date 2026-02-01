@@ -89,7 +89,7 @@ collections:
     slug: '{{slug}}'
     fields:
       - { label: 'Nombre del Estudio', name: 'title', widget: 'string' }
-      - { label: 'Categoría', name: 'categoria', widget: 'select', options: ['Adulto', 'Embarazada', 'Pediatrico', 'Ginecologia', 'Cardiologia', 'Musculoesqueletico', 'Doppler', 'Tiroides', 'Mama', 'General'] }
+      - { label: 'Categoría', name: 'categoria', widget: 'select', options: ['Ultrasonido Adulto', 'Ultrasonido de Paciente Embarazada', 'Ultrasonido de Embarazo 5D'] }
       - { label: 'Imagen Principal', name: 'image', widget: 'image', hint: '📸 Dimensiones recomendadas: 1200x800px. Formato JPG. Máximo 3MB.' }
       - { label: 'Descripción Breve', name: 'description', widget: 'text' }
       - { label: 'Precio', name: 'price', widget: 'string', required: false }

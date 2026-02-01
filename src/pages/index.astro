@@ -515,7 +515,7 @@ function filterServices(category) {
     
     console.log('📈 Services to show:', visibleCount);
     
-    // Announce to screen readers
+    // Announce to screen readers with enhanced logging
     const announcement = document.createElement('div');
     announcement.setAttribute('role', 'status');
     announcement.setAttribute('aria-live', 'polite');
@@ -526,8 +526,11 @@ function filterServices(category) {
     setTimeout(() => announcement.remove(), 1000);
 }
 
-// Initialize on page load
+// Initialize on page load - Ensure all services visible by default
 document.addEventListener('DOMContentLoaded', function() {
+    // Show all services by default when page loads
+    filterServices('all');
+    
     // Trust items animation on scroll
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
