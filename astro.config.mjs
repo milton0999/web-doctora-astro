@@ -3,9 +3,12 @@ import { defineConfig } from 'astro/config';
 import cloudflare from '@astrojs/cloudflare';
 
 export default defineConfig({
-  // Cambiamos a 'server' o 'hybrid' para que las funciones de API funcionen bien
-  output: 'server', 
-  adapter: cloudflare(),
+  // Usamos 'server' con configuración específica para functions
+  output: 'server',
+  adapter: cloudflare({
+    // Configuración para functions
+    imageService: 'cloudflare',
+  }),
   // Optimización de imágenes habilitada para Astro 5
   image: {
     service: {
