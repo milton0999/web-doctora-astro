@@ -7,7 +7,7 @@ media_folder: public/img
 public_folder: /img
 
 publish_mode: editorial_workflow
-show_preview_links: true
+show_preview_links: false
 
 collections:
   # Configuración Global
