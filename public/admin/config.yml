@@ -1,9 +1,6 @@
 backend:
-  name: github
-  repo: milton0999/web-doctora-astro
+  name: git-gateway
   branch: main
-  base_url: https://centromedicogonzalitos.com
-  auth_endpoint: /api/auth
 
 media_folder: public/img
 public_folder: /img
