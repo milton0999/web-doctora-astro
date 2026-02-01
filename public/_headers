@@ -1,12 +1,2 @@
-/admin/config.yml
+/*
   Access-Control-Allow-Origin: *
-  X-Content-Type-Options: nosniff
-  Content-Type: text/yaml
-
-/admin/*
-  Access-Control-Allow-Origin: *
-
-/api/*
-  Access-Control-Allow-Origin: *
-  Access-Control-Allow-Methods: GET, POST, OPTIONS
-  Access-Control-Allow-Headers: Content-Type, Authorization
