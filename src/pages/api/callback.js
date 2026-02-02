@@ -14,7 +14,7 @@ export const GET = async (context) => {
     const { request, env } = context;
     const client_id = env.GITHUB_CLIENT_ID;
     const client_secret = env.GITHUB_CLIENT_SECRET;
-    const kv = env.SESSION;
+    const kv = env.SESIONES;
 
     try {
         const url = new URL(request.url);
