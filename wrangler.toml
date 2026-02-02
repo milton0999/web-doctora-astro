@@ -1,0 +1,7 @@
+name = "web-doctora-astro"
+compatibility_date = "2024-01-01"
+
+[[kv_namespaces]]
+binding = "SESSION"
+id = "9e9f4dcd8f7641b78e7acb50f24bd2cf"
+preview_id = "9e9f4dcd8f7641b78e7acb50f24bd2cf"
