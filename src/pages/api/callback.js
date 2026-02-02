@@ -12,21 +12,36 @@ function renderBody(status, content) {
 
 export const GET = async (context) => {
     const { request, env } = context;
-    const client_id = env.GITHUB_CLIENT_ID;
-    const client_secret = env.GITHUB_CLIENT_SECRET;
-    const kv = env.SESSION;
 
     try {
+        if (!env.GITHUB_CLIENT_ID) {
+            throw new Error('GITHUB_CLIENT_ID not configured');
+        }
+        if (!env.GITHUB_CLIENT_SECRET) {
+            throw new Error('GITHUB_CLIENT_SECRET not configured');
+        }
+        const kv = env.SESSION;
+        if (!kv) {
+            throw new Error('SESSION KV binding not configured');
+        }
+
         const url = new URL(request.url);
         const code = url.searchParams.get('code');
         const state = url.searchParams.get('state');
 
+        if (!code) {
+            throw new Error('Missing code parameter');
+        }
+        if (!state) {
+            throw new Error('Missing state parameter');
+        }
+
         const stateValid = await kv.get(state);
-        
+
         if (!stateValid) {
             return new Response(renderBody('error', { error: 'Invalid state parameter' }), {
                 headers: { 'content-type': 'text/html;charset=UTF-8' },
-                status: 401 
+                status: 401
             });
         }
 
@@ -35,23 +50,30 @@ export const GET = async (context) => {
         const response = await fetch('https://github.com/login/oauth/access_token', {
             method: 'POST',
             headers: { 'content-type': 'application/json', 'accept': 'application/json' },
-            body: JSON.stringify({ client_id, client_secret, code }),
+            body: JSON.stringify({
+                client_id: env.GITHUB_CLIENT_ID,
+                client_secret: env.GITHUB_CLIENT_SECRET,
+                code
+            }),
         });
         const result = await response.json();
-        
+
         if (result.error) {
             return new Response(renderBody('error', result), {
                 headers: { 'content-type': 'text/html;charset=UTF-8' },
-                status: 401 
+                status: 401
             });
         }
-        
+
         return new Response(renderBody('success', { token: result.access_token, provider: 'github' }), {
             headers: { 'content-type': 'text/html;charset=UTF-8' },
-            status: 200 
+            status: 200
         });
     } catch (error) {
         console.error('Callback error:', error);
-        return new Response(error.message, { status: 500 });
+        return new Response(JSON.stringify({ error: error.message, stack: error.stack }), {
+            status: 500,
+            headers: { 'content-type': 'application/json' }
+        });
     }
 }
