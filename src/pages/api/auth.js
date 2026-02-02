@@ -1,6 +1,7 @@
-export async function onRequest(context) {
+export const GET = async (context) => {
     const { request, env } = context;
     const client_id = env.GITHUB_CLIENT_ID;
+    const kv = env.SESIONES;
 
     try {
         const url = new URL(request.url);
@@ -8,9 +9,16 @@ export async function onRequest(context) {
         redirectUrl.searchParams.set('client_id', client_id);
         redirectUrl.searchParams.set('redirect_uri', url.origin + '/api/callback');
         redirectUrl.searchParams.set('scope', 'repo user');
-        redirectUrl.searchParams.set('state', crypto.getRandomValues(new Uint8Array(12)).join(''));
-        return Response.redirect(redirectUrl.href, 301);
+        
+        const stateBytes = crypto.getRandomValues(new Uint8Array(16));
+        const state = Array.from(stateBytes).map(b => b.toString(16).padStart(2, '0')).join('');
+        
+        await kv.put(state, 'valid', { expirationTtl: 600 });
+        
+        redirectUrl.searchParams.set('state', state);
+        return Response.redirect(redirectUrl.href, 302);
     } catch (error) {
+        console.error('Auth error:', error);
         return new Response(error.message, { status: 500 });
     }
 }
